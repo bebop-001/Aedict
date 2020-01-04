@@ -1,11 +1,11 @@
 Located autils source at http://baka.sk/maven2/sk/baka/autils/autils/0.4/
 
-Edict = http://baka.sk/aedict/dictionaries/edict-lucene.zip -> /data/data/sk.baka.aedict/files/index
-Kanjidic = http://baka.sk/aedict/dictionaries/kanjidic-lucene.zip -> /data/data/sk.baka.aedict/files/index-kanjidic
-Tanaka = http://baka.sk/aedict/dictionaries/tanaka-lucene.zip -> /data/data/sk.baka.aedict/files/index-tanaka
-Tatoeba = http://baka.sk/aedict/dictionaries/tatoeba-lucene.zip -> /data/data/sk.baka.aedict/files/index-tatoeba
-sod.dat = http://baka.sk/aedict/dictionaries/sod.dat.gz -> /data/data/sk.baka.aedict/files/sod
-Computing & Telecommunications dictionary = http://baka.sk/aedict/dictionaries/edict-lucene-compdict.zip -> /data/data/sk.baka.aedict/files/index-compdict
-Japanese proper names: place-names; surnames; given names; (some) company names and product names = http://baka.sk/aedict/dictionaries/edict-lucene-enamdict.zip -> /data/data/sk.baka.aedict/files/index-enamdict
+Edict = http://baka.sk/aedict/dictionaries/edict-lucene.zip -> /data/data/sk_x.baka.aedict/files/index
+Kanjidic = http://baka.sk/aedict/dictionaries/kanjidic-lucene.zip -> /data/data/sk_x.baka.aedict/files/index-kanjidic
+Tanaka = http://baka.sk/aedict/dictionaries/tanaka-lucene.zip -> /data/data/sk_x.baka.aedict/files/index-tanaka
+Tatoeba = http://baka.sk/aedict/dictionaries/tatoeba-lucene.zip -> /data/data/sk_x.baka.aedict/files/index-tatoeba
+sod.dat = http://baka.sk/aedict/dictionaries/sod.dat.gz -> /data/data/sk_x.baka.aedict/files/sod
+Computing & Telecommunications dictionary = http://baka.sk/aedict/dictionaries/edict-lucene-compdict.zip -> /data/data/sk_x.baka.aedict/files/index-compdict
+Japanese proper names: place-names; surnames; given names; (some) company names and product names = http://baka.sk/aedict/dictionaries/edict-lucene-enamdict.zip -> /data/data/sk_x.baka.aedict/files/index-enamdict
 
 see docs at http://ftp.monash.edu.au/pub/nihongo/ for Edict, compdict, enamdict, tatoeba and tanaka Corupus.
