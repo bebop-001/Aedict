@@ -63,14 +63,23 @@ import sk_x.baka.autils.MiscUtils;
  */
 public class Main {
 
-    private static final String BASE_DIR = "target";
-    static final String LUCENE_INDEX = BASE_DIR + "/index";
 
-    /**
-     * Performs EDICT download and indexing tasks.
-     * @param args ignored, does not take any parameters.
-     */
+    static private final String CWD = new File("").getAbsolutePath();
+    static final File resourcesDir = new File(CWD, "resources");
+    static final File assetsDir = new File(CWD, "assets");
+
+    static final String LUCENE_INDEX =
+            assetsDir.getAbsolutePath() + "/index";
+
     public static void main(String[] args) {
+        if (! resourcesDir.exists())
+            throw new RuntimeException("Aedict.indexer:" +
+                    " failed to find resources directory:"
+                    + resourcesDir.toString());
+        if (! assetsDir.exists())
+            throw new RuntimeException("Aedict.indexer:"
+                    + " failed to find assets directory:"
+                    + assetsDir.toString());
         try {
             if (args == null || args.length == 0) {
                 printHelp();
@@ -135,21 +144,10 @@ public class Main {
         Option opt = new Option("f", "file", true, "load dictionary file from a filesystem");
         opt.setArgName("file");
         opts.addOption(opt);
-        opt = new Option("u", "url", true, "load dictionary file from a URL");
-        opt.setArgName("url");
-        opts.addOption(opt);
-        opts.addOption("d", "default", false, "download the dictionary file from the official download URL. Equal to -g -u " + FileTypeEnum.Edict.getDefaultDownloadUrl() + ". May be used with the -k/-t/-T switches.");
-        opts.addOption("g", "gzipped", false, "the dictionary file is gzipped");
-        opt = new Option("e", "encoding", true, "dictionary file encoding, defaults to EUC_JP for Jim Breen's dictionaries, UTF-8 for Tatoeba");
-        opt.setArgName("encoding");
-        opts.addOption(opt);
         opts.addOption("?", null, false, "prints this help");
         opts.addOption("k", "kanjidic", false, "the file to process is actually a kanjidic");
-        opts.addOption("t", "tanaka", false, "the file to process is a Tanaka Corpus with example sentences");
         opts.addOption("T", "tatoeba", false, "the file to process is a Tatoeba Project file with example sentences");
-        opts.addOption(null, "upload", false, "Uploads the dictionary file to www.baka.sk");
-        opts.addOption("p", "password", true, "Upload SSH password");
-        opts.addOption("n", "name", true, "(Optional) A custom dictionary name");
+        opts.addOption("s", "sod", false, "the file to process is an sod file");
         return opts;
     }
 
@@ -166,23 +164,14 @@ public class Main {
             config.fileType = FileTypeEnum.Tanaka;
         } else if (cl.hasOption('T')) {
             config.fileType = FileTypeEnum.Tatoeba;
-        } else {
+        } else if (cl.hasOption('e')){
             config.fileType = FileTypeEnum.Edict;
+            config.localSource = new File(resourcesDir, "edict.EUC-JP");
         }
-        if (cl.hasOption('u')) {
-            config.source = cl.getOptionValue('u');
-            config.urlSource = new URL(config.source);
-            config.localSource = null;
-        } else if (cl.hasOption('d')) {
-            config.source = config.fileType.getDefaultDownloadUrl();
-            config.urlSource = new URL(config.source);
-            config.localSource = null;
-        } else if (cl.hasOption('f')) {
-            config.source = cl.getOptionValue('f');
-            config.urlSource = null;
-            config.localSource = new File(config.source);
-        } else {
-            throw new ParseException("At least one of -u, -d or -f switch must be specified");
+        else {
+            System.out.println("Unrecognized option or no optins given.");
+            printHelp();
+            System.exit(255);
         }
         config.isGzipped = (cl.hasOption('g') || cl.hasOption('d')) && config.fileType.isDefaultGzipped();
         final String charset = cl.getOptionValue('e', config.fileType.getDefaultEncoding());
@@ -208,7 +197,12 @@ public class Main {
         }
         sb.append(config.fileType);
         sb.append(" file from ");
-        sb.append(config.urlSource != null ? "URL" : "file");
+        sb.append(
+            (config.urlSource != null)
+                ? config.urlSource
+                : (config.localSource != null)
+                    ? config.localSource
+                    : "unknown source");
         sb.append(' ').append(config.source);
         System.out.println(sb.toString());
         indexWithLucene();

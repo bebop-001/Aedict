@@ -101,7 +101,7 @@ public enum FileTypeEnum {
         }
 
         public boolean isDefaultGzipped() {
-            return true;
+            return false;
         }
     },
     Kanjidic {
