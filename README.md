@@ -33,8 +33,19 @@ in Android Studio and the second time it will restart.
 Expect it to fail.
 * Do the same for app/src/main/java/sk_x.baka/indexer/Main.java
 and likewise, expect it to fail.
-* Select File->Invalidate Caches/Restart from the Android Studio 
+* Select File->Invalidate Caches/Restart from the Android Studio
 File pulldown.
+* Changed how indexer gets and saves its files.  as of 1/6/2020
+  only edict download/update is working.
+    * Dictionary input files are now downloaded and massaged
+      as necessary outside of the java indexer.
+    * Input for indexer
+        is in the indexer resources directory.  Also in that
+        directory is a PERL script that downloads and massages
+        downloaded dictionaries as necessary.
+    * output should be in the indexer assets directory.
+    * Developer is responsible for updating files on the
+      dictionary side as necessary.
 
 After restart you should be able to select either Main or SodMain from
 the app pulldown and start the app.  Output will appear in the
