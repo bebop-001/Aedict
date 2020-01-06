@@ -145,9 +145,10 @@ public class Main {
         opt.setArgName("file");
         opts.addOption(opt);
         opts.addOption("?", null, false, "prints this help");
-        opts.addOption("k", "kanjidic", false, "the file to process is actually a kanjidic");
-        opts.addOption("T", "tatoeba", false, "the file to process is a Tatoeba Project file with example sentences");
-        opts.addOption("s", "sod", false, "the file to process is an sod file");
+        opts.addOption("e", "edict", false, "process  edic.EUC-JP");
+        opts.addOption("k", "kanjidic", false, "process is kanjidic");
+        opts.addOption("T", "tatoeba", false, "Tatoeba Project file with example sentences");
+        opts.addOption("s", "sod", false, "process sod file");
         return opts;
     }
 
@@ -276,7 +277,7 @@ public class Main {
 
     private void zipLuceneIndex() throws IOException {
         System.out.println("Zipping the index file");
-        final File zip = new File(config.getTargetFileName());
+        final File zip = new File(assetsDir, config.getTargetFileName());
         if (zip.exists() && !zip.delete()) {
             throw new IOException("Cannot delete " + zip.getAbsolutePath());
         }
