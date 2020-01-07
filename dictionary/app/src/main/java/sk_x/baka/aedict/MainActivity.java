@@ -42,6 +42,7 @@ import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
 import sk_x.baka.aedict.util.ShowRomaji;
+import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.DialogUtils;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -53,6 +54,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -65,6 +67,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
+
+import static sk_x.baka.aedict.util.UtilsKt.displayBuildInfo;
 
 /**
  * Provides means to search the edict dictionary file.
@@ -151,7 +155,17 @@ public class MainActivity extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		showRomaji.register(this, menu);
+		// showRomaji.register(this, menu);
+		final MenuItem item = menu.add(R.string.build_info);
+		item.setOnMenuItemClickListener(
+		new MenuItem.OnMenuItemClickListener() {
+				public boolean onMenuItemClick(MenuItem item) {
+					displayBuildInfo(MainActivity.this);
+					return true;
+				}
+			}
+		);
+
 		AbstractActivity.addMenuItems(this, menu);
 		return true;
 	}

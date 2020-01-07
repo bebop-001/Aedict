@@ -17,11 +17,31 @@ during the install process.  I did this so you wouldn't
 hit Martin's site with the downloads.  It means a much
 larger download for the git directories and at install time
 however.
+* The indexer is working for edict files.  Changes to it:
+    * dictionary files are downloaded and manipulated
+      outside of the indexer java script.  I added
+      a PERL script indexer/resources/getDictFiles.pl
+      for doing this work.
+    * Input files are now expected in the indexer/resources
+      directory and its output is in the indexer assets
+      directory.  The developer needs to copy the
+      results to the dictionary/app/src/main/assets
+      directory to have them included in the build.
+    * indexer options are changed to reflect the
+      fact that it doesn't download files now.
+    * As time goes by, there will be further changes
+      here.  My goal is to have an index parser that
+      expects a file handle for each dictionary file.
 * I split the indexer and the dictionary.  The indexer
 is a pure java app and the dictionary is an Android app.
 There is shared code but by splitting the app it's easier
 to understand what's going on.
 * I removed the kana card from the app.
+* A new Kotlin file has been added and changes to the 
+  gradle build files and a new dictionary/utils/gitCommitDate.pl
+  script added and a menu option for getting info on the
+  build version, etc.
+* Bumped rev to 3.00.
 
 ## Running the indexer:
 The Indexer is actually 2 pure java apps.  To run them
@@ -57,9 +77,6 @@ to add the appropriate arguments.  You will get a new zip or .gz file
 with new index data.  Copy this to the dictionary assets directory
 (dictionary/app/src/main/assets) and rebuild and reinstall the
 dictionary.  When you update the app, it should use the new indexes.
-
-**However** -- to be honest -- I haven't tried updating the indexes yet.
-I actually just got the indexer working today.
 
 If you find problems, please let me know.
 

@@ -1,6 +1,20 @@
 <resources>
     <string name="app_name">Aedict</string>
 
+    <string name="build_info">Build Info…</string>
+    <string name="build_info_query"><![CDATA[
+        <html>
+        <font color=\"#%1$06x\">
+        Application name: %2$s
+        <br>Version(%3$d, %4$s)
+        <br>Build date:   %5$s
+        <br>Install date: %6$s
+        <br>Build type: %7$s
+        </font>
+        </html>
+    ]]>
+    </string>
+
     <string name="return_">Return %s</string>
     <string name="show_romaji">Show romaji</string>
     <string name="show_kana">Show kana</string>

@@ -72,10 +72,6 @@ public abstract class ShowRomaji {
 
 	protected abstract void show(final boolean romaji);
 
-	/**
-	 * Should be invoked from {@link Activity#onResume()}: checks if user
-	 * changed the SHOW_ROMAJI flag and reacts accordingly.
-	 */
 	public void onResume() {
 		show(resolveShowRomaji());
 	}
