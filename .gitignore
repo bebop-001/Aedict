@@ -1,0 +1,8 @@
+*.sw*
+*/*.sw*
+.*.sw*
+*/README.md
+*/local.properties
+indexer/assets/
+indexer/resources/
+

@@ -389,21 +389,15 @@
 		\n- Some features are accessible by long-clicking an item
 		\n- You can switch to romaji anytime, using menu
 		\n- Requires SDCard for storing dictionaries
-		\n- You can use Romaji for Japanese search
-		\n- Use xzu to write づ, use xna to write んあ
-		\n\nFeatures:\n\n- Automatic download of the indexed EDict/Kanjidic/Tanaka dictionaries
-		\n- Once the dictionary is downloaded it works completely off-line
+		\n\nFeatures:\n\n- Automatic download of the indexed EDict/Kanjidic/Tatoeba dictionaries
 		\n- Kanjipad for drawing and searching kanji characters
 		\n- Search kanji characters by radicals and stroke numbers
 		\n- Shows a kanji analysis in a word
-		\n- SKIP search (a search based on the kanji visual look)
-		\n- Optionally shows romaji instead of hiragana/katakana
-		\n- Search in Tanaka Example sentences
+		\n- Search in Tatoeba Example sentences
 		\n- Verb deinflection (e.g. searching for あえない will find あう)
 		\n- Kanji drawing order for more than 1500 kanjis
 		\n- A basic sentence translation
-		\n- Verb conjugations with example sentences
-		\n- Integrates with Simeji</string>
+		\n- Verb conjugations with example sentences</string>
 	<string name="japanese">From Japanese</string>
 	<string name="english">From English</string>
 	<string name="more">More...</string>
