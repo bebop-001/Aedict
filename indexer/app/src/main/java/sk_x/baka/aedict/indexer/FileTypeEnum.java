@@ -57,7 +57,7 @@ public enum FileTypeEnum {
             return "http://ftp.monash.edu.au/pub/nihongo/edict.gz";
         }
 
-        public IDictParser newParser(Config cfg) {
+        public IDictParser newParser() {
             return new IDictParser() {
 
                 public void addLine(String line, IndexWriter writer) throws IOException {
@@ -118,7 +118,7 @@ public enum FileTypeEnum {
             return "aedict/index-kanjidic/";
         }
 
-        public IDictParser newParser(final Config cfg) {
+        public IDictParser newParser() {
             return new IDictParser() {
 
                 private final char[] commonality = new char[1000];
@@ -245,7 +245,7 @@ public enum FileTypeEnum {
     },
     Tanaka {
 
-        public IDictParser newParser(Config cfg) {
+        public IDictParser newParser() {
             return new TanakaParser();
         }
 
@@ -271,9 +271,9 @@ public enum FileTypeEnum {
     },
     Tatoeba {
 
-        public IDictParser newParser(Config cfg) {
+        public IDictParser newParser() {
             try {
-                return new TatoebaParser(cfg);
+                return new TatoebaParser();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -304,7 +304,7 @@ public enum FileTypeEnum {
      * Produces new parser for this dictionary type.
      * @return a new instance of the parser, never null.
      */
-    public abstract IDictParser newParser(Config cfg);
+    public abstract IDictParser newParser();
 
     /**
      * The file name of the target zip file, which contains the Lucene index.
