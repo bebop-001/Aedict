@@ -85,15 +85,15 @@ sub getTatoeba {
         || die "Failed to create directory $destDir:$!\n";
     $dirs->push($destDir);
     unlink @files;
-#   for my $file (@files) {
-#       my $downloadFile = "$baseUrl/$file";
-#       print "Fetch $downloadFile";
-#       system('/usr/bin/wget', $downloadFile)
-#           && die "wget $downloadFile FAILED:$!\n";
-#       system('/bin/tar', '--bzip2', '-xvf', $file)
-#           && die "untar $file File FAILED:$!\n";
-#       print "\n";
-#   }
+    for my $file (@files) {
+        my $downloadFile = "$baseUrl/$file";
+        print "Fetch $downloadFile";
+        system('/usr/bin/wget', $downloadFile)
+            && die "wget $downloadFile FAILED:$!\n";
+        system('/bin/tar', '--bzip2', '-xvf', $file)
+            && die "untar $file File FAILED:$!\n";
+        print "\n";
+    }
     my $sentencesFile = "sentences.csv";
     my %jpnSentences = ();
     my %engSentences = ();
