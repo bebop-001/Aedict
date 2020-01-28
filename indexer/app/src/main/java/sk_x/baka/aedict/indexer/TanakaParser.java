@@ -37,6 +37,8 @@ import org.apache.lucene.index.IndexWriter;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.autils.MiscUtils;
 
+import static sk_x.baka.aedict.indexer.FileTypeEnum.getSourceFileReader;
+
 /**
  * Parses Tanaka dictionary.
  * @author Martin Vysny
@@ -71,8 +73,9 @@ public class TanakaParser implements IDictParser {
                 location = ".";
             }
             // quickly parse the EDICT dictionary, we are going to need it when constructing the kana reading of the example sentence.
+            File edict = FileTypeEnum.Edict.getSourceFile();
             try {
-                return new Edict(new File(location + "/edict.gz"));
+                return new Edict();
             } catch (Exception ex) {
                 throw new RuntimeException("The parser requires edict.gz to be available at " + new File(location).getAbsolutePath(), ex);
             }
@@ -91,41 +94,38 @@ public class TanakaParser implements IDictParser {
          */
         private final Map<String, Boolean> entryIsCommon = new HashMap<String, Boolean>();
 
-        public Edict(File edictGz) throws IOException {
-            final BufferedReader in = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(edictGz)), "EUC_JP"));
-            try {
-                for (String line = in.readLine(); line != null; line = in.readLine()) {
-                    if (line.startsWith("#") || MiscUtils.isBlank(line) || line.startsWith("　？？？")) {
-                        // skip
-                        continue;
+        public Edict() throws IOException {
+            final BufferedReader in = getSourceFileReader(FileTypeEnum.Edict);
+            for (String line = in.readLine(); line != null; line = in.readLine()) {
+                if (line.startsWith("#") || MiscUtils.isBlank(line) || line.startsWith("　？？？")) {
+                    // skip
+                    continue;
+                }
+                final String[] tokens = line.split("\\[|\\]|\\/");
+                final String kanji = tokens[0].trim();
+                final boolean containsKanji = containsKanji(kanji);
+                if (containsKanji) {
+                    if (kanji.length() > maxKanjiWordLength) {
+                        maxKanjiWordLength = kanji.length();
+                        longestKanjiWord = kanji;
                     }
-                    final String[] tokens = line.split("\\[|\\]|\\/");
-                    final String kanji = tokens[0].trim();
-                    final boolean containsKanji = containsKanji(kanji);
-                    if (containsKanji) {
-                        if (kanji.length() > maxKanjiWordLength) {
-                            maxKanjiWordLength = kanji.length();
-                            longestKanjiWord = kanji;
-                        }
-                    } else {
-                        if (kanji.length() > maxKanaWordLength) {
-                            maxKanaWordLength = kanji.length();
-                            longestKanaWord = kanji;
-                        }
-                    }
-                    if (!containsKanji) {
-                        continue;
-                    }
-                    final String reading = tokens[1].trim();
-                    final String previous = edict.get(kanji);
-                    if ((previous == null) || (!entryIsCommon.get(kanji))) {
-                        edict.put(kanji, reading);
-                        entryIsCommon.put(kanji, line.endsWith("(P)"));
+                } else {
+                    if (kanji.length() > maxKanaWordLength) {
+                        maxKanaWordLength = kanji.length();
+                        longestKanaWord = kanji;
                     }
                 }
-            } finally {
-                IOUtils.closeQuietly(in);
+                if (!containsKanji) {
+                    continue;
+                }
+                final String reading = tokens[1].trim();
+                final String previous = edict.get(kanji);
+                if ((previous == null) || (!entryIsCommon.get(kanji))) {
+                    edict.put(kanji, reading);
+                    entryIsCommon.put(kanji, line.endsWith("(P)"));
+                }
             }
+            IOUtils.closeQuietly(in);
         }
 
         public String getLongestKanaWord() {
