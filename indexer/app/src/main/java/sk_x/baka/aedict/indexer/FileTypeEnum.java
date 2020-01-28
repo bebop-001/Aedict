@@ -17,9 +17,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package sk_x.baka.aedict.indexer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -44,7 +50,6 @@ public enum FileTypeEnum {
      * The EDICT file as downloaded from the Monash web site.
      */
     Edict {
-
         public String getTargetFileName(String name) {
             String result = "edict-lucene";
             if (name != null) {
@@ -53,8 +58,8 @@ public enum FileTypeEnum {
             return result+".zip";
         }
 
-        public String getDefaultDownloadUrl() {
-            return "http://ftp.monash.edu.au/pub/nihongo/edict.gz";
+        public File getSourceFile () {
+            return new File(Main.resourcesDir, "edict.EUC-JP");
         }
 
         public IDictParser newParser(Config cfg) {
@@ -99,23 +104,14 @@ public enum FileTypeEnum {
         public String getDefaultEncoding() {
             return "EUC_JP";
         }
-
-        public boolean isDefaultGzipped() {
-            return false;
-        }
     },
     Kanjidic {
 
         public String getTargetFileName(String name) {
             return "kanjidic-lucene.zip";
         }
-
-        public String getDefaultDownloadUrl() {
-            return "http://ftp.monash.edu.au/pub/nihongo/kanjidic.gz";
-        }
-
-        public String getAndroidSdcardRelativeLoc(String custom) {
-            return "aedict/index-kanjidic/";
+        public File getSourceFile () {
+            return new File(Main.resourcesDir, "kanjidic");
         }
 
         public IDictParser newParser(final Config cfg) {
@@ -238,36 +234,6 @@ public enum FileTypeEnum {
         public String getDefaultEncoding() {
             return "EUC_JP";
         }
-
-        public boolean isDefaultGzipped() {
-            return true;
-        }
-    },
-    Tanaka {
-
-        public IDictParser newParser(Config cfg) {
-            return new TanakaParser();
-        }
-
-        public String getTargetFileName(String name) {
-            return "tanaka-lucene.zip";
-        }
-
-        public String getDefaultDownloadUrl() {
-            return "http://www.csse.monash.edu.au/~jwb/examples.gz";
-        }
-
-        public String getAndroidSdcardRelativeLoc(String custom) {
-            return "aedict/index-tanaka/";
-        }
-
-        public String getDefaultEncoding() {
-            return "EUC_JP";
-        }
-
-        public boolean isDefaultGzipped() {
-            return true;
-        }
     },
     Tatoeba {
 
@@ -282,24 +248,13 @@ public enum FileTypeEnum {
         public String getTargetFileName(String name) {
             return "tatoeba-lucene.zip";
         }
-
-        public String getDefaultDownloadUrl() {
-            return "http://tatoeba.org/files/downloads/sentences.csv";
+        public File getSourceFile () {
+            return new File(Main.resourcesDir, "tatoeba/sentences.parsed.csv");
         }
-
-        public String getAndroidSdcardRelativeLoc(String custom) {
-            return "aedict/index-tatoeba/";
-        }
-
         public String getDefaultEncoding() {
             return "UTF-8";
         }
-
-        public boolean isDefaultGzipped() {
-            return false;
-        }
     };
-
     /**
      * Produces new parser for this dictionary type.
      * @return a new instance of the parser, never null.
@@ -316,15 +271,24 @@ public enum FileTypeEnum {
      * Returns a default download URL of the gzipped file.
      * @return the default URL.
      */
-    public abstract String getDefaultDownloadUrl();
-
-    /**
-     * Indexer uses this method to display a hint to the user, where the dictionary is stored on the SD card.
-     * @return a displayable hint.
-     */
-    public abstract String getAndroidSdcardRelativeLoc(String custom);
-
     public abstract String getDefaultEncoding();
 
-    public abstract boolean isDefaultGzipped();
+    public abstract File getSourceFile();
+
+    public static BufferedReader getSourceFileReader (FileTypeEnum type) {
+        BufferedReader rv = null;
+        try {
+            rv = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(
+                            type.getSourceFile()),
+                    Charset.forName(type.getDefaultEncoding())
+                )
+            );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return rv;
+    }
+
+
 }

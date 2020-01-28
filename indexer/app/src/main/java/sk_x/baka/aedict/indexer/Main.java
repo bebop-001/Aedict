@@ -63,7 +63,6 @@ import sk_x.baka.autils.MiscUtils;
  */
 public class Main {
 
-
     static private final String CWD = new File("").getAbsolutePath();
     static final File resourcesDir = new File(CWD, "resources");
     static final File assetsDir = new File(CWD, "assets");
@@ -87,8 +86,9 @@ public class Main {
             }
             new Main(args).run();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            // ex.printStackTrace();
             System.out.println("Indexing failed: " + ex.toString());
+            printHelp();
             System.exit(1);
         }
     }
@@ -107,6 +107,7 @@ public class Main {
         }
     }
 
+    /*
     private void upload() throws Exception {
         System.out.println("Uploading");
         final SSHClient ssh = new SSHClient();
@@ -137,18 +138,22 @@ public class Main {
         }
     }
 
-    public final Config config = new Config();
+     */
+
+    public Config config = null;
 
     private static Options getOptions() {
         final Options opts = new Options();
-        Option opt = new Option("f", "file", true, "load dictionary file from a filesystem");
-        opt.setArgName("file");
-        opts.addOption(opt);
-        opts.addOption("?", null, false, "prints this help");
-        opts.addOption("e", "edict", false, "process  edic.EUC-JP");
-        opts.addOption("k", "kanjidic", false, "process is kanjidic");
-        opts.addOption("T", "tatoeba", false, "Tatoeba Project file with example sentences");
-        opts.addOption("s", "sod", false, "process sod file");
+        opts.addOption("?", null, false,
+                "prints this help");
+        opts.addOption("e", "edict", false,
+                "process  edic.EUC-JP");
+        opts.addOption("k", "kanjidic", false,
+                "process is kanjidic");
+        opts.addOption("T", "tatoeba", false,
+                "Tatoeba Project file with example sentences");
+        opts.addOption("s", "sod", false,
+                "process sod file");
         return opts;
     }
 
@@ -160,65 +165,40 @@ public class Main {
             System.exit(255);
         }
         if (cl.hasOption('k')) {
-            config.fileType = FileTypeEnum.Kanjidic;
-        } else if (cl.hasOption('t')) {
-            config.fileType = FileTypeEnum.Tanaka;
-        } else if (cl.hasOption('T')) {
-            config.fileType = FileTypeEnum.Tatoeba;
-        } else if (cl.hasOption('e')){
-            config.fileType = FileTypeEnum.Edict;
-            config.localSource = new File(resourcesDir, "edict.EUC-JP");
+            config = new Config(FileTypeEnum.Kanjidic, resourcesDir);
+        }
+        else if (cl.hasOption('T')) {
+            config = new Config(FileTypeEnum.Tatoeba,
+                    new File(resourcesDir, "/tatoeba"));
+        }
+        else if (cl.hasOption('e')){
+            config = new Config(FileTypeEnum.Edict, resourcesDir);
         }
         else {
             System.out.println("Unrecognized option or no optins given.");
             printHelp();
             System.exit(255);
         }
-        config.isGzipped = (cl.hasOption('g') || cl.hasOption('d')) && config.fileType.isDefaultGzipped();
-        final String charset = cl.getOptionValue('e', config.fileType.getDefaultEncoding());
-        if (!Charset.isSupported(charset)) {
-            throw new ParseException("Charset " + charset + " is not supported by JVM. Supported charsets: " + new ArrayList<String>(Charset.availableCharsets().keySet()));
-        }
-        config.encoding = Charset.forName(charset);
-        config.upload = cl.hasOption("upload");
-        config.password = cl.getOptionValue('p');
         config.name = cl.getOptionValue('n');
     }
 
     private static void printHelp() {
         final HelpFormatter f = new HelpFormatter();
-        f.printHelp("ai", "Aedict index file generator\nProduces a Lucene-indexed file from given dictionary file (expects Jim Breen's Edict by default). To download and index the default english-japan edict file just use the -d switch - the file is downloaded automatically.", getOptions(), null, true);
+        f.printHelp(Main.class.getName(), "Aedict index file generator\n"
+                        + "Produces a Lucene-indexed file from given dictionary file. "
+                , getOptions(), null, true);
     }
 
     void run() throws Exception {
         final StringBuilder sb = new StringBuilder();
         sb.append("Indexing ");
-        if (config.isGzipped) {
-            sb.append("gzipped ");
-        }
-        sb.append(config.fileType);
+        sb.append(config.getFileType());
         sb.append(" file from ");
-        sb.append(
-            (config.urlSource != null)
-                ? config.urlSource
-                : (config.localSource != null)
-                    ? config.localSource
-                    : "unknown source");
-        sb.append(' ').append(config.source);
+        sb.append(config.getFileType().getSourceFile());
         System.out.println(sb.toString());
         indexWithLucene();
         zipLuceneIndex();
-        if (config.upload) {
-            upload();
-        }
-        final String aedictDir = config.fileType.getAndroidSdcardRelativeLoc(config.name);
-        System.out.println("Finished - the index file '" + config.getTargetFileName() + "' was created.");
-        System.out.println("To use the indexed file with Aedict, you'll have to:");
-        System.out.println("1. Connect your phone as a mass storage device to your computer");
-        System.out.println("2. Browse the SDCard contents and delete the aedict/ directory if it is present");
-        System.out.println("3. Create the " + aedictDir + " directory");
-        System.out.println("4. Unzip the " + config.getTargetFileName() + " file to the " + aedictDir + " directory");
-        System.out.println("See http://code.google.com/p/aedict/wiki/CustomEdictFile for details");
+        System.out.println("Finished Index File:" + config.getTargetFileName());
     }
 
     private void indexWithLucene() throws IOException {
@@ -233,7 +213,7 @@ public class Main {
                         new StandardAnalyzer(LuceneSearch.LUCENE_VERSION), true,
                         IndexWriter.MaxFieldLength.UNLIMITED);
                 try {
-                    final IDictParser parser = config.fileType.newParser(config);
+                    final IDictParser parser = config.getFileType().newParser(config);
                     indexWithLucene(dictionary, luceneWriter, parser);
                     System.out.println("Optimizing Lucene index");
                     luceneWriter.optimize();

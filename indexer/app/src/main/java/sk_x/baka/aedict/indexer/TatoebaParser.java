@@ -1,6 +1,7 @@
 package sk_x.baka.aedict.indexer;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -97,10 +98,13 @@ public class TatoebaParser implements IDictParser {
     private void writeLucene(IndexWriter writer) throws IOException {
         final Set<String> languages = new HashSet<String>();
         int sc = 0;
+        int totalBline = 0, foundBline = 0;
         for (final Entry<Integer, Sentences> e : sentences.entrySet()) {
+            totalBline++;
             if (e.getValue().bLine == null) {
-                System.out.println("Missing B-Line for sentence " + e.getKey() + ", skipping");
+                // System.out.println("Missing B-Line for sentence " + e.getKey() + ", skipping");
             } else {
+                foundBline++;
                 languages.addAll(e.getValue().sentences.keySet());
                 final Document doc = new Document();
                 doc.add(new Field("japanese", e.getValue().japanese, Field.Store.YES, Field.Index.ANALYZED));
@@ -111,6 +115,8 @@ public class TatoebaParser implements IDictParser {
                 sc++;
             }
         }
+        System.out.printf("found Japanese indices for %d of %d sentences.\n",
+            foundBline, totalBline);
         System.out.println("Lucene indexed " + sc + " example sentences");
         System.out.println("Tatoeba contains sentences in the following languages: " + languages);
     }
@@ -119,7 +125,7 @@ public class TatoebaParser implements IDictParser {
         System.out.println("Parsing Sentence Links file");
         // maps source link ID to a list of links.
         Map<Integer, Set<Integer>> links = new HashMap<Integer, Set<Integer>>();
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("links.csv"), cfg.encoding));
+        final BufferedReader reader = cfg.newReader("links.parsed.csv");
         try {
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 final String[] tokens = split(line);
@@ -283,7 +289,7 @@ public class TatoebaParser implements IDictParser {
 
     private void parseBLines() throws IOException {
         System.out.println("Parsing B-Lines");
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("jpn_indices.csv"), cfg.encoding));
+        final BufferedReader reader = cfg.newReader("jpn_indices.parsed.csv");
         try {
             for (String line = reader.readLine(); line != null; line = reader.readLine()) {
                 if (line.trim().isEmpty()) {

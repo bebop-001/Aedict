@@ -29,34 +29,28 @@ import java.util.zip.GZIPInputStream;
 
 public class Config {
 
-    public File localSource;
-    public URL urlSource;
-    public String source;
-    public boolean isGzipped;
-    public FileTypeEnum fileType;
-    public Charset encoding;
-    public boolean upload;
-    public String password;
+    private final FileTypeEnum fileType;
+    private final Charset encoding;
     public String name;
+    private final File outputDir;
+
     public String getTargetFileName() {
         return fileType.getTargetFileName(name);
     }
-
-    @SuppressWarnings("WeakerAccess")
-    public InputStream newInputStream() throws IOException {
-        InputStream in;
-        if (localSource != null) {
-            in = new FileInputStream(localSource);
-        } else {
-            in = urlSource.openStream();
-        }
-        if (isGzipped) {
-            in = new GZIPInputStream(in);
-        }
-        return in;
-    }
+    public FileTypeEnum getFileType () {return fileType;}
 
     public BufferedReader newReader() throws IOException {
-        return new BufferedReader(new InputStreamReader(newInputStream(), encoding));
+        File localSrc = fileType.getSourceFile();
+        return new BufferedReader(new InputStreamReader(
+                new FileInputStream(localSrc), encoding));
+    }
+    public BufferedReader newReader(String srcFileName) throws IOException {
+        return new BufferedReader(new InputStreamReader(
+                new FileInputStream(srcFileName), encoding));
+    }
+
+    Config(FileTypeEnum fileType, File outputDir) {
+        this.fileType = fileType; this.outputDir = outputDir;
+        encoding = Charset.forName(fileType.getDefaultEncoding());
     }
 }
