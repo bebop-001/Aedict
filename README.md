@@ -44,8 +44,9 @@ however.
     * Command line args were changed on the 'indexer'.  It now only
       accepts '?', '-T', '-e', '-k' and '-s' options.
     * '-e' edict option seems to work.
-    * '-T' sort-of works.  I noticed some sentences for Tatoeba don't
-      show their english translations.
+    * '-T' seems to work.
+* added a perl script for executing the indexer and for creating an 
+  executable jar file.
 
 
 Steve S.
