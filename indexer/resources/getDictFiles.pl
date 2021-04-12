@@ -145,8 +145,11 @@ sub getTatoeba {
         if ((my @matches = /^(\d+)\s+(\d+)\s+(\S+.*)$/) == 3) {
             printf("Indices %5d\r", $i) if ((++$i % 5000) == 0);
             my ($jpn, $eng, $indice) = @matches;
-            $indices{$jpn}{engLink} = $eng;
-            $indices{$jpn}{indice} = $indice;
+            # if the japanese sentence exists in sentences...
+            if ($links{$jpn}){
+                $indices{$jpn}{engLink} = $eng;
+                $indices{$jpn}{indice} = $indice;
+            }
         }
     }
     printf("Indices %5d\n", $i);
