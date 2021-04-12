@@ -79,7 +79,7 @@ public enum FileTypeEnum {
                             jp.add("W" + entry.kanji + "W");
                         }
                         jp.add("W" + entry.reading + "W");
-                        doc.add(new Field("jp", jp.toString(), Field.Store.NO, Field.Index.ANALYZED));
+                        doc.add(new Field("jp", jp.toString(), Field.Store.YES, Field.Index.ANALYZED));
                         writer.addDocument(doc);
                     } catch (Exception ex) {
                         System.out.println("Failed to parse edict line " + line + ", skipping: " + ex);
