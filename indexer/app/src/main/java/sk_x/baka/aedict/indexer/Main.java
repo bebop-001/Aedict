@@ -1,4 +1,4 @@
-/**
+/*
 Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -17,35 +17,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package sk_x.baka.aedict.indexer;
 
+import android.annotation.SuppressLint;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.connection.channel.direct.Session.Command;
-import net.schmizz.sshj.transport.TransportException;
-import net.schmizz.sshj.xfer.scp.SCPFileTransfer;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
+
 import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -94,7 +85,7 @@ public class Main {
     }
     private static final String REMOTE_DIR = "/home/moto/public_html/aedict/dictionaries";
 
-    private static void exec(SSHClient ssh, String cmd) throws ConnectionException, TransportException, IOException {
+    private static void exec(SSHClient ssh, String cmd) throws IOException {
         final Session s = ssh.startSession();
         try {
             final Command c = s.exec(cmd);
@@ -157,29 +148,38 @@ public class Main {
         return opts;
     }
 
-    Main(final String[] args) throws MalformedURLException, ParseException {
-        final CommandLineParser parser = new GnuParser();
-        final CommandLine cl = parser.parse(getOptions(), args);
-        if (cl.hasOption('?')) {
-            printHelp();
-            System.exit(255);
+    Main(final String[] args) {
+        int i = 0;
+        while (i < args.length) {
+            String arg = args[i];
+            switch (arg) {
+                case "?":
+                    printHelp();
+                    System.exit(255);
+                case "-k":
+                    config = new Config(FileTypeEnum.Kanjidic, resourcesDir);
+                    break;
+                case "-T":
+                    config = new Config(FileTypeEnum.Tatoeba,
+                            new File(resourcesDir, "/tatoeba"));
+                    break;
+                case "-e":
+                    config = new Config(FileTypeEnum.Edict, resourcesDir);
+                    break;
+                default:
+                    System.out.println("Unrecognized option or no options given.");
+                    printHelp();
+                    System.exit(255);
+            }
+            try {
+                run();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(0xff);
+            }
+            i++;
         }
-        if (cl.hasOption('k')) {
-            config = new Config(FileTypeEnum.Kanjidic, resourcesDir);
-        }
-        else if (cl.hasOption('T')) {
-            config = new Config(FileTypeEnum.Tatoeba,
-                    new File(resourcesDir, "/tatoeba"));
-        }
-        else if (cl.hasOption('e')){
-            config = new Config(FileTypeEnum.Edict, resourcesDir);
-        }
-        else {
-            System.out.println("Unrecognized option or no optins given.");
-            printHelp();
-            System.exit(255);
-        }
-        config.name = cl.getOptionValue('n');
+        System.exit(0);
     }
 
     private static void printHelp() {
@@ -190,17 +190,16 @@ public class Main {
     }
 
     void run() throws Exception {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Indexing ");
-        sb.append(config.getFileType());
-        sb.append(" file from ");
-        sb.append(config.getFileType().getSourceFile());
-        System.out.println(sb.toString());
+        String sb = "Indexing " +
+                config.getFileType() +
+                " file from " +
+                config.getFileType().getSourceFile();
+        System.out.println(sb);
         indexWithLucene();
         zipLuceneIndex();
-        System.out.println("Finished Index File:" + config.getTargetFileName());
     }
 
+    @SuppressWarnings("deprecation")
     private void indexWithLucene() throws IOException {
         System.out.println("Deleting old Lucene index");
         FileUtils.deleteDirectory(new File(LUCENE_INDEX));
@@ -209,16 +208,14 @@ public class Main {
         try {
             final Directory directory = FSDirectory.open(new File(LUCENE_INDEX));
             try {
-                final IndexWriter luceneWriter = new IndexWriter(directory,
+                try (IndexWriter luceneWriter = new IndexWriter(directory,
                         new StandardAnalyzer(LuceneSearch.LUCENE_VERSION), true,
-                        IndexWriter.MaxFieldLength.UNLIMITED);
-                try {
+                        IndexWriter.MaxFieldLength.UNLIMITED)) {
                     final IDictParser parser = config.getFileType().newParser(config);
                     indexWithLucene(dictionary, luceneWriter, parser);
                     System.out.println("Optimizing Lucene index");
+                    //noinspection deprecation
                     luceneWriter.optimize();
-                } finally {
-                    luceneWriter.close();
                 }
             } finally {
                 closeQuietly(directory);
@@ -226,7 +223,6 @@ public class Main {
         } finally {
             IOUtils.closeQuietly(dictionary);
         }
-        System.out.println("Finished Lucene indexing");
     }
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
@@ -256,8 +252,14 @@ public class Main {
     }
 
     private void zipLuceneIndex() throws IOException {
-        System.out.println("Zipping the index file");
-        final File zip = new File(assetsDir, config.getTargetFileName());
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("-yyyMMdd.");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String dateFormatted = sdf.format(new Date());
+        String[] s = config.getTargetFileName().split("\\.");
+        String outFile = assetsDir.toString()
+                + "/" + s[0] + dateFormatted + s[1];
+        System.out.println("Zipping the index file to " + outFile);
+        final File zip = new File(outFile);
         if (zip.exists() && !zip.delete()) {
             throw new IOException("Cannot delete " + zip.getAbsolutePath());
         }
