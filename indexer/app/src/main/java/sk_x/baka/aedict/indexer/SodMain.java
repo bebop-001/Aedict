@@ -1,4 +1,4 @@
-/**
+/*
 Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -64,7 +64,7 @@ public class SodMain {
             throw new IOException(sodUtf8Location + " does not exist");
         }
     }
-    private final Map<Character, File> pngLengths = new HashMap<Character, File>();
+    private final Map<Character, File> pngLengths = new HashMap<>();
 
     private void run() throws IOException {
         computePngLengths();
@@ -80,6 +80,7 @@ public class SodMain {
                 return name.endsWith(".png");
             }
         });
+        //noinspection ConstantConditions
         for (final File png : pngs) {
             final String kanji = png.getName().substring(0, png.getName().length() - 4);
             if (kanji.length() != 1) {
@@ -96,10 +97,11 @@ public class SodMain {
             // write index table
             int offset = pngLengths.size() * 6 + 4;
             out.writeInt(pngLengths.size());
-            final List<Character> kanjis = new ArrayList<Character>(pngLengths.keySet());
+            final List<Character> kanjis = new ArrayList<>(pngLengths.keySet());
             for (final Character kanji : kanjis) {
                 out.writeChar(kanji);
                 out.writeInt(offset);
+                //noinspection ConstantConditions,ConstantConditions
                 offset += (int) pngLengths.get(kanji).length();
             }
             // write png contents
