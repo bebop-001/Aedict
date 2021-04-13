@@ -17,6 +17,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package sk_x.baka.aedict.dict;
 
+import android.util.Log;
+
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
@@ -118,6 +120,9 @@ public final class LuceneSearch implements Closeable {
         // unretrieved by Lucene. TODO perhaps a better Lucene query might help.
         final int maxLuceneResults = (query.matcher != MatcherEnum.Substring) && (query.dictType == DictTypeEnum.Edict) && (!query.isJapanese) ? 5000 : maxResults;
         int resultsToFind = maxLuceneResults;
+        Log.d("searchInternal:",
+                String.format("parsedQuery:dictType=%s, matcher=%s"
+                    , query.dictType, query.matcher.toString()));
         for (final String q : queries) {
             // gradually walk through the queries and fill the result list.
             final Query parsedQuery;
@@ -129,6 +134,8 @@ public final class LuceneSearch implements Closeable {
                 throw new RuntimeException(e);
             }
             final TopDocs result = searcher.search(parsedQuery, null, resultsToFind);
+            Log.d("searchInternal:", String.format("parsedQuery:%s, results=%d",
+                    parsedQuery.toString(), result.scoreDocs.length));
             for (final ScoreDoc sd : result.scoreDocs) {
                 final Document doc = searcher.doc(sd.doc);
                 final DictEntry entry = dictType.tryGetEntry(doc, query);

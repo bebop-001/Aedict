@@ -128,21 +128,6 @@ public class DownloaderService implements Closeable {
 		return checkDictionaryFile(activity, new DictDownloader(dictionary, dictionary.getDownloadSite(), dictionary.getDictionaryLocation().getAbsolutePath(), dictionary.getName(), expectedSize == null ? dictionary.dte.luceneFileSize() : expectedSize), skipMissingMsg);
 	}
 	
-	/**
-	 * Checks if there are old dictionaries present on the SD Card which needs update.
-	 * @param activity context
-	 * @return true if the dictionaries are okay, false if there is an old dictionary. In this case, an activity handling this case is already launched.
-	 */
-	public boolean checkRequiredVersions(final Activity activity) {
-		final Set<Dictionary> needsUpdate = AedictApp.getConfig().getCurrentDictVersions().getOlderThan(AedictApp.MIN_REQUIRED);
-		if (!needsUpdate.isEmpty()) {
-			Log.i("DictionaryChecker", "Comparing current versions "+AedictApp.getConfig().getCurrentDictVersions().versions+" and "+AedictApp.MIN_REQUIRED.versions);
-			new DialogActivity.Builder(activity).setDialogListener(new UpdateDictionaries(needsUpdate)).showYesNoDialog(
-					"The following dictionaries are no longer compatible with this version of Aedict and needs to be updated: " + needsUpdate + ". Perform the update now?");
-		}
-		return needsUpdate.isEmpty();
-	}
-
 	public static class UpdateDictionaries implements DialogActivity.IDialogListener {
 		private static final long serialVersionUID = 1L;
 		public final Set<Dictionary> dictionariesToUpdate;
@@ -181,6 +166,7 @@ public class DownloaderService implements Closeable {
 	 * @return true if the files are available, false otherwise.
 	 */
 	public boolean checkDictionary(final Activity activity, Dictionary dict, URL source, String targetDir, String dictName, long expectedSize, final boolean skipMissingMsg) {
+		Log.d("DownloadService", String.format("checkDictionary:name=%s, targedDir=%s ", dictName, targetDir));
 		return checkDictionaryFile(activity, new DictDownloader(dict, source, targetDir, dictName, expectedSize), skipMissingMsg);
 	}
 	
@@ -224,11 +210,14 @@ public class DownloaderService implements Closeable {
 
 	// This is where downloads get qued.
 	void download(final AbstractDownloader download, Activity a) {
-		if (!new File(download.targetDir).isAbsolute()) {
-			throw new IllegalArgumentException("Not absolute: " + download.targetDir);
+		// don't download Tanaka.
+		if (download.dictName != "Tanaka") {
+			if (!new File(download.targetDir).isAbsolute()) {
+				throw new IllegalArgumentException("Not absolute: " + download.targetDir);
+			}
+			queueDictNames.put(download.dictName, new Object());
+			currentDownload = downloader.submit(download);
 		}
-		queueDictNames.put(download.dictName, new Object());
-		currentDownload = downloader.submit(download);
 	}
 
 	private volatile Future<?> currentDownload = null;
