@@ -75,6 +75,7 @@ public class Main {
                 printHelp();
                 System.exit(255);
             }
+            //noinspection ConstantConditions
             new Main(args).run();
         } catch (Exception ex) {
             // ex.printStackTrace();
@@ -251,6 +252,7 @@ public class Main {
         luceneWriter.commit();
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void zipLuceneIndex() throws IOException {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("-yyyMMdd.");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
