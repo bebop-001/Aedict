@@ -1,4 +1,4 @@
-/**
+/*
 Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -19,16 +19,13 @@ package sk_x.baka.aedict.indexer;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-import java.util.zip.GZIPInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.document.CompressionTools;
 import org.apache.lucene.document.Document;
@@ -43,6 +40,7 @@ import static sk_x.baka.aedict.indexer.FileTypeEnum.getSourceFileReader;
  * Parses Tanaka dictionary.
  * @author Martin Vysny
  */
+@SuppressWarnings("deprecation")
 public class TanakaParser implements IDictParser {
 
     private final Edict edict;
@@ -84,7 +82,7 @@ public class TanakaParser implements IDictParser {
          * Maps entry word (kanji+hiragana) to its hiragana reading. Does not contain katakana nor pure hiragana entries as it
          * is only used to get the kana transcription of Tanaka entries.
          */
-        public final Map<String, String> edict = new HashMap<String, String>();
+        public final Map<String, String> edict = new HashMap<>();
         private int maxKanjiWordLength = 0;
         private String longestKanjiWord;
         private int maxKanaWordLength = 0;
@@ -92,7 +90,7 @@ public class TanakaParser implements IDictParser {
         /**
          * Check if the {@link #edict} entry is common or not. Incommon entries may get overwritten.
          */
-        private final Map<String, Boolean> entryIsCommon = new HashMap<String, Boolean>();
+        private final Map<String, Boolean> entryIsCommon = new HashMap<>();
 
         public Edict() throws IOException {
             final BufferedReader in = getSourceFileReader(FileTypeEnum.Edict);
@@ -210,7 +208,7 @@ public class TanakaParser implements IDictParser {
         }
 
         private List<BWord> parseWords(final String bLine) {
-            final List<BWord> result = new ArrayList<BWord>();
+            final List<BWord> result = new ArrayList<>();
             final ArrayList<Object> words = Collections.list(new StringTokenizer(bLine));
             for (final Object w : words) {
                 result.add(new BWord(edict, (String) w));
@@ -268,28 +266,37 @@ public class TanakaParser implements IDictParser {
             dictionaryForm = t.nextToken();
             while (t.hasMoreTokens()) {
                 final String token = t.nextToken();
-                if (token.equals("~")) {
-                    _isChecked = true;
-                } else if (token.equals("(")) {
-                    inRoundBraces = true;
-                } else if (token.equals(")")) {
-                    inRoundBraces = false;
-                } else if (token.equals("{")) {
-                    inCurlyBraces = true;
-                } else if (token.equals("}")) {
-                    inCurlyBraces = false;
-                } else if (token.equals("[")) {
-                    inSquareBraces = true;
-                } else if (token.equals("]")) {
-                    inSquareBraces = false;
-                } else {
-                    if (inRoundBraces) {
-                        _hiraganaReading = token;
-                    } else if (inSquareBraces) {
-                        _senseNumber = Integer.valueOf(token);
-                    } else if (inCurlyBraces) {
-                        _wordInSentence = token;
-                    }
+                switch (token) {
+                    case "~":
+                        _isChecked = true;
+                        break;
+                    case "(":
+                        inRoundBraces = true;
+                        break;
+                    case ")":
+                        inRoundBraces = false;
+                        break;
+                    case "{":
+                        inCurlyBraces = true;
+                        break;
+                    case "}":
+                        inCurlyBraces = false;
+                        break;
+                    case "[":
+                        inSquareBraces = true;
+                        break;
+                    case "]":
+                        inSquareBraces = false;
+                        break;
+                    default:
+                        if (inRoundBraces) {
+                            _hiraganaReading = token;
+                        } else if (inSquareBraces) {
+                            _senseNumber = Integer.valueOf(token);
+                        } else if (inCurlyBraces) {
+                            _wordInSentence = token;
+                        }
+                        break;
                 }
             }
             isChecked = _isChecked;
