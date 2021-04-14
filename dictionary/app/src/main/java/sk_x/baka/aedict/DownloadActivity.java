@@ -64,8 +64,10 @@ public class DownloadActivity extends Activity {
 
 			public void onClick(View v) {
 				for (DictTypeEnum dt : DictTypeEnum.values()) {
-					AedictApp.getDownloader().downloadDict(new Dictionary(dt, null),
-					DownloadActivity.this);
+					AedictApp.getDownloader().downloadDict(
+							new Dictionary(dt, null),
+					DownloadActivity.this
+					);
 				}
 				AedictApp.getDownloader().downloadSod(DownloadActivity.this);
 			}

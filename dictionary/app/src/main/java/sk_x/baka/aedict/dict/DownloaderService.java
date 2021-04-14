@@ -28,7 +28,7 @@ import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,6 +37,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -128,6 +130,21 @@ public class DownloaderService implements Closeable {
 		return checkDictionaryFile(activity, new DictDownloader(dictionary, dictionary.getDownloadSite(), dictionary.getDictionaryLocation().getAbsolutePath(), dictionary.getName(), expectedSize == null ? dictionary.dte.luceneFileSize() : expectedSize), skipMissingMsg);
 	}
 	
+	/**
+	 * Checks if there are old dictionaries present on the SD Card which needs update.
+	 * @param activity context
+	 * @return true if the dictionaries are okay, false if there is an old dictionary. In this case, an activity handling this case is already launched.
+	 */
+	public boolean checkRequiredVersions(final Activity activity) {
+		final Set<Dictionary> needsUpdate = AedictApp.getConfig().getCurrentDictVersions().getOlderThan(AedictApp.MIN_REQUIRED);
+		if (!needsUpdate.isEmpty()) {
+			Log.i("DictionaryChecker", "Comparing current versions "+AedictApp.getConfig().getCurrentDictVersions().versions+" and "+AedictApp.MIN_REQUIRED.versions);
+			new DialogActivity.Builder(activity).setDialogListener(new UpdateDictionaries(needsUpdate)).showYesNoDialog(
+					"The following dictionaries are no longer compatible with this version of Aedict and needs to be updated: " + needsUpdate + ". Perform the update now?");
+		}
+		return needsUpdate.isEmpty();
+	}
+
 	public static class UpdateDictionaries implements DialogActivity.IDialogListener {
 		private static final long serialVersionUID = 1L;
 		public final Set<Dictionary> dictionariesToUpdate;
@@ -166,7 +183,6 @@ public class DownloaderService implements Closeable {
 	 * @return true if the files are available, false otherwise.
 	 */
 	public boolean checkDictionary(final Activity activity, Dictionary dict, URL source, String targetDir, String dictName, long expectedSize, final boolean skipMissingMsg) {
-		Log.d("DownloadService", String.format("checkDictionary:name=%s, targedDir=%s ", dictName, targetDir));
 		return checkDictionaryFile(activity, new DictDownloader(dict, source, targetDir, dictName, expectedSize), skipMissingMsg);
 	}
 	
@@ -210,14 +226,11 @@ public class DownloaderService implements Closeable {
 
 	// This is where downloads get qued.
 	void download(final AbstractDownloader download, Activity a) {
-		// don't download Tanaka.
-		if (download.dictName != "Tanaka") {
-			if (!new File(download.targetDir).isAbsolute()) {
-				throw new IllegalArgumentException("Not absolute: " + download.targetDir);
-			}
-			queueDictNames.put(download.dictName, new Object());
-			currentDownload = downloader.submit(download);
+		if (!new File(download.targetDir).isAbsolute()) {
+			throw new IllegalArgumentException("Not absolute: " + download.targetDir);
 		}
+		queueDictNames.put(download.dictName, new Object());
+		currentDownload = downloader.submit(download);
 	}
 
 	private volatile Future<?> currentDownload = null;
@@ -301,45 +314,62 @@ public class DownloaderService implements Closeable {
 			}
 		}
 
-		Boolean usingAssetFile;
-		private void download() throws Exception {
-			String assetFiles[] = MainActivity.getAssetManager().list("dictionaries");
-			usingAssetFile = false;
-			String url = source.toString();
-			int dictStart = url.lastIndexOf("/dictionaries/");
-			int gzipExtent = url.lastIndexOf(".gz");
-			String assetsFileName =  (dictStart > 0)
-					? (gzipExtent > 0)
-					? url.substring(dictStart + 1, gzipExtent)
-					: url.substring(dictStart + 1)
-					: "";
+		HashMap<String, AssetsInfo> assetsInfo = new HashMap<>();
+		private class AssetsInfo {
+			String key, version, file, extent;
+			AssetsInfo(String key, String version, String extent, String file) {
+				this.key = key; this.version = version; this.file = file; this.extent = extent;
+			}
+		}
 
+		Boolean usingAssetFile = true;
+		private void download() throws Exception {
+			String[] assetFiles = MainActivity.getAssetManager().list("dictionaries");
+			if (assetsInfo.isEmpty()) {
+				for (String name : assetFiles) {
+					Log.d("put", name);
+
+					Matcher m = Pattern.compile("^(.*)-(\\d+)(?:\\.[^.]+)*\\.([a-z]+)$")
+							.matcher(name);
+					if (m.find()) {
+						Log.d("put", m.groupCount() + ":" + m.group(1) + "+" + m.group(2) + "+" +  m.group(3) + "+" + m.group(0));
+						AssetsInfo ai = new AssetsInfo(m.group(1), m.group(2), m.group(3),
+								"dictionaries/" + m.group(0));
+						Log.d("put", ":" + ai.toString());
+						assetsInfo.put(m.group(1), ai);
+					}
+				}
+			}
+			String url = source.toString();
+			Matcher m = Pattern.compile("^.*/([^.]+).*").matcher(url);
+			String assetsFile = (m.find()) ? m.group(1) : "";
+			if (assetsFile == "") {
+				throw new RuntimeException("download: Failed to find assets file in url.");
+			}
+			Log.d("download","found asset file:" + assetsFile);
+
+			String assetVersion = assetsInfo.get(assetsFile).version;
+			assetsFile = assetsInfo.get(assetsFile).file;
 			InputStream assetStream = null;
-			if (assetsFileName != "") {
+			if (assetsFile != "") {
 				try {
-					assetStream = MainActivity.getAssetManager().open(assetsFileName);
-					usingAssetFile = true;
+					assetStream = MainActivity.getAssetManager().open(assetsFile);
 				}
 				catch (Exception e){
-					// ignore
+					throw new RuntimeException("Failed to download assets file:" + assetsFile);
 				}
 			}
 
-			final URLConnection conn = source.openConnection();
-			// this is the unpacked edict file size.
 			final File dir = new File(targetDir);
 			if (!dir.exists() && !dir.mkdirs()) {
-				throw new IOException("Failed to create directory '" + targetDir + "'. Please make sure that the sdcard is inserted in the phone, mounted and is not write-protected.");
+				throw new IOException("Create directory '" + targetDir + "' FAILED");
 			}
-			final InputStream in = (assetStream == null)
-				? new BufferedInputStream(conn.getInputStream())
-				: new BufferedInputStream(assetStream);
+			final InputStream in = new BufferedInputStream(assetStream);
 			try {
-				String _dictName = (usingAssetFile)
-						? dictName + " using assets file"
-						: dictName;
-				s().state = new State(AedictApp.format(R.string.downloading_dictionary, _dictName), targetDir, 0, 100, false);
-				copy(in);
+				String dictName  = assetsFile + " using assets file";
+				s().state = new State(AedictApp.format(R.string.downloading_dictionary, dictName),
+						targetDir, 0, 100, false);
+				copy(in, assetVersion);
 			} finally {
 				MiscUtils.closeQuietly(in);
 			}
@@ -354,7 +384,7 @@ public class DownloaderService implements Closeable {
 		 * @throws IOException
 		 *             on i/o error
 		 */
-		protected abstract void copy(final InputStream in) throws IOException;
+		protected abstract void copy(final InputStream in, final String version) throws IOException;
 
 		/**
 		 * Copies streams. Provides automatic notification of the progress.
@@ -379,9 +409,7 @@ public class DownloaderService implements Closeable {
 			}
 			final int max = (int) (size / 1024L);
 			long downloaded = downloadedUntilNow;
-			String _dictName = (usingAssetFile)
-					? dictName + " using assets file"
-					: dictName;
+			String _dictName =  dictName + " using assets file";
 			s().state = new State(AedictApp.format(R.string.downloading_dictionary, _dictName), targetDir, (int) (downloaded / 1024L), max, false);
 			int reportCountdown = REPORT_EACH_XTH_BYTE;
 			final byte[] buf = new byte[BUFFER_SIZE];
@@ -428,7 +456,7 @@ public class DownloaderService implements Closeable {
 		}
 
 		@Override
-		protected void copy(final InputStream in) throws IOException {
+		protected void copy(final InputStream in, final String version) throws IOException {
 			final ZipInputStream zip = new ZipInputStream(in);
 			long downloaded = 0;
 			for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
@@ -441,7 +469,6 @@ public class DownloaderService implements Closeable {
 				zip.closeEntry();
 			}
 			// update the version
-			final String version = dictionary.downloadVersion();
 			final DictionaryVersions versions = AedictApp.getConfig().getCurrentDictVersions();
 			versions.versions.put(dictionary, version);
 			AedictApp.getConfig().setCurrentDictVersions(versions);
@@ -459,14 +486,12 @@ public class DownloaderService implements Closeable {
 		}
 
 		@Override
-		protected void copy(InputStream in) throws IOException {
+		protected void copy(final InputStream in, final String version) throws IOException {
 			// we have to ungzip the input stream
-			final InputStream sodStream = (usingAssetFile)
-				? in
-				: new GZIPInputStream(in);
+			// final InputStream sodStream = new GZIPInputStream(in);
 			final OutputStream out = new FileOutputStream(SodLoader.SDCARD_LOCATION);
 			try {
-				copy(0L, -1, sodStream, out);
+				copy(0L, -1, in, out);
 			} finally {
 				MiscUtils.closeQuietly(out);
 			}
