@@ -55,7 +55,7 @@
 				android:layout_weight="1" />
 		</LinearLayout>
 		<TextView android:layout_width="fill_parent"
-			android:textColor="#FFF" android:layout_height="wrap_content"
+			android:textColor="@android:color/black" android:layout_height="wrap_content"
 			android:text="@string/jpTranslate" />
 	</LinearLayout>
 	<ScrollView android:layout_height="fill_parent"
@@ -73,11 +73,11 @@
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/aedict"
 					android:text="Aedict 2.0" android:textSize="35sp"
-					android:textColor="#FFF" />
+					android:textColor="@android:color/black" />
 			</LinearLayout>
 			<TextView android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:text="@string/intro"
-				android:textColor="#FFF" />
+				android:textColor="@android:color/black" />
 		</LinearLayout>
 	</ScrollView>
 	<LinearLayout android:layout_height="fill_parent"
@@ -85,7 +85,7 @@
 		android:visibility="gone">
 		<TextView android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:text="@string/recentlyViewed"
-			android:background="#333333" android:textColor="#808080" />
+			android:background="@android:color/black" android:textColor="@android:color/white" />
 		<ListView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@android:id/list"/>
 	</LinearLayout>
