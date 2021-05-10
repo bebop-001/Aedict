@@ -18,7 +18,6 @@
 package sk_x.baka.aedict;
 
 import sk_x.baka.aedict.dict.DictEntry;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.MiscUtils;
 import android.app.Activity;
 import android.content.Context;
@@ -91,6 +90,6 @@ public class CopyActivity extends Activity {
 		activity.startActivity(i);
 	}
 	public static void launch(Activity activity, final DictEntry e) {
-		launch(activity, e.kanji, ShowRomaji.romanizeIfRequired(e.reading), e.english);
+		launch(activity, e.kanji, e.reading, e.english);
 	}
 }

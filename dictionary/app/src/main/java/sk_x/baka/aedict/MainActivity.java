@@ -35,7 +35,6 @@ import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.DialogUtils;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -67,8 +66,6 @@ import static sk_x.baka.aedict.util.UtilsKt.displayBuildInfo;
  * @author Martin Vysny
  */
 public class MainActivity extends ListActivity {
-	private ShowRomaji showRomaji;
-
 	private static String baseDir = null;
 	public static String getBaseDir() {
 		return baseDir;
@@ -81,13 +78,6 @@ public class MainActivity extends ListActivity {
 		setContentView(R.layout.activity_main);
 		baseDir = this.getFilesDir().toString();
 		assetManager = getAssets();
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-			}
-		};
 		findViewById(R.id.advanced).setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -155,7 +145,6 @@ public class MainActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		invalidateModel();
-		showRomaji.onResume();
 		findViewById(R.id.searchEdit).requestFocus();
 		final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);

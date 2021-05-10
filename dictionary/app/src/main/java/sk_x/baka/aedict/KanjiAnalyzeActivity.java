@@ -34,7 +34,6 @@ import sk_x.baka.aedict.dict.SearchQuery;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.kanji.Radicals;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.AbstractTask;
 import sk_x.baka.autils.MiscUtils;
 import sk_x.baka.autils.Progress;
@@ -117,20 +116,10 @@ public class KanjiAnalyzeActivity extends ListActivity {
 	 * per-word basis.
 	 */
 	private boolean isAnalysisPerCharacter = true;
-	private ShowRomaji showRomaji;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				if (getListAdapter() != null) {
-					((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-				}
-			}
-		};
 		word = getIntent().getStringExtra(INTENTKEY_WORD);
 		model = (List<DictEntry>) getIntent().getSerializableExtra(INTENTKEY_ENTRYLIST);
 		isAnalysisPerCharacter = !getIntent().getBooleanExtra(INTENTKEY_WORD_ANALYSIS, false);
@@ -239,14 +228,12 @@ public class KanjiAnalyzeActivity extends ListActivity {
 				return true;
 			}
 		});
-		showRomaji.register(this, menu);
 		return true;
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showRomaji.onResume();
 	}
 
 	private void recomputeModel() {

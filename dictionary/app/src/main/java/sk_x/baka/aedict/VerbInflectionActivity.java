@@ -27,7 +27,6 @@ import sk_x.baka.aedict.dict.EdictEntry;
 import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.VerbInflection;
 import sk_x.baka.aedict.kanji.VerbInflection.Form;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.DialogUtils;
 import android.app.Activity;
@@ -49,7 +48,6 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 	 */
 	public static final String INTENTKEY_ENTRY = "entry";
 	private EdictEntry entry;
-	private ShowRomaji showRomaji;
 	/**
 	 * true if we are showing only {@link Form#basic} forms.
 	 */
@@ -70,13 +68,6 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				buildAndSetAdapter();
-			}
-		};
 		entry = (EdictEntry) getIntent().getSerializableExtra(INTENTKEY_ENTRY);
 		buildAndSetAdapter();
 		new DialogUtils(this).showInfoOnce(getClass().getName(), R.string.info, R.string.inflectionWarning);
@@ -146,14 +137,12 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 				return true;
 			}
 		}));
-		showRomaji.register(this, menu);
 		return true;
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showRomaji.onResume();
 	}
 
 	public static void launch(Activity activity, EdictEntry entry) {

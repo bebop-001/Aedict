@@ -28,7 +28,6 @@ import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.Constants;
 import sk_x.baka.aedict.util.SearchClickListener;
 import sk_x.baka.aedict.util.SearchUtils;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.aedict.util.SpanStringBuilder;
 import sk_x.baka.autils.DialogUtils;
 import android.content.Context;
@@ -65,7 +64,6 @@ public class KanjiDetailActivity extends AbstractActivity {
 		activity.startActivity(intent);
 	}
 
-	private ShowRomaji showRomaji;
 	private KanjidicEntry entry;
 
 	@Override
@@ -73,14 +71,6 @@ public class KanjiDetailActivity extends AbstractActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.kanji_detail);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				updateContent();
-				tanakaSearchTask.updateModel();
-			}
-		};
 		entry = (KanjidicEntry) getIntent().getSerializableExtra(INTENTKEY_KANJIDIC_ENTRY);
 		MainActivity.recentlyViewed(entry);
 		final TextView kanji = (TextView) findViewById(R.id.kanji);
@@ -158,7 +148,6 @@ public class KanjiDetailActivity extends AbstractActivity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		showRomaji.register(this, menu);
 		AbstractActivity.addMenuItems(this, menu);
 		return true;
 	}
@@ -169,11 +158,10 @@ public class KanjiDetailActivity extends AbstractActivity {
 	protected void onResume() {
 		super.onResume();
 		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
-			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), showRomaji, entry.getJapanese());
+			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
 			tanakaSearchTask.execute(entry.getJapanese());
 		}
 		// the tanakaSearchTask must be non-null otherwise this will fail.
-		showRomaji.onResume();
 	}
 
 	@Override

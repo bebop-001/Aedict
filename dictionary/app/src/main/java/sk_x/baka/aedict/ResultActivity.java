@@ -37,7 +37,6 @@ import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.Deinflections.Deinflection;
 import sk_x.baka.aedict.util.Constants;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.aedict.util.SpanStringBuilder;
 import sk_x.baka.autils.AbstractTask;
 import sk_x.baka.autils.DialogUtils;
@@ -153,20 +152,11 @@ public class ResultActivity extends ListActivity {
 		return result;
 	}
 
-	ShowRomaji showRomaji=null;
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchresult);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-			}
-		};
 		queries = fromIntent();
 		if (queries.get(0).dictType == DictTypeEnum.Tanaka && !AedictApp.isInstrumentation) {
 			new DialogUtils(this).showInfoOnce(Constants.INFOONCE_TANAKA_MISSING_READING, -1, R.string.tanakaMissingReading);
@@ -275,7 +265,6 @@ public class ResultActivity extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		showRomaji.register(this, menu);
 		AbstractActivity.addMenuItems(this, menu);
 		return true;
 	}
@@ -283,7 +272,6 @@ public class ResultActivity extends ListActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showRomaji.onResume();
 	}
 
 	private class SearchTask extends AbstractTask<SearchQuery, List<DictEntry>> {

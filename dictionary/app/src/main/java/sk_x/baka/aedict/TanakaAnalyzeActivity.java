@@ -31,7 +31,6 @@ import sk_x.baka.aedict.dict.MatcherEnum;
 import sk_x.baka.aedict.dict.SearchQuery;
 import sk_x.baka.aedict.dict.TanakaDictEntry;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.AbstractTask;
 import sk_x.baka.autils.MiscUtils;
 import sk_x.baka.autils.Progress;
@@ -70,7 +69,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 		activity.startActivity(i);
 	}
 
-	private ShowRomaji showRomaji;
 	private List<DictEntry> model = null;
 	private TanakaDictEntry tanaka;
 
@@ -131,15 +129,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				if (getListAdapter() != null) {
-					((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-				}
-			}
-		};
 		tanaka = (TanakaDictEntry) getIntent().getSerializableExtra(INTENTKEY_TANAKADICTENTRY);
 		new DictEntryListActions(this, true, true, false, true).register(getListView());
 	}
@@ -147,7 +136,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showRomaji.onResume();
 		if(model==null){
 			recomputeModel();
 		}
@@ -156,7 +144,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		showRomaji.register(this, menu);
 		return true;
 	}
 

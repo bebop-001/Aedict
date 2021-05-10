@@ -29,7 +29,6 @@ import sk_x.baka.aedict.TanakaAnalyzeActivity;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.aedict.util.SpanStringBuilder;
 import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.MiscUtils;
@@ -55,31 +54,24 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 	private final Activity activity;
 	private List<DictEntry> exampleSentences = new ArrayList<DictEntry>();
 	private final List<ViewGroup> views = new ArrayList<ViewGroup>();
-	private final ShowRomaji showRomaji;
 	private final String highlightTerm;
 	private final DictTypeEnum dictType;
 
 	/**
 	 * Creates new searcher.
-	 * 
-	 * @param activity
+	 *  @param activity
 	 *            owning activity, not null.
 	 * @param vg
 	 *            views with results will be placed here. not null.
-	 * @param showRomaji
-	 *            controls display of kana or romaji, not null.
 	 * @param highlightTerm
-	 *            highlight this term with blueish color in the result. not
-	 *            null.
+ *            highlight this term with blueish color in the result. not
 	 */
-	public TanakaSearchTask(final Activity activity, final ViewGroup vg, final ShowRomaji showRomaji, final String highlightTerm) {
+	public TanakaSearchTask(final Activity activity, final ViewGroup vg, final String highlightTerm) {
 		Check.checkNotNull("activity", activity);
 		Check.checkNotNull("vg", vg);
-		Check.checkNotNull("showRomaji", showRomaji);
 		Check.checkNotNull("highlightTerm", highlightTerm);
 		this.activity = activity;
 		this.vg = vg;
-		this.showRomaji = showRomaji;
 		this.highlightTerm = highlightTerm;
 		dictType = AedictApp.getConfig().getSamplesDictType();
 	}

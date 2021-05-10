@@ -28,7 +28,6 @@ import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.FocusVisual;
 import sk_x.baka.aedict.util.SearchClickListener;
 import sk_x.baka.aedict.util.SearchUtils;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.aedict.util.SpanStringBuilder;
 import sk_x.baka.autils.DialogUtils;
 import sk_x.baka.autils.ListBuilder;
@@ -69,7 +68,6 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	}
 
 	private EdictEntry entry;
-	private ShowRomaji showRomaji;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +78,6 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 			throw new IllegalArgumentException("The "+INTENTKEY_ENTRY+" extra is missing from the intent");
 		}
 		MainActivity.recentlyViewed(entry);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				displayEntry();
-				if (tanakaSearchTask != null) {
-					tanakaSearchTask.updateModel();
-				}
-			}
-		};
 		displayEntry();
 		new SearchUtils(this).setupCopyButton(R.id.copy, R.id.kanji);
 		findViewById(R.id.analyze).setOnClickListener(new View.OnClickListener() {
@@ -165,7 +153,6 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		showRomaji.register(this, menu);
 		AbstractActivity.addMenuItems(this, menu);
 		return true;
 	}
@@ -173,9 +160,8 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		showRomaji.onResume();
 		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
-			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), showRomaji, entry.getJapanese());
+			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
 			tanakaSearchTask.execute(entry.getJapanese());
 		}
 	}
