@@ -229,7 +229,7 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		public synchronized List<String> getNotepadCategories() {
 			final List<String> result = new ArrayList<>();
 			for (final String cat : prefs.getString(KEY_NOTEPAD_CATEGORIES, "").split("@@@@")) {
-				if (!MiscUtils.isBlank(cat)) {
+				if (!MiscUtils.isNullOrEmpty(cat)) {
 					result.add(cat);
 				}
 			}

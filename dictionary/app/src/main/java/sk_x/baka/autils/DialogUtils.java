@@ -97,7 +97,7 @@ public final class DialogUtils {
      */
     public void showYesNoDialog(final String title, final String message, final DialogInterface.OnClickListener yesListener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        if (!MiscUtils.isBlank(title)) {
+        if (!MiscUtils.isNullOrEmpty(title)) {
             builder.setTitle(title);
         }
         builder.setMessage(message);

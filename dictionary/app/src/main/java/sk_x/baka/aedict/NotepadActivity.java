@@ -24,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +33,6 @@ import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.Edict;
 import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.util.DictEntryListActions;
-import sk_x.baka.aedict.util.ShowRomaji;
 import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.DialogUtils;
 import sk_x.baka.autils.MiscUtils;
@@ -340,7 +338,7 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 					builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int which) {
 							final String newName = tv.getText().toString();
-							if (MiscUtils.isBlank(newName)) {
+							if (MiscUtils.isNullOrEmpty(newName)) {
 								return;
 							}
 							final int current = getCurrentCategory();

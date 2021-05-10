@@ -69,8 +69,4 @@ public abstract class ShowRomaji {
 		return kana;
 	}
 	
-	public String getJapanese(final DictEntry e) {
-		Check.checkTrue("entry not valid", e.isValid());
-		return e.kanji;
-	}
 }

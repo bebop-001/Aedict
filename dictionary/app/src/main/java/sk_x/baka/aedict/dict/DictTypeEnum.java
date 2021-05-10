@@ -481,7 +481,7 @@ public enum DictTypeEnum {
      */
     public DictEntry tryGetEntry(final Document doc, final SearchQuery query) {
         final DictEntry entry = tryGetEntry(doc, query.langCode);
-        if (!entry.isValid() || MiscUtils.isBlank(query.query)) {
+        if (!entry.isNotNullOrEmpty() || MiscUtils.isNullOrEmpty(query.query)) {
             return entry;
         }
 	for (final String q : query.query) {
@@ -508,7 +508,7 @@ public enum DictTypeEnum {
      *
      * @param entry
      *            the entry to match. Never null, always
-     *            {@link DictEntry#isValid() valid}.
+     *            {@link DictEntry#isNotNullOrEmpty() valid}.
      * @param isJapanese
      *            if true we are matching japanese word, if false, a
      *            non-japanese (presumably english) word is being matched.

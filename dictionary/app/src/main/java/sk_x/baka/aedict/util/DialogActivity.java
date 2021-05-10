@@ -146,7 +146,7 @@ public class DialogActivity extends Activity {
 		}
 
 		public Builder setTitle(String title) {
-			if (!MiscUtils.isBlank(title)) {
+			if (!MiscUtils.isNullOrEmpty(title)) {
 				this.title = title;
 			}
 			return this;

@@ -56,7 +56,7 @@ public class Dictionary implements Serializable {
 		if (DEFAULT_DICTIONARY_NAME.equals(custom)) {
 			custom = null;
 		}
-		if (custom != null && MiscUtils.isBlank(custom)) {
+		if (custom != null && MiscUtils.isNullOrEmpty(custom)) {
 			throw new IllegalArgumentException("The dictionary name is blank");
 		}
 		if (custom != null) {

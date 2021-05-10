@@ -62,7 +62,7 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	public static void launch(final Activity a, final EdictEntry entry) {
 		Check.checkNotNull("a", a);
 		Check.checkNotNull("entry", entry);
-		Check.checkTrue("entry is not valid", entry.isValid());
+		Check.checkTrue("entry is not valid", entry.isNotNullOrEmpty());
 		final Intent i = new Intent(a, EdictEntryDetailActivity.class);
 		i.putExtra(INTENTKEY_ENTRY, entry);
 		a.startActivity(i);
@@ -108,10 +108,10 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 
 	private void displayEntry() {
 		final TextView kanji = ((TextView) findViewById(R.id.kanji));
-		kanji.setText(showRomaji.getJapanese(entry));
+		kanji.setText(entry.getJapanese());
 		new SearchClickListener(this, entry.getJapanese()).registerTo(kanji);
 		final TextView kana = ((TextView) findViewById(R.id.kana));
-		if (MiscUtils.isBlank(entry.kanji)) {
+		if (MiscUtils.isNullOrEmpty(entry.kanji)) {
 			kana.setVisibility(View.GONE);
 		} else {
 			kana.setText(entry.reading);
@@ -174,7 +174,7 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	protected void onResume() {
 		super.onResume();
 		showRomaji.onResume();
-		if (tanakaSearchTask == null && entry.isValid()) {
+		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
 			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), showRomaji, entry.getJapanese());
 			tanakaSearchTask.execute(entry.getJapanese());
 		}

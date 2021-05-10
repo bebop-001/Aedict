@@ -27,6 +27,7 @@ import java.util.List;
 
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.kanji.RomanizationEnum;
+import sk_x.baka.aedict.util.Check;
 import sk_x.baka.autils.ListBuilder;
 import sk_x.baka.autils.MiscUtils;
 
@@ -99,8 +100,13 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
      * @return true if it is valid (the kanji or the reading is not blank),
      *         false otherwise.
      */
-    public final boolean isValid() {
-        return !MiscUtils.isBlank(kanji) || !MiscUtils.isBlank(reading);
+    public final boolean isNotNullOrEmpty() {
+        return !MiscUtils.isNullOrEmpty(kanji) || !MiscUtils.isNullOrEmpty(reading);
+    }
+    // if is a valid dict entry, return the kanji.
+    public String getJapanese() {
+        Check.checkTrue("entry not valid", isNotNullOrEmpty());
+        return kanji;
     }
 
     /**
@@ -148,7 +154,7 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
      */
     public static Collection<? extends DictEntry> removeInvalid(final Collection<? extends DictEntry> edictEntries) {
         for (final Iterator<? extends DictEntry> i = edictEntries.iterator(); i.hasNext();) {
-            if (!i.next().isValid()) {
+            if (!i.next().isNotNullOrEmpty()) {
                 i.remove();
             }
         }
@@ -181,16 +187,6 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
     }
 
     /**
-     * Returns japanese translation. Returns {@link #kanji} if available,
-     * {@link #reading} otherwise.
-     *
-     * @return a japanese translation, kanji or hiragana/katakana.
-     */
-    public final String getJapanese() {
-        return kanji != null ? kanji : reading;
-    }
-
-    /**
      * A comparator which imposes order upon an edict entry, according to the
      * following rules:
      * <ul>
@@ -207,13 +203,13 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
      * @return see {@link Comparable} for details
      */
     public final int compareTo(DictEntry another) {
-        if (!isValid()) {
-            if (another.isValid()) {
+        if (!isNotNullOrEmpty()) {
+            if (another.isNotNullOrEmpty()) {
                 return 1;
             }
             return english.compareTo(another.english);
         }
-        if (!another.isValid()) {
+        if (!another.isNotNullOrEmpty()) {
             return -1;
         }
         // common words first
@@ -328,7 +324,7 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
         final String items[] = external.split("@@@@");
         final List<DictEntry> result = new ArrayList<DictEntry>();
         for (final String item : items) {
-            if (!MiscUtils.isBlank(item)) {
+            if (!MiscUtils.isNullOrEmpty(item)) {
                 result.add(DictEntry.fromExternal(item));
             }
         }

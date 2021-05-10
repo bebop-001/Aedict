@@ -86,7 +86,7 @@ public final class MiscUtils {
      * @return true if given string is null, empty or consists of whitespaces
      *         only.
      */
-    public static boolean isBlank(final String str) {
+    public static boolean isNullOrEmpty(final String str) {
         return str == null || str.trim().length() == 0;
     }
 
@@ -99,12 +99,12 @@ public final class MiscUtils {
      * @return true if given string is null, empty or consists of whitespaces
      *         only.
      */
-    public static boolean isBlank(final String[] str) {
+    public static boolean isNullOrEmpty(final String[] str) {
         if (str == null || str.length == 0) {
             return true;
         }
         for (final String s : str) {
-            if (!isBlank(s)) {
+            if (!isNullOrEmpty(s)) {
                 return false;
             }
         }

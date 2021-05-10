@@ -18,15 +18,9 @@
 
 package sk_x.baka.aedict;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.zip.GZIPInputStream;
 
 import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.DictTypeEnum;
@@ -42,16 +36,13 @@ import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
 import sk_x.baka.aedict.util.ShowRomaji;
-import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.DialogUtils;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -224,7 +215,7 @@ public class MainActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		final DictEntry e = getModel().get(position);
-		if (!e.isValid()) {
+		if (!e.isNotNullOrEmpty()) {
 			return;
 		}
 		EdictEntryDetailActivity.launch(this, EdictEntry.fromEntry(e));

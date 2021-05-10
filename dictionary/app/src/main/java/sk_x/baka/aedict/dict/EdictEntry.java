@@ -73,14 +73,14 @@ public final class EdictEntry extends DictEntry {
      * Creates new entry instance.
      *
      * @param entry
-     *            the DictEntry, must be {@link DictEntry#isValid() valid}.
+     *            the DictEntry, must be {@link DictEntry#isNotNullOrEmpty() valid}.
      * @return non-null EdictEntry
      */
     public static EdictEntry fromEntry(final DictEntry entry) {
         if(entry instanceof EdictEntry){
             return (EdictEntry)entry;
         }
-        if(!entry.isValid()){
+        if(!entry.isNotNullOrEmpty()){
             throw new IllegalArgumentException("Entry is invalid: "+entry);
         }
         return new EdictEntry(entry.kanji, entry.reading, entry.english);
@@ -92,7 +92,7 @@ public final class EdictEntry extends DictEntry {
      * @return true if this entry is a ichidan verb, false otherwise.
      */
     public boolean isIchidan() {
-        return isValid() && getMarkings().contains("v1");
+        return isNotNullOrEmpty() && getMarkings().contains("v1");
     }
 
     /**
@@ -101,7 +101,7 @@ public final class EdictEntry extends DictEntry {
      * @return true if this entry is a godan verb, false otherwise.
      */
     public boolean isGodan() {
-        return isValid() && english.contains("v5");
+        return isNotNullOrEmpty() && english.contains("v5");
     }
 
     /**
@@ -216,7 +216,7 @@ public final class EdictEntry extends DictEntry {
         final String e = english.substring(findMarkings(english, new ArrayList<String>()));
         for (final StringTokenizer senses = new StringTokenizer(e, ";/"); senses.hasMoreTokens();) {
             final String sense = senses.nextToken();
-            if (MiscUtils.isBlank(sense)) {
+            if (MiscUtils.isNullOrEmpty(sense)) {
                 continue;
             }
             int[] newCurrentSense = findSenseNumber(sense);

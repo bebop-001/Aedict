@@ -143,7 +143,7 @@ public class DownloadDictionaryActivity extends ListActivity {
 					if (line == null) {
 						break;
 					}
-					if (MiscUtils.isBlank(line)) {
+					if (MiscUtils.isNullOrEmpty(line)) {
 						continue;
 					}
 					final DownloadableDictionaryInfo info = DownloadableDictionaryInfo.parse(line);

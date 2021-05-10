@@ -53,7 +53,7 @@ public class CopyActivity extends Activity {
 	private void setup(final String intentkey, final int layoutid, boolean autoHide) {
 		String content = getIntent().getStringExtra(intentkey);
 		final View layout = findViewById(layoutid);
-		if (MiscUtils.isBlank(content) && autoHide) {
+		if (MiscUtils.isNullOrEmpty(content) && autoHide) {
 			layout.setVisibility(View.GONE);
 		} else {
 			content = content == null ? "" : content;

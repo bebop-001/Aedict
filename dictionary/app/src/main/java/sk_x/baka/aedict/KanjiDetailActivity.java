@@ -35,7 +35,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,7 +168,7 @@ public class KanjiDetailActivity extends AbstractActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (tanakaSearchTask == null && entry.isValid()) {
+		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
 			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), showRomaji, entry.getJapanese());
 			tanakaSearchTask.execute(entry.getJapanese());
 		}

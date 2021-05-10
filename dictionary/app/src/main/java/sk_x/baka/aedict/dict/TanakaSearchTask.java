@@ -137,7 +137,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 			}
 			i++;
 			print(i, de, view);
-			if (de.isValid()) {
+			if (de.isNotNullOrEmpty()) {
 				view.setOnClickListener(AndroidUtils.safe(activity, new View.OnClickListener() {
 
 					public void onClick(View v) {
@@ -152,9 +152,9 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 			} else {
 				view.setOnClickListener(null);
 			}
-			view.setFocusable(de.isValid());
-			view.setOnFocusChangeListener(de.isValid() ? this : null);
-			if (de.isValid()) {
+			view.setFocusable(de.isNotNullOrEmpty());
+			view.setOnFocusChangeListener(de.isNotNullOrEmpty() ? this : null);
+			if (de.isNotNullOrEmpty()) {
 				final DictEntryListActions dela = new DictEntryListActions(activity, true, true, false, true);
 				view.setOnCreateContextMenuListener(AndroidUtils.safe(activity, new View.OnCreateContextMenuListener() {
 
@@ -172,7 +172,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 	}
 
 	private void print(final int num, DictEntry de, ViewGroup view) {
-		if (de.isValid()) {
+		if (de.isNotNullOrEmpty()) {
 			final String kanjis = getKanjis(highlightTerm);
 			TextView tv = (TextView) view.findViewById(R.id.kanji);
 			final SpanStringBuilder sb = new SpanStringBuilder();
@@ -184,7 +184,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 			sb.append(str);
 			tv.setText(sb);
 			tv = (TextView) view.findViewById(R.id.romaji);
-			if (MiscUtils.isBlank(de.reading) || MiscUtils.isBlank(de.kanji)) {
+			if (MiscUtils.isNullOrEmpty(de.reading) || MiscUtils.isNullOrEmpty(de.kanji)) {
 				tv.setVisibility(View.GONE);
 			} else {
 				tv.setVisibility(View.VISIBLE);

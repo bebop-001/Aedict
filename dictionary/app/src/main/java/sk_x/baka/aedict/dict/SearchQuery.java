@@ -267,7 +267,7 @@ public final class SearchQuery implements Serializable {
 
     public void validate() {
         // query may be blank when searching for kanjis based on SKIP number (see SkipActivity for details).
-        if (dictType != DictTypeEnum.Kanjidic && MiscUtils.isBlank(query)) {
+        if (dictType != DictTypeEnum.Kanjidic && MiscUtils.isNullOrEmpty(query)) {
             throw new IllegalStateException("No query specified");
         }
         if (matcher == null) {

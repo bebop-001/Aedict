@@ -126,7 +126,7 @@ public class ResultActivity extends ListActivity {
 			result = Collections.singletonList(new SearchQuery(DictTypeEnum.Edict));
 			result.get(0).matcher = MatcherEnum.Exact;
 			String searchFor = it.getStringExtra(SIMEJI_INTENTKEY_REPLACE);
-			if (!MiscUtils.isBlank(searchFor)) {
+			if (!MiscUtils.isNullOrEmpty(searchFor)) {
 				searchFor = searchFor.trim();
 				// If the first character is a japanese character then we are
 				// searching for a
@@ -138,7 +138,7 @@ public class ResultActivity extends ListActivity {
 			result = Collections.singletonList(new SearchQuery(DictTypeEnum.Edict));
 			result.get(0).matcher=MatcherEnum.Exact;
 			String searchFor = it.getStringExtra(EDICT_INTENTKEY_KANJIS);
-			if (!MiscUtils.isBlank(searchFor)) {
+			if (!MiscUtils.isNullOrEmpty(searchFor)) {
 				searchFor = searchFor.trim();
 				result.get(0).isJapanese = true;
 				result.get(0).query = new String[] { searchFor };
@@ -172,7 +172,7 @@ public class ResultActivity extends ListActivity {
 			new DialogUtils(this).showInfoOnce(Constants.INFOONCE_TANAKA_MISSING_READING, -1, R.string.tanakaMissingReading);
 		}
 		setTitle(AedictApp.format(R.string.searchResultsFor, queries.get(0).prettyPrintQuery()));
-		if (MiscUtils.isBlank(queries.get(0).query)) {
+		if (MiscUtils.isNullOrEmpty(queries.get(0).query)) {
 			// nothing to search for
 			model = Collections.singletonList(DictEntry.newErrorMsg(getString(R.string.nothing_to_search_for)));
 		} else if (getIntent().getSerializableExtra(INTENTKEY_RESULT_LIST) != null) {
@@ -189,7 +189,7 @@ public class ResultActivity extends ListActivity {
 			protected void addCustomItems(ContextMenu menu, DictEntry entry,
 					int itemIndex) {
 				if (isSimeji) {
-					if (!entry.isValid()) {
+					if (!entry.isNotNullOrEmpty()) {
 						return;
 					}
 					if (entry.kanji != null) {
@@ -260,7 +260,7 @@ public class ResultActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		final DictEntry e = model.get(position);
-		if (!e.isValid()) {
+		if (!e.isNotNullOrEmpty()) {
 			return;
 		}
 		if (isSimeji) {

@@ -120,7 +120,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		final DictEntry e = model.get(position);
-		if (!e.isValid()) {
+		if (!e.isNotNullOrEmpty()) {
 			return;
 		}
 		if (e instanceof EdictEntry) {
