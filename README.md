@@ -48,5 +48,9 @@ however.
 * added a perl script for executing the indexer and for creating an 
   executable jar file.
 
+5/10/2021<br>
+Romaji support removed.  It adds too much complexity.  Also, my experience
+is that it's a crutch that in the longer run will impede learning Japanese
+reading and writing.  Kana isn't that complicated. 😊
 
 Steve S.
