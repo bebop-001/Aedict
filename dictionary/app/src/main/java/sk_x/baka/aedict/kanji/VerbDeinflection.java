@@ -331,14 +331,13 @@ public final class VerbDeinflection {
      *            the word to search, in japanese language, may contain romaji.
      *            Full-width katakana conversion is performed automatically. Not
      *            null
-     * @param romanization
-     *            the romanization system to use, not null.
      * @return search query, never null
      */
-    public static Deinflections searchJpDeinflected(final String verb, final RomanizationEnum romanization) {
+    public static Deinflections searchJpDeinflected(final String verb) {
         final SearchQuery result = new SearchQuery(DictTypeEnum.Edict);
         final String conv = KanjiUtils.halfwidthToKatakana(verb);
-        final String romaji = RomanizationEnum.NihonShiki.toRomaji(romanization.toHiragana(conv));
+        final String hepburn = RomanizationEnum.Hepburn.toHiragana(conv);
+        final String romaji = RomanizationEnum.NihonShiki.toRomaji(hepburn);
         final Deinflections deinflections = VerbDeinflection.deinflect(romaji);
         result.query = deinflections.deinflectedVerbs.toArray(new String[0]);
         for (int i = 0; i < result.query.length; i++) {

@@ -50,7 +50,7 @@ public class GlobalSearchHandler extends Activity {
 		}
 		final String query = intent.getStringExtra(SearchManager.QUERY);
 		if (query != null) {
-			final Deinflections deinflection = VerbDeinflection.searchJpDeinflected(query, AedictApp.getConfig().getRomanization());
+			final Deinflections deinflection = VerbDeinflection.searchJpDeinflected(query);
 			final List<SearchQuery> queries = new ArrayList<SearchQuery>();
 			queries.add(deinflection.query);
 			queries.add(SearchQuery.searchEnEdict(query, true));

@@ -126,7 +126,6 @@ public class MainActivity extends ListActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		// showRomaji.register(this, menu);
 		final MenuItem item = menu.add(R.string.build_info);
 		item.setOnMenuItemClickListener(
 		new MenuItem.OnMenuItemClickListener() {
@@ -185,7 +184,6 @@ public class MainActivity extends ListActivity {
 	 * Sets the ListView model.
 	 */
 	private void setModel() {
-		final RomanizationEnum romanization = AedictApp.getConfig().getRomanization();
 		setListAdapter(new ArrayAdapter<DictEntry>(this, android.R.layout.simple_list_item_2, getModel()) {
 
 			@Override
@@ -258,7 +256,7 @@ public class MainActivity extends ListActivity {
 				final RomanizationEnum r = AedictApp.getConfig().getRomanization();
 				if (!isAdvanced) {
 					// search for jp/en
-					final Deinflections d = VerbDeinflection.searchJpDeinflected(text, r);
+					final Deinflections d = VerbDeinflection.searchJpDeinflected(text);
 					final SearchQuery en = SearchQuery.searchEnEdict(text, true);
 					ResultActivity.launch(MainActivity.this, Arrays.asList(en, d.query), d.deinflections);
 				} else if (deinflect.isChecked() || translate.isChecked()) {
@@ -290,7 +288,7 @@ public class MainActivity extends ListActivity {
 		final boolean isDeinflect = ((CheckBox) findViewById(R.id.jpDeinflectVerbs)).isChecked();
 		final RomanizationEnum r = AedictApp.getConfig().getRomanization();
 		if (isAdvanced && isDeinflect && isJapanese) {
-			final Deinflections q = VerbDeinflection.searchJpDeinflected(text, r);
+			final Deinflections q = VerbDeinflection.searchJpDeinflected(text);
 			performSearch(q.query, q.deinflections);
 			return;
 		}

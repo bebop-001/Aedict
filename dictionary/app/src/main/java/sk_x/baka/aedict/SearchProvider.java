@@ -25,7 +25,6 @@ import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.DictTypeEnum;
 import sk_x.baka.aedict.dict.LuceneSearch;
 import sk_x.baka.aedict.dict.SearchQuery;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.autils.MiscUtils;
 import android.app.SearchManager;
@@ -67,7 +66,7 @@ public class SearchProvider extends ContentProvider {
 		try {
 			final LuceneSearch lucene = new LuceneSearch(DictTypeEnum.Edict, AedictApp.getConfig().getDictionaryLoc(), AedictApp.getConfig().isSorted());
 			try {
-				entries.addAll(lucene.search(VerbDeinflection.searchJpDeinflected(query, AedictApp.getConfig().getRomanization()).query));
+				entries.addAll(lucene.search(VerbDeinflection.searchJpDeinflected(query).query));
 				entries.addAll(lucene.search(SearchQuery.searchEnEdict(query, true)));
 			} finally {
 				MiscUtils.closeQuietly(lucene);
