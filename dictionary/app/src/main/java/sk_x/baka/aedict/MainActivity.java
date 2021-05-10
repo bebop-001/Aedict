@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
  Copyright (C) 2009 Martin Vysny
  
@@ -35,6 +35,8 @@ import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
 import sk_x.baka.autils.DialogUtils;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -64,6 +66,7 @@ import static sk_x.baka.aedict.util.UtilsKt.displayBuildInfo;
  * 
  * @author Martin Vysny
  */
+@SuppressWarnings("deprecation")
 public class MainActivity extends ListActivity {
 	private static String baseDir = null;
 	public static String getBaseDir() {
@@ -71,6 +74,7 @@ public class MainActivity extends ListActivity {
 	}
 	private static AssetManager assetManager = null;
 	public static AssetManager getAssetManager() { return assetManager; }
+	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -238,11 +242,11 @@ public class MainActivity extends ListActivity {
 				search(true);
 			}
 		});
-		final CheckBox deinflect = (CheckBox) findViewById(R.id.jpDeinflectVerbs);
+		final CheckBox deinflect = findViewById(R.id.jpDeinflectVerbs);
 		deinflect.setOnCheckedChangeListener(new ComponentUpdater());
-		final CheckBox tanaka = (CheckBox) findViewById(R.id.searchExamples);
+		final CheckBox tanaka = findViewById(R.id.searchExamples);
 		tanaka.setOnCheckedChangeListener(new ComponentUpdater());
-		final CheckBox translate = (CheckBox) findViewById(R.id.translate);
+		final CheckBox translate = findViewById(R.id.translate);
 		translate.setOnCheckedChangeListener(new ComponentUpdater());
 		((EditText)findViewById(R.id.searchEdit)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			
@@ -305,10 +309,10 @@ public class MainActivity extends ListActivity {
 	private class ComponentUpdater implements OnCheckedChangeListener {
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			final Activity activity = MainActivity.this;
-			final Spinner matcher = (Spinner) activity.findViewById(R.id.matcher);
-			final CheckBox deinflect = (CheckBox) activity.findViewById(R.id.jpDeinflectVerbs);
-			final CheckBox tanaka = (CheckBox) activity.findViewById(R.id.searchExamples);
-			final CheckBox translate = (CheckBox) activity.findViewById(R.id.translate);
+			final Spinner matcher = activity.findViewById(R.id.matcher);
+			final CheckBox deinflect = activity.findViewById(R.id.jpDeinflectVerbs);
+			final CheckBox tanaka = activity.findViewById(R.id.searchExamples);
+			final CheckBox translate = activity.findViewById(R.id.translate);
 			if (buttonView.getId() == R.id.jpDeinflectVerbs && isChecked) {
 				matcher.setSelection(MatcherEnum.Exact.ordinal());
 				tanaka.setChecked(false);
