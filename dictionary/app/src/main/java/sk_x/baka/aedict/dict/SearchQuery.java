@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -97,16 +97,8 @@ public final class SearchQuery implements Serializable {
         strokeCount = other.strokeCount;
         skip = other.skip;
         radical = other.radical;
-    }
-
-    /**
-     * When searching for a particular stroke count, SKIP code or radical, the
-     * KANJIDIC dictionary is required to be available.
-     *
-     * @return true if this search query requires a KANJIDIC, false otherwise.
-     */
-    public boolean requiresKanjidic() {
-        return strokeCount != null || skip != null || radical != null;
+        langCode = other.langCode;
+        strokesPlusMinus = other.strokesPlusMinus;
     }
 
     /**
@@ -185,8 +177,9 @@ public final class SearchQuery implements Serializable {
         return result;
     }
 
-    private static String[] parseQuery(final String query, final boolean isJapanese, final RomanizationEnum r) {
+    private static String[] parseQuery(final String query, final boolean isJapanese) {
 	if (isJapanese) {
+        final RomanizationEnum r = RomanizationEnum.Hepburn;
 	    final String conv = KanjiUtils.halfwidthToKatakana(query);
 	    final ListBuilder k = new ListBuilder(" AND ");
 	    final ListBuilder h = new ListBuilder(" AND ");
@@ -198,9 +191,9 @@ public final class SearchQuery implements Serializable {
 	} else {
 	    return new String[]{query};
 	}
-    }
+}
 
-    /**
+    /*
      * Creates an EDICT query which searches for a japanese term.
      *
      * @param verb
@@ -225,17 +218,18 @@ public final class SearchQuery implements Serializable {
      *            the word to search, in japanese language, may contain romaji.
      *            Full-width katakana conversion is performed automatically. Not
      *            null
-     * @param romanization
-     *            the romanization system to use, not null.
      * @param langCode ISO 639-3 language code to return instead of english. May be null - in this case the default language is used.
      * @return search query, never null
      */
-    public static SearchQuery searchTanaka(final DictTypeEnum sampleDictType, final String word, final boolean isJapanese, final RomanizationEnum romanization, final String langCode) {
+    public static SearchQuery searchTanaka(
+            final DictTypeEnum sampleDictType, final String word,
+            final boolean isJapanese, final String langCode
+    ) {
         if(sampleDictType!=DictTypeEnum.Tanaka && sampleDictType!=DictTypeEnum.Tatoeba) {
             throw new RuntimeException("Invalid dictionary type: "+sampleDictType);
         }
         final SearchQuery result = new SearchQuery(sampleDictType);
-	result.query = parseQuery(word, isJapanese, romanization);
+	    result.query = parseQuery(word, isJapanese);
         result.isJapanese = isJapanese;
         result.matcher = MatcherEnum.Substring;
         result.langCode = langCode;
@@ -249,17 +243,11 @@ public final class SearchQuery implements Serializable {
      *            the word to search, in japanese language, may contain romaji.
      *            Full-width katakana conversion is performed automatically. Not
      *            null
-     * @param romanization
-     *            the romanization system to use, not null.
-     * @param exact
-     *            if true then performs exact search, if false then performs a
-     *            substring search.
-     * @param isSearchInExamples if true then the search will be performed in Tanaka examples.
      * @return search query, never null
      */
-    public static SearchQuery searchJpRomaji(final String word, final RomanizationEnum romanization, final MatcherEnum matcher) {
+    public static SearchQuery searchJpRomaji(final String word, final MatcherEnum matcher) {
         final SearchQuery result = new SearchQuery(DictTypeEnum.Edict);
-        result.query = parseQuery(word, true, romanization);
+        result.query = parseQuery(word, true);
         result.isJapanese = true;
         result.matcher = matcher;
         return result;
