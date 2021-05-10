@@ -245,7 +245,7 @@ public final class SearchQuery implements Serializable {
      *            null
      * @return search query, never null
      */
-    public static SearchQuery searchJpRomaji(final String word, final MatcherEnum matcher) {
+    public static SearchQuery searchJapanese(final String word, final MatcherEnum matcher) {
         final SearchQuery result = new SearchQuery(DictTypeEnum.Edict);
         result.query = parseQuery(word, true);
         result.isJapanese = true;

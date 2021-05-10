@@ -31,7 +31,6 @@ import sk_x.baka.aedict.dict.MatcherEnum;
 import sk_x.baka.aedict.dict.SearchQuery;
 import sk_x.baka.aedict.kanji.Deinflections;
 import sk_x.baka.aedict.kanji.Deinflections.Deinflection;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
@@ -253,7 +252,6 @@ public class MainActivity extends ListActivity {
 					return true;
 				}
 				final boolean isAdvanced = findViewById(R.id.advancedPanel).getVisibility() != View.GONE;
-				final RomanizationEnum r = AedictApp.getConfig().getRomanization();
 				if (!isAdvanced) {
 					// search for jp/en
 					final Deinflections d = VerbDeinflection.searchJpDeinflected(text);
@@ -265,8 +263,8 @@ public class MainActivity extends ListActivity {
 					if (!AedictApp.getDownloader().checkDictionary(MainActivity.this, new Dictionary(DictTypeEnum.Tanaka, null), null, false)) {
 						return true;
 					}
-					final SearchQuery jp = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, true, r, AedictApp.getConfig().getSamplesDictLang());
-					final SearchQuery en = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, false, r, AedictApp.getConfig().getSamplesDictLang());
+					final SearchQuery jp = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, true, AedictApp.getConfig().getSamplesDictLang());
+					final SearchQuery en = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, false, AedictApp.getConfig().getSamplesDictLang());
 					ResultActivity.launch(MainActivity.this, Arrays.asList(en, jp), null);
 				}
 				return true;
@@ -286,7 +284,6 @@ public class MainActivity extends ListActivity {
 			return;
 		}
 		final boolean isDeinflect = ((CheckBox) findViewById(R.id.jpDeinflectVerbs)).isChecked();
-		final RomanizationEnum r = AedictApp.getConfig().getRomanization();
 		if (isAdvanced && isDeinflect && isJapanese) {
 			final Deinflections q = VerbDeinflection.searchJpDeinflected(text);
 			performSearch(q.query, q.deinflections);
@@ -294,12 +291,14 @@ public class MainActivity extends ListActivity {
 		}
 		final boolean isTanaka = ((CheckBox) findViewById(R.id.searchExamples)).isChecked();
 		if (isAdvanced && isTanaka) {
-			final SearchQuery q = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, isJapanese, r, AedictApp.getConfig().getSamplesDictLang());
+			final SearchQuery q = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, isJapanese, AedictApp.getConfig().getSamplesDictLang());
 			performSearch(q, null);
 			return;
 		}
 		final MatcherEnum matcher = isAdvanced ? MatcherEnum.values()[((Spinner) findViewById(R.id.matcher)).getSelectedItemPosition()] : MatcherEnum.Substring;
-		final SearchQuery q = isJapanese ? SearchQuery.searchJpRomaji(text, r, matcher) : SearchQuery.searchEnEdict(text, matcher == MatcherEnum.Exact);
+		final SearchQuery q = isJapanese
+				? SearchQuery.searchJapanese(text, matcher)
+				: SearchQuery.searchEnEdict(text, matcher == MatcherEnum.Exact);
 		performSearch(q, null);
 	}
 
