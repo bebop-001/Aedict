@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -36,7 +36,6 @@ public final class KanjiUtils {
     private KanjiUtils() {
         throw new AssertionError();
     }
-    private static final Set<Character> HIRAGANA_SPECIALS = new HashSet<Character>(Arrays.asList('っ', 'ゃ', 'ゅ', 'ょ'));
 
     /**
      * A very simple check for hiragana characters.
@@ -46,21 +45,8 @@ public final class KanjiUtils {
      * @return true if it is a hiragana character, false otherwise.
      */
     public static boolean isHiragana(char c) {
-        // first check for special characters, like small ya, yu, yo. These
-        // characters are generally untranslateable with the toRomaji founction
-        // and it will fail.
-        if (HIRAGANA_SPECIALS.contains(c)) {
-            return true;
-        }
-        final String romaji = RomanizationEnum.Hepburn.toRomaji(c);
-        if (romaji.length() == 0 || romaji.charAt(0) == c) {
-            // kanji
-            return false;
-        }
-        final char c1 = RomanizationEnum.Hepburn.toHiragana(romaji).charAt(0);
-        return c1 == c;
+        return Character.UnicodeBlock.of(c) == Character.UnicodeBlock.HIRAGANA;
     }
-    private static final Set<Character> KATAKANA_SPECIALS = new HashSet<Character>(Arrays.asList('ー', 'ャ', 'ュ', 'ョ'));
 
     /**
      * A very simple check for hiragana characters.
@@ -70,19 +56,7 @@ public final class KanjiUtils {
      * @return true if it is a hiragana character, false otherwise.
      */
     public static boolean isKatakana(char c) {
-        // first check for special characters, like small ya, yu, yo. These
-        // characters are generally untranslateable with the toRomaji founction
-        // and it will fail.
-        if (KATAKANA_SPECIALS.contains(c)) {
-            return true;
-        }
-        final String romaji = RomanizationEnum.Hepburn.toRomaji(c);
-        if (romaji.length() == 0 || romaji.charAt(0) == c) {
-            // kanji
-            return false;
-        }
-        final char c1 = RomanizationEnum.Hepburn.toKatakana(romaji).charAt(0);
-        return c1 == c;
+        return Character.UnicodeBlock.of(c) == Character.UnicodeBlock.KATAKANA;
     }
     private static final String HALFWIDTH_KATAKANA_TABLE = "。=｡;「=｢;」=｣;、=､;ー=ｰ;ッ=ｯ;ャ=ｬ;ュ=ｭ;ョ=ｮ;ァ=ｧ;ィ=ｨ;ゥ=ｩ;ェ=ｪ;ォ=ｫ;ア=ｱ;イ=ｲ;ウ=ｳ;エ=ｴ;オ=ｵ;カ=ｶ;キ=ｷ;ク=ｸ;ケ=ｹ;コ=ｺ;サ=ｻ;シ=ｼ;ス=ｽ;セ=ｾ;ソ=ｿ;タ=ﾀ;チ=ﾁ;ツ=ﾂ;テ=ﾃ;ト=ﾄ;ナ=ﾅ;ニ=ﾆ;ヌ=ﾇ;ネ=ﾈ;ノ=ﾉ;ハ=ﾊ;ヒ=ﾋ;フ=ﾌ;ヘ=ﾍ;ホ=ﾎ;マ=ﾏ;ミ=ﾐ;ム=ﾑ;メ=ﾒ;モ=ﾓ;ヤ=ﾔ;ユ=ﾕ;ヨ=ﾖ;ラ=ﾗ;リ=ﾘ;ル=ﾙ;レ=ﾚ;ロ=ﾛ;ワ=ﾜ;ヲ=ｦ;ン=ﾝ;ガ=ｶﾞ;ギ=ｷﾞ;グ=ｸﾞ;ゲ=ｹﾞ;ゴ=ｺﾞ;ザ=ｻﾞ;ジ=ｼﾞ;ズ=ｽﾞ;ゼ=ｾﾞ;ゾ=ｿﾞ;ダ=ﾀﾞ;ヂ=ﾁﾞ;ヅ=ﾂﾞ;デ=ﾃﾞ;ド=ﾄﾞ;バ=ﾊﾞ;ビ=ﾋﾞ;ブ=ﾌﾞ;ベ=ﾍﾞ;ボ=ﾎﾞ;パ=ﾊﾟ;ピ=ﾋﾟ;プ=ﾌﾟ;ペ=ﾍﾟ;ポ=ﾎﾟ";
     private static final Map<String, String> KATAKANA_TO_HALFWIDTH = new HashMap<String, String>();
@@ -134,7 +108,18 @@ public final class KanjiUtils {
      * @return true if it is half-width katakana, false otherwise
      */
     public static boolean isHalfwidth(final char ch) {
-        return HALFWIDTH_TO_KATAKANA.containsKey(String.valueOf(ch));
+        HashSet<Character> special = new HashSet<>();
+        special.add('ぁ'); special.add('ぃ'); special.add('ぅ');
+        special.add('ぇ'); special.add('ぉ'); special.add('っ');
+        special.add('ゃ'); special.add('ゅ'); special.add('ょ');
+        special.add('ゎ'); special.add('ゕ'); special.add('ゖ');
+        special.add('ァ'); special.add('ィ'); special.add('ゥ');
+        special.add('ェ'); special.add('ォ'); special.add('ッ');
+        special.add('ャ'); special.add('ュ'); special.add('ョ');
+        return ((('\uff65' <= ch) && (ch <= '\uff9f')) // Half width Katakana.
+            || (('\uff61' >= ch) && ('\uff64' <= ch))  // half-width CJK punctuation
+            || (('\uffe8' >= ch) && ('\uffee' <= ch))      // half-width symbols
+            || special.contains(ch));
     }
 
     private static String translate(final String in, final Map<? extends String, ? extends String> table, final int maxKeyLength) {
@@ -168,6 +153,7 @@ public final class KanjiUtils {
      *         kanji}), false otherwise.
      */
     public static boolean isKana(char ch) {
+
         return isKatakana(ch) || isHiragana(ch) || isHalfwidth(ch);
     }
 
