@@ -176,18 +176,7 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		 * @return true if Romaji will be displayed.
 		 */
 		public synchronized boolean isUseRomaji() {
-			return prefs.getBoolean(ConfigActivity.KEY_USE_ROMAJI, false);
-		}
-
-		/**
-		 * If true then Romaji will be used instead of katakana/hiragana
-		 * throughout the application.
-		 * 
-		 * @param useRomaji
-		 *            true if Romaji will be displayed.
-		 */
-		public synchronized void setUseRomaji(boolean useRomaji) {
-			prefs.edit().putBoolean(ConfigActivity.KEY_USE_ROMAJI, useRomaji).apply();
+			return false;
 		}
 
 		/**

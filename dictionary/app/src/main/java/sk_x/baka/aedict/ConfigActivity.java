@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.concurrent.Callable;
 
-import sk_x.baka.aedict.dict.DictTypeEnum;
 import sk_x.baka.aedict.dict.Dictionary;
 import sk_x.baka.aedict.dict.DictionaryVersions;
 import sk_x.baka.aedict.dict.DownloaderService.UpdateDictionaries;
@@ -63,11 +62,6 @@ public class ConfigActivity extends PreferenceActivity {
 	 * romanization system to use.
 	 */
 	public static final String KEY_ROMANIZATION = "romanization";
-	/**
-	 * Boolean. If true then Romaji will be used instead of katakana/hiragana
-	 * throughout the application.
-	 */
-	public static final String KEY_USE_ROMAJI = "useRomaji";
 	/**
 	 * Launches the {@link DownloadDictionaryActivity} activity.
 	 */
@@ -206,7 +200,7 @@ public class ConfigActivity extends PreferenceActivity {
 			}
 			AedictApp.getConfig().setServerDictVersions(dv);
 			final DictionaryVersions current = AedictApp.getConfig().getCurrentDictVersions();
-			Log.i("Aedict-DictionaryVersionChecker", "Comparing current versions "+current.versions+" and "+dv.versions);
+			Log.i("DictVersionChecker", "Comparing current versions "+current.versions+" and "+dv.versions);
 			final Set<Dictionary> updatable = current.getOlderThan(dv);
 			if(updatable.isEmpty()){
 				new DialogActivity.Builder(a).showInfoDialog("No updates found", "No dictionary updates has been found.");

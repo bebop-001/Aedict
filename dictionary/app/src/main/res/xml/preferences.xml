@@ -21,14 +21,6 @@
 		<CheckBoxPreference android:key="alwaysAvailable"
 			android:defaultValue="false" android:title="@string/always_available"
 			android:summary="@string/always_available_summary" />
-		<CheckBoxPreference android:key="useRomaji"
-			android:defaultValue="false" android:title="@string/useRomaji"
-			android:summary="@string/useRomaji_summary" />
-		<ListPreference android:key="romanization"
-			android:defaultValue="Hepburn" android:title="@string/romanization"
-			android:summary="@string/romanizationSummary"
-			android:entries="@array/romanizations" android:entryValues="@array/romanizations_enum"
-			android:dialogTitle="@string/romanization" />
 		<PreferenceScreen android:key="sdcardCleanup" android:title="@string/sdcardCleanup"
 			android:summary="@string/sdcardCleanupSummary">
 		</PreferenceScreen>
