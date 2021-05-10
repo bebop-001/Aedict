@@ -170,16 +170,6 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		}
 
 		/**
-		 * If true then Romaji will be used instead of katakana/hiragana
-		 * throughout the application.
-		 * 
-		 * @return true if Romaji will be displayed.
-		 */
-		public synchronized boolean isUseRomaji() {
-			return false;
-		}
-
-		/**
 		 * The dictionary name to use. If null then the default one should be
 		 * used. Applies to EDICT dictionaries only.
 		 * 

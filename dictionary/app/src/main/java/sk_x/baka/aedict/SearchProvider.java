@@ -84,7 +84,7 @@ public class SearchProvider extends ContentProvider {
 	
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-		final RomanizationEnum romanize = AedictApp.getConfig().isUseRomaji() ? AedictApp.getConfig().getRomanization() : null;
+		final RomanizationEnum romanize = null; // isUseRomaji removed. 
 		final String searchString = uri.getLastPathSegment();
 		final MatrixCursor cursor = new MatrixCursor(COLUMN_NAMES);
 		final List<DictEntry> entries = searchForQuery(searchString);

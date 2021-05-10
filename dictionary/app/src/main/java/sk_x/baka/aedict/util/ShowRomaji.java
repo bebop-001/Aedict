@@ -35,83 +35,42 @@ import android.view.MenuItem;
  * @author Martin Vysny
  */
 public abstract class ShowRomaji {
-	private Boolean isShowingRomaji;
+	private static final Boolean isShowingRomaji =  false;
 
 	public ShowRomaji() {
 		this(null);
 	}
 	public ShowRomaji(final Boolean isShowingRomaji) {
-		this.isShowingRomaji = isShowingRomaji;
 	}
 
-	public boolean resolveShowRomaji() {
-		return isShowingRomaji == null ? AedictApp.getConfig().isUseRomaji() : isShowingRomaji;
-	}
-	
 	public void showRomaji(final Boolean isShowingRomaji) {
-		this.isShowingRomaji = isShowingRomaji;
-		show(resolveShowRomaji());
 	}
 	 
 	public void register(final Activity a, final Menu menu) {
-		final MenuItem item = menu.add(resolveShowRomaji() ? R.string.show_kana : R.string.show_romaji);
+		final MenuItem item = menu.add(R.string.show_kana);
 		item.setOnMenuItemClickListener(AndroidUtils.safe(a, new MenuItem.OnMenuItemClickListener() {
 
 			public boolean onMenuItemClick(MenuItem item) {
-				isShowingRomaji = !resolveShowRomaji();
-				show(isShowingRomaji);
+				show(false);
 				return true;
 			}
 		}));
-		item.setIcon(resolveShowRomaji() ? R.drawable.showkana : R.drawable.showromaji);
-	}
-
-	public Boolean isShowingRomaji() {
-		return isShowingRomaji;
+		item.setIcon(R.drawable.showkana);
 	}
 
 	protected abstract void show(final boolean romaji);
 
 	public void onResume() {
-		show(resolveShowRomaji());
+		show(false);
 	}
 
-	private RomanizationEnum getRomanization() {
-		RomanizationEnum result = AedictApp.getConfig().getRomanization();
-		if(result == null){
-			return RomanizationEnum.Hepburn;
-		}
-		return result;
-	}
-	
-	public String romanize(final String kana) {
-		if (resolveShowRomaji()) {
-			return getRomanization().toRomaji(kana);
-		}
-		return kana;
-	}
-
+    // no romaji.  sjs
 	public static String romanizeIfRequired(final String kana) {
-		final boolean isShowingRomaji = AedictApp.getConfig().isUseRomaji();
-		final RomanizationEnum romanization = AedictApp.getConfig().getRomanization();
-		return isShowingRomaji ? romanization.toRomaji(kana) : kana;
+		return kana;
 	}
 	
 	public String getJapanese(final DictEntry e) {
 		Check.checkTrue("entry not valid", e.isValid());
-		if (MiscUtils.isBlank(e.kanji)) {
-			return romanize(e.reading);
-		}
 		return e.kanji;
-	}
-	
-	private static final String BUNDLEKEY_STATE = "showRomaji_state";
-	
-	public void saveState(Bundle b) {
-		b.putSerializable(BUNDLEKEY_STATE, isShowingRomaji);
-	}
-	
-	public void loadState(Bundle b) {
-		isShowingRomaji = (Boolean) b.getSerializable(BUNDLEKEY_STATE);
 	}
 }

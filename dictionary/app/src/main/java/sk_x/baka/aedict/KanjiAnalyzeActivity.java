@@ -120,17 +120,6 @@ public class KanjiAnalyzeActivity extends ListActivity {
 	private ShowRomaji showRomaji;
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		showRomaji = new ShowRomaji() {
@@ -171,7 +160,7 @@ public class KanjiAnalyzeActivity extends ListActivity {
 					v = getLayoutInflater().inflate(R.layout.kanjidic_list_item, getListView(), false);
 				}
 				final DictEntry e = model.get(position);
-				((TextView) v.findViewById(android.R.id.text1)).setText(showRomaji.romanize(e.reading));
+				((TextView) v.findViewById(android.R.id.text1)).setText(e.reading);
 				final StringBuilder sb = new StringBuilder();
 				if (e instanceof KanjidicEntry) {
 					final KanjidicEntry ee = (KanjidicEntry) e;

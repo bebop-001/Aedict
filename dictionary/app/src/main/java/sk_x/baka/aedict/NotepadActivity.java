@@ -72,18 +72,6 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 	 * persisted).
 	 */
 	private final Map<Integer, List<DictEntry>> modelCache = new HashMap<Integer, List<DictEntry>>();
-	private ShowRomaji showRomaji;
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
-	}
-
 	/**
 	 * Expects {@link DictEntry} as a value. Adds given entry to the model list.
 	 */
@@ -156,7 +144,7 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 				if (view == null) {
 					view = (TwoLineListItem) getLayoutInflater().inflate(android.R.layout.simple_list_item_2, getListView(category), false);
 				}
-				Edict.print(getModel(category).get(position), view, showRomaji.resolveShowRomaji() ? romanization : null);
+				Edict.print(getModel(category).get(position), view, null);
 				return view;
 			}
 
@@ -219,19 +207,6 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.notepad);
-		showRomaji = new ShowRomaji() {
-
-			@Override
-			protected void show(boolean romaji) {
-				for (int i = 0; i < getCategoryCount(); i++) {
-					final ListView lv = getListView(i);
-					if (lv != null) {
-						final ArrayAdapter<?> adapter = (ArrayAdapter<?>) lv.getAdapter();
-						adapter.notifyDataSetChanged();
-					}
-				}
-			}
-		};
 		initializeListView((ListView) findViewById(android.R.id.list), 0);
 		findViewById(R.id.btnNotepadSearch).setOnClickListener(new View.OnClickListener() {
 			
@@ -274,7 +249,6 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 	protected void onResume() {
 		super.onResume();
 		updateTabs();
-		showRomaji.onResume();
 	}
 
 	/**
@@ -296,7 +270,6 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		showRomaji.register(this, menu);
 		final MenuItem item = menu.add(0, 1, 1, R.string.deleteAll);
 		item.setIcon(android.R.drawable.ic_menu_delete);
 		item.setOnMenuItemClickListener(AndroidUtils.safe(this, new MenuItem.OnMenuItemClickListener() {

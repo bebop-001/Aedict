@@ -155,16 +155,6 @@ public class ResultActivity extends ListActivity {
 
 	ShowRomaji showRomaji=null;
 	
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +215,7 @@ public class ResultActivity extends ListActivity {
 				if (view == null) {
 					view = (TwoLineListItem) getLayoutInflater().inflate(android.R.layout.simple_list_item_2, getListView(), false);
 				}
-				Edict.print(model.get(position), view, showRomaji.resolveShowRomaji() ? romanization : null);
+				Edict.print(model.get(position), view, null);
 				return view;
 			}
 

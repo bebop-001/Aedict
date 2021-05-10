@@ -70,16 +70,6 @@ public class KanjiDetailActivity extends AbstractActivity {
 	private KanjidicEntry entry;
 
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
-	}
-
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -152,10 +142,9 @@ public class KanjiDetailActivity extends AbstractActivity {
 			if (sitem.trim().length() == 0) {
 				continue;
 			}
-			if (isJapanese) {
-				item = showRomaji.romanize(item);
-			}
-			String query = KanjiUtils.isKatakana(sitem.charAt(0)) ? RomanizationEnum.NihonShiki.toHiragana(RomanizationEnum.NihonShiki.toRomaji(sitem)) : sitem;
+			String query = KanjiUtils.isKatakana(sitem.charAt(0))
+					? RomanizationEnum.NihonShiki.toHiragana(RomanizationEnum.NihonShiki.toRomaji(sitem))
+					: sitem;
 			if (isJapanese) {
 				query += " AND " + entry.kanji;
 			}

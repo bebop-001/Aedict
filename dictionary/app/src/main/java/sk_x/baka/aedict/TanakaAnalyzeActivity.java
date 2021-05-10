@@ -74,14 +74,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	private List<DictEntry> model = null;
 	private TanakaDictEntry tanaka;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		model = (List<DictEntry>) savedInstanceState.getSerializable(INTENTKEY_STATE);
-		showRomaji.loadState(savedInstanceState);
-		setListAdapter(newAdapter());
-	}
-
 	private ArrayAdapter<DictEntry> newAdapter() {
 		return new ArrayAdapter<DictEntry>(this, R.layout.kanjidic_list_item, model) {
 
@@ -92,7 +84,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 					v = getLayoutInflater().inflate(R.layout.kanjidic_list_item, getListView(), false);
 				}
 				final DictEntry e = model.get(position);
-				((TextView) v.findViewById(android.R.id.text1)).setText(showRomaji.romanize(e.reading));
+				((TextView) v.findViewById(android.R.id.text1)).setText(e.reading);
 				final StringBuilder sb = new StringBuilder();
 				sb.insert(0, e.english);
 				((TextView) v.findViewById(android.R.id.text2)).setText(sb.toString());
@@ -122,7 +114,6 @@ public class TanakaAnalyzeActivity extends ListActivity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
 		outState.putSerializable(INTENTKEY_STATE, (Serializable) model);
 	}
 

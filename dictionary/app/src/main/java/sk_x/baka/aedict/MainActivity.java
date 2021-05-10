@@ -78,16 +78,6 @@ import static sk_x.baka.aedict.util.UtilsKt.displayBuildInfo;
 public class MainActivity extends ListActivity {
 	private ShowRomaji showRomaji;
 
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
-	}
-
 	private static String baseDir = null;
 	public static String getBaseDir() {
 		return baseDir;
@@ -224,7 +214,7 @@ public class MainActivity extends ListActivity {
 				if (view == null) {
 					view = (TwoLineListItem) getLayoutInflater().inflate(android.R.layout.simple_list_item_2, getListView(), false);
 				}
-				Edict.print(getModel().get(position), view, showRomaji.resolveShowRomaji() ? romanization : null);
+				Edict.print(getModel().get(position), view, null);
 				return view;
 			}
 

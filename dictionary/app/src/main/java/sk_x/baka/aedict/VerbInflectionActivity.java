@@ -59,13 +59,11 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 	
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		showRomaji.loadState(savedInstanceState);
 		isShowingBasicOnly = savedInstanceState.getBoolean(BUNDLEKEY_STATE, true);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		showRomaji.saveState(outState);
 		outState.putBoolean(BUNDLEKEY_STATE, isShowingBasicOnly);
 	}
 
@@ -86,7 +84,7 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 
 	private String convertInflectionProduct(final String romaji) {
 		final String kana = RomanizationEnum.NihonShiki.toHiragana(romaji);
-		return showRomaji.romanize(kana);
+		return kana;
 	}
 
 	private static final String KEY_JP = "jp";
@@ -94,7 +92,7 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 
 	private void buildAndSetAdapter() {
 		final boolean isIchidan = entry.isIchidan();
-		final RomanizationEnum romanization = !showRomaji.resolveShowRomaji() ? null : AedictApp.getConfig().getRomanization();
+		final RomanizationEnum romanization = null;
 		final List<Map<String, String>> groupData = new ArrayList<Map<String, String>>();
 		final List<List<Map<String, String>>> childData = new ArrayList<List<Map<String, String>>>();
 		// first, add all Base-x inflections

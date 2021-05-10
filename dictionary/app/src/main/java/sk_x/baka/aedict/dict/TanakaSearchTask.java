@@ -188,7 +188,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 				tv.setVisibility(View.GONE);
 			} else {
 				tv.setVisibility(View.VISIBLE);
-				tv.setText(showRomaji.romanize(de.reading));
+				tv.setText(de.reading);
 			}
 		}
 		TextView tv = (TextView) view.findViewById(R.id.english);
