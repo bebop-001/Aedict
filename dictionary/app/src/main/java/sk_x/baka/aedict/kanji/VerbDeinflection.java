@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
 Copyright (C) 2009 Martin Vysny
 
@@ -96,7 +96,7 @@ public final class VerbDeinflection {
                 // nothing matched
                 return null;
             }
-            final Set<String> result = new HashSet<String>(replaceBy.length);
+            final Set<String> result = new HashSet<>(replaceBy.length);
             final String verbPart = romaji.substring(0, romaji.length() - ending.length());
             for (final String rb : replaceBy) {
                 result.add(verbPart + rb);
@@ -190,10 +190,10 @@ public final class VerbDeinflection {
         return new EndsWithDeinflector(endsWith, false, true, form, replaceBy);
     }
 
-    private static List<IrregularDeinflector> irregular(String[] endsWith, final Form form, final String replaceBy) {
-    	final List<IrregularDeinflector> result=new ArrayList<VerbDeinflection.IrregularDeinflector>();
+    private static List<IrregularDeinflector> irregular(String[] endsWith, final Form form) {
+    	final List<IrregularDeinflector> result= new ArrayList<>();
     	for(final String ew:endsWith){
-    		result.add(new IrregularDeinflector(ew, form, replaceBy));
+    		result.add(new IrregularDeinflector(ew, form, "desu"));
     	}
     	return result;
     }
@@ -201,9 +201,9 @@ public final class VerbDeinflection {
     private final static List<? extends AbstractDeinflector> DEINFLECTORS;
 
     static {
-        final List<AbstractDeinflector> d = new ArrayList<AbstractDeinflector>();
-        d.addAll(irregular(new String[]{"dewaarimasen", "dehaarimasen", "de wa arimasen", "de ha arimasen", "zya arimasen", "zyaarimasen"}, Form.POLITE_NEGATIVE, "desu"));
-        d.addAll(irregular(new String[]{"dewaarimasendesita", "dehaarimasendesita", "de wa arimasen desita", "de ha arimasen desita", "zya arimasen desita", "zyaarimasendesita"}, Form.POLITE_PAST_NEGATIVE, "desu"));
+        final List<AbstractDeinflector> d = new ArrayList<>();
+        d.addAll(irregular(new String[]{"dewaarimasen", "dehaarimasen", "de wa arimasen", "de ha arimasen", "zya arimasen", "zyaarimasen"}, Form.POLITE_NEGATIVE));
+        d.addAll(irregular(new String[]{"dewaarimasendesita", "dehaarimasendesita", "de wa arimasen desita", "de ha arimasen desita", "zya arimasen desita", "zyaarimasendesita"}, Form.POLITE_PAST_NEGATIVE));
         // the -masu deinflector
         d.add(new EndsWithDeinflector("masen", Form.POLITE_NEGATIVE, "masu"));
         d.add(new EndsWithDeinflector("masita", Form.POLITE_PAST, "masu"));
@@ -226,12 +226,12 @@ public final class VerbDeinflection {
         d.add(new IrregularDeinflector("kimasu", Form.POLITE, "kuru"));
         d.add(new IrregularDeinflector("koyou",Form.LET_S2, "kuru"));
         d.add(new IrregularDeinflector("da", Form.PLAIN, "desu"));
-        d.addAll(irregular(new String[]{"dewanai", "zyanai"},Form.NEGATIVE, "desu"));
+        d.addAll(irregular(new String[]{"dewanai", "zyanai"},Form.NEGATIVE));
         d.add(new IrregularDeinflector("datta", Form.PAST_TENSE , "desu"));
         d.add(new IrregularDeinflector("desita", Form.POLITE_PAST, "desu"));
         d.add(new IrregularDeinflector("de", null, "desu"));
-        d.addAll(irregular(new String[]{"dehanai", "de ha nai", "dewanai", "de wa nai"}, Form.NEGATIVE, "desu"));
-        d.addAll(irregular(new String[]{"dehaaru", "de ha aru", "de wa aru", "dewaaru"}, Form.PLAIN, "desu"));
+        d.addAll(irregular(new String[]{"dehanai", "de ha nai", "dewanai", "de wa nai"}, Form.NEGATIVE));
+        d.addAll(irregular(new String[]{"dehaaru", "de ha aru", "de wa aru", "dewaaru"}, Form.PLAIN));
         d.add(new IrregularDeinflector("itta", Form.PAST_TENSE, "iku"));
         d.add(new IrregularDeinflector("itte", Form.CONTINUATION, "iku"));
         d.add(new IrregularDeinflector("ikimasu", Form.POLITE, "iku"));
@@ -294,12 +294,12 @@ public final class VerbDeinflection {
      */
     public static Deinflections deinflect(final String japanese) {
         final Deinflections result = new Deinflections();
-        result.deinflections=new ArrayList<Deinflection>();
-        result.deinflectedVerbs = new HashSet<String>();
-        Set<String> finalDeinflect = new HashSet<String>();
+        result.deinflections=new ArrayList<>();
+        result.deinflectedVerbs = new HashSet<>();
+        Set<String> finalDeinflect = new HashSet<>();
         result.deinflectedVerbs.add(RomanizationEnum.NihonShiki.toRomaji(japanese).trim());
         for (final AbstractDeinflector deinflector : DEINFLECTORS) {
-            final Set<String> newResult = new HashSet<String>(result.deinflectedVerbs);
+            final Set<String> newResult = new HashSet<>(result.deinflectedVerbs);
             for (final String romaji : result.deinflectedVerbs) {
                 final Set<String> deinflected = deinflector.deinflect(romaji);
                 if (deinflected != null && !deinflected.isEmpty()) {
