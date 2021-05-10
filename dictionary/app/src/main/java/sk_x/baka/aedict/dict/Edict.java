@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import sk_x.baka.aedict.R;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
+
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
@@ -135,32 +135,26 @@ public final class Edict {
 
 	/**
 	 * Prints itself to a ListView item.
-	 * 
-	 * @param e
+	 *  @param e
 	 *            the entry to print, not null.
 	 * @param item
 	 *            the item.
-	 * @param romanize
-	 *            if non-null then katakana/hiragana will be shown as romaji
 	 */
-	public static void print(final DictEntry e, final TwoLineListItem item, final RomanizationEnum romanize) {
-		print(e, item.getText1(), item.getText2(), romanize);
+	public static void print(final DictEntry e, final TwoLineListItem item) {
+		print(e, item.getText1(), item.getText2());
 	}
 
 	/**
 	 * Prints itself to a ListView item.
-	 * 
-	 * @param e
+	 *  @param e
 	 *            the entry to print, not null.
 	 * @param text1
 	 *            first, larger textview.
 	 * @param text2
-	 *            second, smaller textview.
-	 * @param romanize
-	 *            if non-null then katakana/hiragana will be shown as romaji
+ *            second, smaller textview.
 	 */
-	public static void print(final DictEntry e, final TextView text1, final TextView text2, final RomanizationEnum romanize) {
-		text1.setText(e.formatJapanese(romanize));
+	public static void print(final DictEntry e, final TextView text1, final TextView text2) {
+		text1.setText(e.formatJapanese());
 		text2.setText(e.english);
 	}
 }

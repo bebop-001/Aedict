@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import sk_x.baka.aedict.kanji.KanjiUtils;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.autils.ListBuilder;
 import sk_x.baka.autils.MiscUtils;
@@ -166,20 +165,14 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
      * {@link #reading}. The dash separator is omitted if one of {@link #kanji}
      * or {@link #reading} is missing.
      *
-     * @param romanize
-     *            if non-null then katakana/hiragana will be shown as romaji
-     *
      * @return a formatted japanese contents.
      */
-    public String formatJapanese(final RomanizationEnum romanize) {
+    public String formatJapanese() {
         final ListBuilder t1 = new ListBuilder(" - ");
         if (kanji != null) {
             t1.add(kanji);
         }
         String reading = this.reading;
-        if (romanize != null && reading != null) {
-            reading = romanize.toRomaji(reading);
-        }
         if (reading != null) {
             t1.add(reading);
         }

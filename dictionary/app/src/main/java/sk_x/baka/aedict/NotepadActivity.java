@@ -142,7 +142,7 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 				if (view == null) {
 					view = (TwoLineListItem) getLayoutInflater().inflate(android.R.layout.simple_list_item_2, getListView(category), false);
 				}
-				Edict.print(getModel(category).get(position), view, null);
+				Edict.print(getModel(category).get(position), view);
 				return view;
 			}
 

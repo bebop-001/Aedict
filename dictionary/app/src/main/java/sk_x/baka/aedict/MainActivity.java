@@ -194,7 +194,7 @@ public class MainActivity extends ListActivity {
 				if (view == null) {
 					view = (TwoLineListItem) getLayoutInflater().inflate(android.R.layout.simple_list_item_2, getListView(), false);
 				}
-				Edict.print(getModel().get(position), view, null);
+				Edict.print(getModel().get(position), view);
 				return view;
 			}
 
