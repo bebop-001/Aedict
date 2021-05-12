@@ -25,7 +25,7 @@ import java.util.List;
 import sk_x.baka.aedict.AedictApp;
 import sk_x.baka.aedict.KanjiAnalyzeActivity;
 import sk_x.baka.aedict.R;
-import sk_x.baka.aedict.TanakaAnalyzeActivity;
+import sk_x.baka.aedict.TatoebaAnalyzeActivity;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
@@ -49,7 +49,7 @@ import android.widget.TextView;
  * 
  * @author Martin Vysny
  */
-public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> implements View.OnFocusChangeListener {
+public class TatoebaSearchTask extends AsyncTask<String, Void, List<DictEntry>> implements View.OnFocusChangeListener {
 	private final ViewGroup vg;
 	private final Activity activity;
 	private List<DictEntry> exampleSentences = new ArrayList<>();
@@ -66,7 +66,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 	 * @param highlightTerm
  *            highlight this term with blueish color in the result. not
 	 */
-	public TanakaSearchTask(final Activity activity, final ViewGroup vg, final String highlightTerm) {
+	public TatoebaSearchTask(final Activity activity, final ViewGroup vg, final String highlightTerm) {
 		Check.checkNotNull("activity", activity);
 		Check.checkNotNull("vg", vg);
 		Check.checkNotNull("highlightTerm", highlightTerm);
@@ -96,7 +96,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 		try {
 			return LuceneSearch.singleSearch(query, null, true);
 		} catch (Exception e) {
-			Log.e(TanakaSearchTask.class.getSimpleName(), "Failed to search in " + dictType, e);
+			Log.e(TatoebaSearchTask.class.getSimpleName(), "Failed to search in " + dictType, e);
 			return Collections.singletonList(DictEntry.newErrorMsg(e));
 		}
 	}
@@ -121,7 +121,7 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 		for (final DictEntry de : exampleSentences) {
 			ViewGroup view;
 			if (views.size() <= i) {
-				view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tanakaexample_list_item, vg, false);
+				view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tatoeba_example_LI, vg, false);
 				views.add(view);
 				vg.addView(view);
 			} else {
@@ -133,9 +133,9 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 				view.setOnClickListener(AndroidUtils.safe(activity, new View.OnClickListener() {
 
 					public void onClick(View v) {
-						final TanakaDictEntry e = (TanakaDictEntry) de;
+						final TatoebaDictEntry e = (TatoebaDictEntry) de;
 						if (e.wordList != null && !e.wordList.isEmpty()) {
-							TanakaAnalyzeActivity.launch(activity, e);
+							TatoebaAnalyzeActivity.launch(activity, e);
 						} else {
 							KanjiAnalyzeActivity.launch(activity, de.getJapanese(), false);
 						}

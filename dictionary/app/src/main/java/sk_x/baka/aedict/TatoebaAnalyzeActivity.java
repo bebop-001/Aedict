@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
  Copyright (C) 2009 Martin Vysny
  
@@ -29,7 +29,7 @@ import sk_x.baka.aedict.dict.EdictEntry;
 import sk_x.baka.aedict.dict.LuceneSearch;
 import sk_x.baka.aedict.dict.MatcherEnum;
 import sk_x.baka.aedict.dict.SearchQuery;
-import sk_x.baka.aedict.dict.TanakaDictEntry;
+import sk_x.baka.aedict.dict.TatoebaDictEntry;
 import sk_x.baka.aedict.util.DictEntryListActions;
 import sk_x.baka.autils.AbstractTask;
 import sk_x.baka.autils.MiscUtils;
@@ -50,27 +50,27 @@ import android.widget.TextView;
  * 
  * @author Martin Vysny
  */
-public class TanakaAnalyzeActivity extends ListActivity {
+public class TatoebaAnalyzeActivity extends ListActivity {
 	/**
-	 * The {@link TanakaDictEntry} to analyze.
+	 * The {@link TatoebaDictEntry} to analyze.
 	 */
-	static final String INTENTKEY_TANAKADICTENTRY = "tanakaDictEntry";
-	private static final String INTENTKEY_STATE = "state";
+	static final String INTENT_TATOEBA = "tatoebaDict";
+	private static final String INTENT_STATE = "state";
 
-	public static void launch(final Activity activity, final TanakaDictEntry td) {
+	public static void launch(final Activity activity, final TatoebaDictEntry td) {
 		if (td == null || td.wordList == null || td.wordList.isEmpty()) {
 			throw new IllegalArgumentException("word is null");
 		}
 		if (!AedictApp.getDownloader().checkDictionary(activity, new Dictionary(DictTypeEnum.Tanaka, null), null, false)) {
 			return;
 		}
-		final Intent i = new Intent(activity, TanakaAnalyzeActivity.class);
-		i.putExtra(INTENTKEY_TANAKADICTENTRY, td);
+		final Intent i = new Intent(activity, TatoebaAnalyzeActivity.class);
+		i.putExtra(INTENT_TATOEBA, td);
 		activity.startActivity(i);
 	}
 
 	private List<DictEntry> model = null;
-	private TanakaDictEntry tanaka;
+	private TatoebaDictEntry tanaka;
 
 	private ArrayAdapter<DictEntry> newAdapter() {
 		return new ArrayAdapter<DictEntry>(this, R.layout.kanjidic_list_item, model) {
@@ -86,7 +86,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 				final StringBuilder sb = new StringBuilder();
 				sb.insert(0, e.english);
 				((TextView) v.findViewById(android.R.id.text2)).setText(sb.toString());
-				final TextView tv = (TextView) v.findViewById(R.id.kanjiBig);
+				final TextView tv = v.findViewById(R.id.kanjiBig);
 				// if the japanese word is too big the reading and the
 				// translation is not shown anymore
 				// workaround: add \n character after each third char
@@ -112,7 +112,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		outState.putSerializable(INTENTKEY_STATE, (Serializable) model);
+		outState.putSerializable(INTENT_STATE, (Serializable) model);
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		tanaka = (TanakaDictEntry) getIntent().getSerializableExtra(INTENTKEY_TANAKADICTENTRY);
+		tanaka = (TatoebaDictEntry) getIntent().getSerializableExtra(INTENT_TATOEBA);
 		new DictEntryListActions(this, true, true, false, true).register(getListView());
 	}
 
@@ -151,7 +151,7 @@ public class TanakaAnalyzeActivity extends ListActivity {
 		new RecomputeModel().execute(AedictApp.isInstrumentation, this, tanaka);
 	}
 
-	private class RecomputeModel extends AbstractTask<TanakaDictEntry, List<DictEntry>> {
+	private class RecomputeModel extends AbstractTask<TatoebaDictEntry, List<DictEntry>> {
 
 		@Override
 		protected void cleanupAfterError(Exception ex) {
@@ -166,12 +166,12 @@ public class TanakaAnalyzeActivity extends ListActivity {
 		}
 
 		@Override
-		public List<DictEntry> impl(TanakaDictEntry... params) throws Exception {
+		public List<DictEntry> impl(TatoebaDictEntry... params) throws Exception {
 			publish(new Progress(AedictApp.getStr(R.string.analyzing), 0, 100));
-			final List<DictEntry> result = new ArrayList<DictEntry>();
+			final List<DictEntry> result = new ArrayList<>();
 			final LuceneSearch lsEdict = new LuceneSearch(DictTypeEnum.Edict, AedictApp.getConfig().getDictionaryLoc(), true);
 			try {
-				final TanakaDictEntry e = params[0];
+				final TatoebaDictEntry e = params[0];
 				for (int i = 0; i < e.wordList.size(); i++) {
 					publish(new Progress(null, i, e.wordList.size()));
 					if (isCancelled()) {

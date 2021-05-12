@@ -7,7 +7,7 @@ import java.util.List;
  * Represents a Tanaka entry.
  * @author Martin Vysny
  */
-public class TanakaDictEntry extends DictEntry {
+public class TatoebaDictEntry extends DictEntry {
 
     private static final long serialVersionUID = 1L;
     /**
@@ -15,7 +15,7 @@ public class TanakaDictEntry extends DictEntry {
      */
     public final List<String> wordList;
 
-    public TanakaDictEntry(String kanji, String reading, String english, final String words) {
+    public TatoebaDictEntry(String kanji, String reading, String english, final String words) {
         super(kanji, reading, english);
         if (words == null) {
             wordList = null;
