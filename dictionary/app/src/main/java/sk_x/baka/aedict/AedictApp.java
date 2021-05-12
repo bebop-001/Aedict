@@ -27,7 +27,6 @@ import sk_x.baka.aedict.dict.DictTypeEnum;
 import sk_x.baka.aedict.dict.Dictionary;
 import sk_x.baka.aedict.dict.DictionaryVersions;
 import sk_x.baka.aedict.dict.DownloaderService;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.util.BackgroundService;
 import sk_x.baka.aedict.util.Iso6393Codes;
 import sk_x.baka.autils.DialogUtils;
@@ -152,15 +151,6 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		}
 
 		/**
-		 * Which romanization system to use. Defaults to Hepburn.
-		 * 
-		 * @return the romanization system to use. Never null.
-		 */
-		public synchronized RomanizationEnum getRomanization() {
-			return RomanizationEnum.valueOf(prefs.getString(ConfigActivity.KEY_ROMANIZATION, null));
-		}
-
-		/**
 		 * If true then a notification icon is registered.
 		 * 
 		 * @return true if the application is always available.
@@ -186,7 +176,7 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		 */
 		static final String KEY_NOTEPAD_ITEMS = "notepadItems2";
 
-		/**
+		/**:160
 		 * Persisted notepad DictEntries.
 		 * 
 		 * @param category

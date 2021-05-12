@@ -193,7 +193,6 @@ public class ResultActivity extends ListActivity {
 	}
 
 	private void updateModel(final boolean searching) {
-		final RomanizationEnum romanization = AedictApp.getConfig().getRomanization();
 		if (model.isEmpty()) {
 			model = Collections.singletonList(DictEntry.newErrorMsg(getString(searching ? R.string.searching : R.string.no_results)));
 		}

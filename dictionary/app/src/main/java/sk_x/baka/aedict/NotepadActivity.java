@@ -31,7 +31,6 @@ import java.util.Map;
 import sk_x.baka.aedict.AedictApp.Config;
 import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.Edict;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.util.DictEntryListActions;
 import sk_x.baka.autils.AndroidUtils;
 import sk_x.baka.autils.DialogUtils;
@@ -133,7 +132,6 @@ public class NotepadActivity extends Activity implements TabContentFactory {
 	}
 
 	private void initializeListView(final ListView lv, final int category) {
-		final RomanizationEnum romanization = AedictApp.getConfig().getRomanization();
 		lv.setAdapter(new ArrayAdapter<DictEntry>(this, android.R.layout.simple_list_item_2, getModel(category)) {
 
 			@Override
