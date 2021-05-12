@@ -23,7 +23,7 @@ import java.util.List;
 
 import sk_x.baka.aedict.dict.Edict;
 import sk_x.baka.aedict.dict.EdictEntry;
-import sk_x.baka.aedict.dict.TanakaSearchTask;
+import sk_x.baka.aedict.dict.TatoebaSearchTask;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.FocusVisual;
 import sk_x.baka.aedict.util.SearchClickListener;
@@ -160,18 +160,18 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
-			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
-			tanakaSearchTask.execute(entry.getJapanese());
+		if (tatoebaSearchTask == null && entry.isNotNullOrEmpty()) {
+			tatoebaSearchTask = new TatoebaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
+			tatoebaSearchTask.execute(entry.getJapanese());
 		}
 	}
 
-	private TanakaSearchTask tanakaSearchTask;
+	private TatoebaSearchTask tatoebaSearchTask;
 
 	@Override
 	protected void onStop() {
-		if (tanakaSearchTask.cancel(true)) {
-			tanakaSearchTask = null;
+		if (tatoebaSearchTask.cancel(true)) {
+			tatoebaSearchTask = null;
 		}
 		super.onStop();
 	}

@@ -7,11 +7,11 @@ import sk_x.baka.aedict.MainActivity;
 import sk_x.baka.aedict.NotepadActivity;
 import sk_x.baka.aedict.R;
 import sk_x.baka.aedict.StrokeOrderActivity;
-import sk_x.baka.aedict.TanakaAnalyzeActivity;
+import sk_x.baka.aedict.TatoebaAnalyzeActivity;
 import sk_x.baka.aedict.VerbInflectionActivity;
 import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.EdictEntry;
-import sk_x.baka.aedict.dict.TanakaDictEntry;
+import sk_x.baka.aedict.dict.TatoebaDictEntry;
 import sk_x.baka.autils.AndroidUtils;
 import android.app.Activity;
 import android.content.Context;
@@ -61,10 +61,10 @@ public class DictEntryListActions {
 			menu.add(0, 0, 0, R.string.analyze).setOnMenuItemClickListener(AndroidUtils.safe(activity, new MenuItem.OnMenuItemClickListener() {
 
 				public boolean onMenuItemClick(MenuItem item) {
-					if (entry instanceof TanakaDictEntry) {
-						final TanakaDictEntry e = (TanakaDictEntry) entry;
+					if (entry instanceof TatoebaDictEntry) {
+						final TatoebaDictEntry e = (TatoebaDictEntry) entry;
 						if (e.wordList != null && !e.wordList.isEmpty()) {
-							TanakaAnalyzeActivity.launch(activity, e);
+							TatoebaAnalyzeActivity.launch(activity, e);
 							return true;
 						}
 					}

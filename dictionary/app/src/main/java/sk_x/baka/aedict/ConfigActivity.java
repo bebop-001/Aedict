@@ -58,15 +58,6 @@ public class ConfigActivity extends PreferenceActivity {
 	 */
 	public static final String KEY_ALWAYS_AVAILABLE = "alwaysAvailable";
 	/**
-	 * String (the name of the {@link RomanizationEnum} enum). Which
-	 * romanization system to use.
-	 */
-	public static final String KEY_ROMANIZATION = "romanization";
-	/**
-	 * Launches the {@link DownloadDictionaryActivity} activity.
-	 */
-	public static final String KEY_DOWNLOAD_DICTIONARIES = "downloadDictionaries";
-	/**
 	 * Which EDICT dictionary to use for search.
 	 */
 	public static final String KEY_DICTIONARY_NAME = "dictionaryName";
@@ -78,14 +69,6 @@ public class ConfigActivity extends PreferenceActivity {
 	 * Resets the introduction dialogs - all dialogs will be shown again.
 	 */
 	public static final String KEY_RESET_INTRODUCTIONS = "resetIntroductions";
-	/**
-	 * Checks for dictionary updates.
-	 */
-	public static final String KEY_CHECK_FOR_UPDATES = "checkForUpdates";
-	/**
-	 * Shows the download dialog
-	 */
-	public static final String KEY_SHOW_DOWNLOADER = "showDownloader";
 	/**
 	 * Shows the "About" dialog.
 	 */
@@ -113,11 +96,6 @@ public class ConfigActivity extends PreferenceActivity {
 	@Override
 	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 		final String key = preference.getKey();
-		if (key.equals(KEY_DOWNLOAD_DICTIONARIES)) {
-			final Intent intent = new Intent(this, DownloadDictionaryActivity.class);
-			startActivity(intent);
-			return true;
-		}
 		if (key.equals(KEY_RESET_INTRODUCTIONS)) {
 			final DialogUtils utils = new DialogUtils(ConfigActivity.this);
 			utils.clearInfoOccurency();
@@ -126,10 +104,6 @@ public class ConfigActivity extends PreferenceActivity {
 		}
 		if (key.equals(KEY_ABOUT)) {
 			AboutActivity.launch(this);
-			return true;
-		}
-		if(key.equals(KEY_SHOW_DOWNLOADER)){
-			DownloadActivity.launch(this);
 			return true;
 		}
 		return super.onPreferenceTreeClick(preferenceScreen, preference);

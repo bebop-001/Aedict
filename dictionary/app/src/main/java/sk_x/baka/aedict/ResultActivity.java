@@ -31,7 +31,7 @@ import sk_x.baka.aedict.dict.EdictEntry;
 import sk_x.baka.aedict.dict.LuceneSearch;
 import sk_x.baka.aedict.dict.MatcherEnum;
 import sk_x.baka.aedict.dict.SearchQuery;
-import sk_x.baka.aedict.dict.TanakaDictEntry;
+import sk_x.baka.aedict.dict.TatoebaDictEntry;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.kanji.RomanizationEnum;
 import sk_x.baka.aedict.kanji.Deinflections.Deinflection;
@@ -256,8 +256,8 @@ public class ResultActivity extends ListActivity {
 			returnToSimeji(queries.get(0).isJapanese ? e.english : e.getJapanese());
 		} else if (e instanceof EdictEntry) {
 			EdictEntryDetailActivity.launch(this, (EdictEntry) e);
-		} else if (e instanceof TanakaDictEntry) {
-			TanakaAnalyzeActivity.launch(this, (TanakaDictEntry)e);
+		} else if (e instanceof TatoebaDictEntry) {
+			TatoebaAnalyzeActivity.launch(this, (TatoebaDictEntry)e);
 		}
 	}
 

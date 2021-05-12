@@ -269,17 +269,6 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		}
 
 		/**
-		 * Sets the dictionary type used to retrieve the example sentences.
-		 * @param dict dictionary type, {@link DictTypeEnum#Tatoeba} or {@link DictTypeEnum#Tanaka}.
-		 */
-		public synchronized void setSamplesDictType(final DictTypeEnum dict) {
-			if(dict!=DictTypeEnum.Tatoeba && dict!=DictTypeEnum.Tanaka) {
-				throw new RuntimeException("Invalid dict type: "+dict);
-			}
-			prefs.edit().putString(ConfigActivity.KEY_EXAMPLES_DICT, dict.name()).apply();
-		}
-
-		/**
 		 * Gets the dictionary type used to retrieve the example sentences.
 		 * @return dictionary type, {@link DictTypeEnum#Tatoeba} or {@link DictTypeEnum#Tanaka}.
 		 */

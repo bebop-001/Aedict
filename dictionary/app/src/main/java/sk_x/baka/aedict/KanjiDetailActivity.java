@@ -20,7 +20,7 @@ package sk_x.baka.aedict;
 import java.util.List;
 
 import sk_x.baka.aedict.dict.KanjidicEntry;
-import sk_x.baka.aedict.dict.TanakaSearchTask;
+import sk_x.baka.aedict.dict.TatoebaSearchTask;
 import sk_x.baka.aedict.kanji.KanjiUtils;
 import sk_x.baka.aedict.kanji.Radicals;
 import sk_x.baka.aedict.kanji.RomanizationEnum;
@@ -152,22 +152,22 @@ public class KanjiDetailActivity extends AbstractActivity {
 		return true;
 	}
 
-	private TanakaSearchTask tanakaSearchTask;
+	private TatoebaSearchTask tatoebaSearchTask;
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (tanakaSearchTask == null && entry.isNotNullOrEmpty()) {
-			tanakaSearchTask = new TanakaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
-			tanakaSearchTask.execute(entry.getJapanese());
+		if (tatoebaSearchTask == null && entry.isNotNullOrEmpty()) {
+			tatoebaSearchTask = new TatoebaSearchTask(this, (ViewGroup) findViewById(R.id.tanakaExamples), entry.getJapanese());
+			tatoebaSearchTask.execute(entry.getJapanese());
 		}
 		// the tanakaSearchTask must be non-null otherwise this will fail.
 	}
 
 	@Override
 	protected void onStop() {
-		if (tanakaSearchTask.cancel(true)) {
-			tanakaSearchTask = null;
+		if (tatoebaSearchTask.cancel(true)) {
+			tatoebaSearchTask = null;
 		}
 		super.onStop();
 	}
