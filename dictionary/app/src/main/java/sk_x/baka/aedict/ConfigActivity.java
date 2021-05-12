@@ -118,10 +118,6 @@ public class ConfigActivity extends PreferenceActivity {
 			startActivity(intent);
 			return true;
 		}
-		if (key.equals(KEY_SDCARD_CLEANUP)) {
-			cleanup();
-			return true;
-		}
 		if (key.equals(KEY_RESET_INTRODUCTIONS)) {
 			final DialogUtils utils = new DialogUtils(ConfigActivity.this);
 			utils.clearInfoOccurency();
@@ -152,25 +148,5 @@ public class ConfigActivity extends PreferenceActivity {
 		final ListPreference dictNames = (ListPreference) findPreference(KEY_DICTIONARY_NAME);
 		dictNames.setEntries(dictionaries.toArray(new CharSequence[0]));
 		dictNames.setEntryValues(dictionaries.toArray(new CharSequence[0]));
-	}
-
-	/**
-	 * Deletes all dictionary files.
-	 */
-	private void cleanup() {
-		final DialogUtils utils = new DialogUtils(this);
-		utils.showYesNoDialog(AedictApp.format(R.string.deleteDictionaryFiles, MiscUtils.getLength(new File(MainActivity.getBaseDir())) / 1024), new DialogInterface.OnClickListener() {
-
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-				try {
-					MiscUtils.deleteDir(new File(MainActivity.getBaseDir()));
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-				utils.showToast(R.string.data_files_removed);
-			}
-
-		});
 	}
 }
