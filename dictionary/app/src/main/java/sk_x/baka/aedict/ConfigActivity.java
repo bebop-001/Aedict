@@ -136,10 +136,6 @@ public class ConfigActivity extends PreferenceActivity {
 			DownloadActivity.launch(this);
 			return true;
 		}
-		if(key.equals(KEY_CHECK_FOR_UPDATES)) {
-			checkForNewVersions();
-			return true;
-		}
 		return super.onPreferenceTreeClick(preferenceScreen, preference);
 	}
 
@@ -176,36 +172,5 @@ public class ConfigActivity extends PreferenceActivity {
 			}
 
 		});
-	}
-
-	private static class GetVersionNumbers implements Callable<Void> {
-		public final Activity a;
-		public GetVersionNumbers(Activity a){
-			this.a=a;
-		}
-		public static final String KEY = "getNewDictionaryVersionNumbers";
-		public Void call() throws Exception {
-			final DictionaryVersions dv = new DictionaryVersions();
-			for(Dictionary d: Dictionary.listInstalled()) {
-				final String version = d.downloadVersion();
-				dv.versions.put(d, version);
-			}
-			AedictApp.getConfig().setServerDictVersions(dv);
-			final DictionaryVersions current = AedictApp.getConfig().getCurrentDictVersions();
-			Log.i("DictVersionChecker", "Comparing current versions "+current.versions+" and "+dv.versions);
-			final Set<Dictionary> updatable = current.getOlderThan(dv);
-			if(updatable.isEmpty()){
-				new DialogActivity.Builder(a).showInfoDialog("No updates found", "No dictionary updates has been found.");
-			}else{
-				new DialogActivity.Builder(a).setDialogListener(new UpdateDictionaries(updatable)).showYesNoDialog(
-						"The following dictionaries may be updated: " + updatable + ". Perform the update now?");
-			}
-			return null;
-		}
-	}
-	private void checkForNewVersions() {
-		final Toast toast = Toast.makeText(this, "Checking for updates", Toast.LENGTH_SHORT);
-		toast.show();
-		AedictApp.getBackground().schedule(GetVersionNumbers.KEY, new GetVersionNumbers(this));
 	}
 }
