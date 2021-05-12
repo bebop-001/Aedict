@@ -91,10 +91,6 @@ public class ConfigActivity extends PreferenceActivity {
 	 */
 	public static final String KEY_ABOUT= "about";
 	/**
-	 * Launches the "Donate" page.
-	 */
-	public static final String KEY_DONATE= "donate";
-	/**
 	 * Picks the example dictionary, Tanaka or Tatoeba.
 	 */
 	public static final String KEY_EXAMPLES_DICT = "examplesDict";
@@ -138,10 +134,6 @@ public class ConfigActivity extends PreferenceActivity {
 		}
 		if(key.equals(KEY_SHOW_DOWNLOADER)){
 			DownloadActivity.launch(this);
-			return true;
-		}
-		if (key.equals(KEY_DONATE)) {
-			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://code.google.com/p/aedict/#Donate")));
 			return true;
 		}
 		if(key.equals(KEY_CHECK_FOR_UPDATES)) {
