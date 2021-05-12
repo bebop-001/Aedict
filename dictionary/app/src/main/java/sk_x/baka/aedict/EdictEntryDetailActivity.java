@@ -79,7 +79,7 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 		}
 		MainActivity.recentlyViewed(entry);
 		displayEntry();
-		new SearchUtils(this).setupCopyButton(R.id.copy, R.id.kanji);
+		new SearchUtils(this).setupCopyButton(R.id.copy, R.id.tanaka_kanji);
 		findViewById(R.id.analyze).setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -95,7 +95,7 @@ public class EdictEntryDetailActivity extends AbstractActivity {
 	}
 
 	private void displayEntry() {
-		final TextView kanji = ((TextView) findViewById(R.id.kanji));
+		final TextView kanji = ((TextView) findViewById(R.id.tanaka_kanji));
 		kanji.setText(entry.getJapanese());
 		new SearchClickListener(this, entry.getJapanese()).registerTo(kanji);
 		final TextView kana = ((TextView) findViewById(R.id.kana));

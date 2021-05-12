@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
  Copyright (C) 2009 Martin Vysny
  
@@ -52,8 +52,8 @@ import android.widget.TextView;
 public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> implements View.OnFocusChangeListener {
 	private final ViewGroup vg;
 	private final Activity activity;
-	private List<DictEntry> exampleSentences = new ArrayList<DictEntry>();
-	private final List<ViewGroup> views = new ArrayList<ViewGroup>();
+	private List<DictEntry> exampleSentences = new ArrayList<>();
+	private final List<ViewGroup> views = new ArrayList<>();
 	private final String highlightTerm;
 	private final DictTypeEnum dictType;
 
@@ -163,37 +163,35 @@ public class TanakaSearchTask extends AsyncTask<String, Void, List<DictEntry>> i
 		}
 	}
 
-	private void print(final int num, DictEntry de, ViewGroup view) {
-		if (de.isNotNullOrEmpty()) {
+	private void print(final int num, DictEntry dictEntry, ViewGroup view) {
+		if (dictEntry.isNotNullOrEmpty()) {
 			final String kanjis = getKanjis(highlightTerm);
-			TextView tv = (TextView) view.findViewById(R.id.kanji);
+			TextView tv = view.findViewById(R.id.tanaka_kanji);
 			final SpanStringBuilder sb = new SpanStringBuilder();
 			sb.append(sb.newForeground(0xFF777777), "(" + num + ") ");
-			final SpannableString str = new SpannableString(de.getJapanese());
-			for (int i = de.getJapanese().indexOf(kanjis); i >= 0; i = de.getJapanese().indexOf(kanjis, i + 1)) {
+			final SpannableString str = new SpannableString(dictEntry.getJapanese());
+			for (int i = dictEntry.getJapanese().indexOf(kanjis); i >= 0; i = dictEntry.getJapanese().indexOf(kanjis, i + 1)) {
 				str.setSpan(sb.newForeground(0xFF7da5e7), i, i + kanjis.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 			}
 			sb.append(str);
 			tv.setText(sb);
-			tv = (TextView) view.findViewById(R.id.romaji);
-			if (MiscUtils.isNullOrEmpty(de.reading) || MiscUtils.isNullOrEmpty(de.kanji)) {
+			tv = view.findViewById(R.id.tanaka_kana);
+			if (MiscUtils.isNullOrEmpty(dictEntry.reading) || MiscUtils.isNullOrEmpty(dictEntry.kanji)) {
 				tv.setVisibility(View.GONE);
 			} else {
 				tv.setVisibility(View.VISIBLE);
-				tv.setText(de.reading);
+				tv.setText(dictEntry.reading);
 			}
 		}
-		TextView tv = (TextView) view.findViewById(R.id.english);
-		tv.setText(de.english);
+		TextView tv = view.findViewById(R.id.tanaka_english);
+		tv.setText(dictEntry.english);
 	}
 
 	private String getKanjis(final String jp) {
 		int start = 0;
-		for (; start < jp.length() && !KanjiUtils.isKanji(jp.charAt(start)); start++) {
-		}
+		while (start < jp.length() && !KanjiUtils.isKanji(jp.charAt(start))) start++;
 		int end = jp.length() - 1;
-		for (; end >= 0 && !KanjiUtils.isKanji(jp.charAt(end)); end--) {
-		}
+		while (end >= 0 && !KanjiUtils.isKanji(jp.charAt(end))) end--;
 		if (start <= end) {
 			return jp.substring(start, end + 1);
 		}

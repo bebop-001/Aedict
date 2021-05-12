@@ -73,7 +73,7 @@ public class KanjiDetailActivity extends AbstractActivity {
 		setContentView(R.layout.kanji_detail);
 		entry = (KanjidicEntry) getIntent().getSerializableExtra(INTENTKEY_KANJIDIC_ENTRY);
 		MainActivity.recentlyViewed(entry);
-		final TextView kanji = (TextView) findViewById(R.id.kanji);
+		final TextView kanji = (TextView) findViewById(R.id.tanaka_kanji);
 		kanji.setText(entry.kanji);
 		new SearchClickListener(this, entry.kanji).registerTo(kanji);
 		((TextView) findViewById(R.id.stroke)).setText(Integer.toString(entry.strokes));
@@ -83,7 +83,7 @@ public class KanjiDetailActivity extends AbstractActivity {
 		((TextView) findViewById(R.id.radicals)).setText(Radicals.getRadicals(entry.getKanji()));
 		((TextView) findViewById(R.id.radicalNumber)).setText(String.valueOf(entry.radical));
 		final SearchUtils utils = new SearchUtils(this);
-		utils.setupCopyButton(R.id.copy, R.id.kanji);
+		utils.setupCopyButton(R.id.copy, R.id.tanaka_kanji);
 		findViewById(R.id.showStrokeOrder).setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -102,7 +102,7 @@ public class KanjiDetailActivity extends AbstractActivity {
 				NotepadActivity.addAndLaunch(KanjiDetailActivity.this, entry);
 			}
 		});
-		addTextViews(R.id.english, null, entry.getEnglish(), false);
+		addTextViews(R.id.tanaka_english, null, entry.getEnglish(), false);
 		updateContent();
 		// display hint
 		if (!AedictApp.isInstrumentation) {
