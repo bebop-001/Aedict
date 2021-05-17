@@ -26,7 +26,6 @@ import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.DictTypeEnum;
 import sk_x.baka.aedict.dict.Dictionary;
 import sk_x.baka.aedict.dict.DictionaryVersions;
-import sk_x.baka.aedict.dict.DownloaderService;
 import sk_x.baka.aedict.util.BackgroundService;
 import sk_x.baka.aedict.util.Iso6393Codes;
 import sk_x.baka.autils.DialogUtils;
@@ -62,23 +61,16 @@ public class AedictApp extends Application implements OnSharedPreferenceChangeLi
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, true);
 		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 		apply(new Config(this), this);
-		ds = new DownloaderService();
 		bs = new BackgroundService();
 	}
 
 	@Override
 	public void onTerminate() {
-		MiscUtils.closeQuietly(ds);
 		MiscUtils.closeQuietly(bs);
 		super.onTerminate();
 	}
 
-	private volatile DownloaderService ds;
 	private volatile BackgroundService bs;
-
-	public static DownloaderService getDownloader() {
-		return getApp().ds;
-	}
 
 	public static BackgroundService getBackground() {
 		return getApp().bs;

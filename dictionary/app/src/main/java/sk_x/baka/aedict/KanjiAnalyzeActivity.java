@@ -25,7 +25,6 @@ import java.util.List;
 
 import sk_x.baka.aedict.dict.DictEntry;
 import sk_x.baka.aedict.dict.DictTypeEnum;
-import sk_x.baka.aedict.dict.Dictionary;
 import sk_x.baka.aedict.dict.EdictEntry;
 import sk_x.baka.aedict.dict.KanjidicEntry;
 import sk_x.baka.aedict.dict.LuceneSearch;
@@ -337,9 +336,6 @@ public class KanjiAnalyzeActivity extends ListActivity {
 			final LuceneSearch lsEdict = new LuceneSearch(DictTypeEnum.Edict, AedictApp.getConfig().getDictionaryLoc(), AedictApp.getConfig().isSorted());
 			try {
 				LuceneSearch lsKanjidic = null;
-				if (AedictApp.getDownloader().isComplete(DictTypeEnum.Kanjidic)) {
-					lsKanjidic = new LuceneSearch(DictTypeEnum.Kanjidic, null, AedictApp.getConfig().isSorted());
-				}
 				try {
 					final String w = MiscUtils.removeWhitespaces(word);
 					for (int i = 0; i < w.length(); i++) {
