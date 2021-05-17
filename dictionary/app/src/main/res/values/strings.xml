@@ -16,36 +16,23 @@
     </string>
 
     <string name="return_">Return %s</string>
-    <string name="show_romaji">Show romaji</string>
-    <string name="show_kana">Show kana</string>
     <string name="no_radicals_selected">No radicals selected</string>
     <string name="configuration">Configuration</string>
     <string name="always_available">Always available</string>
     <string name="always_available_summary">Adds or removes notification icon</string>
-    <string name="kanjiEntryText">Kanji (tip: to select and/or copy-paste just long-click the edit box. To search for a part of a word just select it and press search)</string>
-    <string name="entryReadingText">Reading (when searching, romaji is automatically translated to both hiragana and katakana)</string>
     <string name="nothing_to_search_for">Nothing to search for</string>
     <string name="no_results">No results</string>
     <string name="searchFailed">Failed to perform search: %s</string>
-    <string name="data_files_removed">Data files were removed</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="sdcardCleanup">SD-Card cleanup</string>
     <string name="sdcardCleanupSummary">Deletes all Aedict-downloaded files, including dictionaries</string>
-    <string name="warning_less_than_x_mb_free" formatted="false"> Warning: there is less than %d kb of free space on the sd card (%d kb). The download will most probably fail.</string>
-    <string name="dictionary_missing_download">The %s dictionary is missing. Do you wish to download it now?</string>
-    <string name="downloading_dictionary">Downloading %s</string>
-    <string name="interrupted">Interrupted</string>
     <string name="error">Error</string>
     <string name="info">Information</string>
-    <string name="failed_to_download_dictionary">Failed to download %s: </string>
-    <string name="connecting">Connecting</string>
     <string name="searchResults">Aedict: Search Results</string>
-    <string name="deleteDictionaryFiles">Dictionary data files are currently taking up to %d kb. Do you wish to clean the files?</string>
     <string name="searchResultsFor">Search results for %s</string>
     <string name="about">http://code.google.com/p/aedict\n\nCopyright (C) 2009 Martin Vyšný\nGUI design: Mitchell Liam\n\nLicensed under GPL3: http://www.gnu.org/licenses/gpl-3.0.html\n\nWhat\'s new: http://baka.sk/aedict/changes-report.html\n\nReferences:\nEDict: http://www.csse.monash.edu.au/~jwb/edict.html\nLucene: http://lucene.apache.org/java/docs/\nKanji recognizer (C) by Todd David Rudick, http://www.cs.arizona.edu/projects/japan/JavaDict/\nSKIP code system (C) by Jack Halpern\nStroke order diagrams (C) Jim Rose, http://www.kanjicafe.com\nVerb inflection examples (C) by Tim R. Matheson, http://www.timwerx.net/language/jpverbs/</string>
     <string name="aboutCaption">About</string>
-    <string name="exactMatch">Exact match</string>
     <string name="enterSearchTerm">Enter search term</string>
     <string name="search">Search</string>
     <string name="searching">Searching</string>
@@ -53,22 +40,15 @@
     <string name="copy">Copy</string>
     <string name="copyToClipboard">Copy to clipboard</string>
     <string name="copied">Copied "%s" to the clipboard</string>
-    <string name="kanaTable">Kana Table</string>
-    <string name="showkanaTable">Show kana table</string>
     <string name="romanization">Romanization</string>
-    <string name="romanizationSummary">Which romanization to use, both for romaji input and for display</string>
     <string name="analyze">Analyze</string>
     <string name="kanjiAnalysisOf">Kanji analysis of %s</string>
     <string name="kanjiRadicalLookup">Radical Lookup</string>
-    <string name="kanjiDrawLookup">Kanjipad</string>
     <string name="kanjiLookup">Kanji Lookup</string>
     <string name="radicals">Radicals</string>
     <string name="clear">Clear</string>
-    <string name="useRomaji">Show romaji</string>
-    <string name="useRomaji_summary">Show romaji instead of katakana/hiragana</string>
     <string name="strokes">Strokes: %d</string>
     <string name="plusMinusBetween0And2">The +- number must be 0..2</string>
-    <string name="numberOfStrokes">Number of strokes:</string>
     <string name="edictDictionary">Edict dictionary</string>
     <string name="edictDictionarySummary">Use given dictionary for search and translation</string>
     <string name="analyzeWords">Analyze as words</string>
@@ -78,16 +58,12 @@
     <string name="analyzing">Analyzing</string>
     <string name="downloadDictionaries">Download dictionary</string>
     <string name="downloadDictionariesSummary">Download additional dictionaries</string>
-    <string name="downloadingDictionaryList">Downloading list of dictionaries</string>
-    <string name="availableDicts">Available dictionaries (click on the name to install)</string>
     <string name="notepad">Notepad</string>
     <string name="delete">Delete</string>
     <string name="deleteAll">Delete all</string>
     <string name="addToNotepad">Add to notepad</string>
     <string name="searchingInDictionary">Searching in the %s dictionary</string>
     <string name="deinflectVerbs">Deinflect verbs</string>
-    <string name="kanjiDrawWarning">Please note that you must use the proper stroke order and count, otherwise your kanji will not be recognized. Also it does not recognize hiragana nor katakana characters.</string>
-    <string name="donate">Donate</string>
     <string name="searchInExamples">Search in examples</string>
     <string name="showSod">Show stroke order</string>
     <string name="resetIntroductions">Reset introductions</string>
@@ -103,7 +79,6 @@
     <string name="iDoNotDoSomething">I do not do something.</string>
     <string name="iDoNotDoSomethingPolitely">I do not do something. (politely)</string>
     <string name="politeNegativeFormExamples">Watashi wa kasa o kaimasen.\nI\'m not going to buy an umbrella.\nKare wa machimasen.\nHe won\'t wait.\nKimiko wa oosaka ni ikimasen.\nKimiko isn\'t going to Osaka.\nWatashi wa ima tabemasen.\nI\'m not going to eat now.\nKanojo wa kasa o karimasen.\nShe isn\'t going to borrow an umbrella.</string>
-    <string name="iDidSomething">I did something.</string>
     <string name="iDidSomethingPolitely">I did something. (politely)</string>
     <string name="politePastFormExamples">_jon_ wa Sendai ni ikimashita.\nJohn went to Sendai.\nKodomotachi wa kouen de asobimashita.\nThe children played at the park.\nYoshi wa ringo o tabemashita.\nYoshi ate an apple.\nShizu wa manga o kaimashita.\nShizu bought a comic book.\n_Bobbu_ wa sono eiga o mimashita.\nBob saw that movie.</string>
     <string name="iDidNotDoSomething">I didn\'t do something.</string>
@@ -258,7 +233,6 @@
     <string name="iWasJustAboutToDoX">I was just about to do X.</string>
     <string name="nearlyFormExamples">Ima Sachiko ni denwa suru tokoro datta.\nI was just about to call Sachiko.\nWatashi no saifu o wasureru tokoro datta.\nI almost forgot my wallet.</string>
     <string name="inflectionWarning">Please note that the conjugation is performed automatically and may produce weird results, especially with kuru/suru. Don\'t believe everything you see :-)</string>
-    <string name="dictFilesCorrupted">It seems that the dictionary files became corrupted. Please try to delete them and re-download them. Also please check your sd-card for errors.</string>
     <string name="mark_adj_i">adjective (keiyoushi)</string>
     <string name="mark_adj_na">adjectival nouns or quasi-adjectives (keiyodoshi)</string>
     <string name="mark_adj_no">nouns which may take the genitive case particle `no\'</string>
@@ -357,7 +331,6 @@
     <string name="mark_uk">word usually written using kana alone</string>
     <string name="mark_vulg">vulgar expression or word</string>
     <string name="mark_p">common</string>
-    <string name="posMarkings">POS Markings</string>
     <string name="preference_application">Application</string>
     <string name="preference_dictionaries">Dictionaries</string>
     <string name="preference_expert">Expert settings</string>
@@ -375,16 +348,8 @@
 	<string name="kanjiSearch">Kanji Search</string>
 	<string name="kanjiSearchMethod">Kanji search method</string>
 	<string name="exampleSentences">Example sentences</string>
-	<string name="jlptQuiz">JLPT Quiz</string>
 	<string name="launch">Launch</string>
-	<string name="showDetailed">Show detailed</string>
-	<string name="youScored" formatted="false">You scored %d out of %d questions</string>
 	<string name="results">Results</string>
-	<string name="downloadAll">Download all dictionaries</string>
-	<string name="noActiveDownload">No active download</string>
-	<string name="queuedForDownload">Queued for download: %s</string>
-	<string name="downloadManager">Download manager</string>
-	<string name="cancelDownload">Cancel download</string>
 	<string name="intro">Aedict is a Japanese translation tool based on Jim Breen\'s EDict dictionary. Tips:\n
 		\n- Some features are accessible by long-clicking an item
 		\n- You can switch to romaji anytime, using menu
@@ -407,8 +372,6 @@
 	<string name="deleteCategory">Delete category</string>
 	<string name="renameCategory">Rename category</string>
 	<string name="ok">Ok</string>
-	<string name="tryDrawingKanji">Please try drawing the kanji</string>
-	<string name="tryIt">Try!</string>
 	<string name="searchFurther">Search further</string>
 	<string name="moveToCategory">Move to category...</string>
 	<string name="next">Next</string>
