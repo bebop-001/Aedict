@@ -18,34 +18,19 @@
 
 package sk_x.baka.aedict;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedMap;
-import java.util.concurrent.Callable;
 
 import sk_x.baka.aedict.dict.Dictionary;
-import sk_x.baka.aedict.dict.DictionaryVersions;
-import sk_x.baka.aedict.dict.DownloaderService.UpdateDictionaries;
-import sk_x.baka.aedict.kanji.RomanizationEnum;
-import sk_x.baka.aedict.util.DialogActivity;
 import sk_x.baka.aedict.util.Iso6393Codes;
 import sk_x.baka.autils.DialogUtils;
-import sk_x.baka.autils.MiscUtils;
-import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Configures AEdict.

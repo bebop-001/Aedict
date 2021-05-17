@@ -51,7 +51,6 @@
 		<activity android:name=".StrokeOrderActivity" android:label="@string/showSod"  android:screenOrientation="portrait"/>
 		<activity android:name=".KanjiDetailActivity" android:label="@string/kanjiDetail" android:screenOrientation="portrait"/>
 		<activity android:name=".EdictEntryDetailActivity" android:label="@string/entryDetail" />
-		<activity android:name=".DownloadActivity" android:label="@string/downloadManager" />
 		<activity android:name=".GlobalSearchHandler" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.SEARCH" />

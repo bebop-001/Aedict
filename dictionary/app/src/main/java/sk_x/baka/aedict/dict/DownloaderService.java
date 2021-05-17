@@ -39,24 +39,16 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import sk_x.baka.aedict.AedictApp;
-import sk_x.baka.aedict.DownloadActivity;
 import sk_x.baka.aedict.MainActivity;
 import sk_x.baka.aedict.R;
-import sk_x.baka.aedict.util.DialogActivity;
 import sk_x.baka.aedict.util.IOExceptionWithCause;
-import sk_x.baka.aedict.util.SodLoader;
 import sk_x.baka.autils.MiscUtils;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.os.StatFs;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Downloads an EDICT/KANJIDIC dictionary.
@@ -117,42 +109,6 @@ public class DownloaderService implements Closeable {
 		return state;
 	}
 
-	/**
-	 * Checks if there are old dictionaries present on the SD Card which needs update.
-	 * @param activity context
-	 * @return true if the dictionaries are okay, false if there is an old dictionary. In this case, an activity handling this case is already launched.
-	 */
-	public boolean checkRequiredVersions(final Activity activity) {
-		final Set<Dictionary> needsUpdate = AedictApp.getConfig().getCurrentDictVersions().getOlderThan(AedictApp.MIN_REQUIRED);
-		if (!needsUpdate.isEmpty()) {
-			Log.i("DictionaryChecker", "Comparing current versions "+AedictApp.getConfig().getCurrentDictVersions().versions+" and "+AedictApp.MIN_REQUIRED.versions);
-			new DialogActivity.Builder(activity).setDialogListener(new UpdateDictionaries(needsUpdate)).showYesNoDialog(
-					"The following dictionaries are no longer compatible with this version of Aedict and needs to be updated: " + needsUpdate + ". Perform the update now?");
-		}
-		return needsUpdate.isEmpty();
-	}
-
-	public static class UpdateDictionaries implements DialogActivity.IDialogListener {
-		private static final long serialVersionUID = 1L;
-		public final Set<Dictionary> dictionariesToUpdate;
-		public UpdateDictionaries(Set<Dictionary> dictionariesToUpdate) {
-			super();
-			this.dictionariesToUpdate = dictionariesToUpdate;
-		}
-		public void onPositiveClick(DialogActivity activity) {
-			for(final Dictionary dict: dictionariesToUpdate) {
-				try {
-					dict.delete();
-				} catch (IOException e) {
-					throw new RuntimeException(e);
-				}
-				AedictApp.getDownloader().download(
-						new DictDownloader(dict, dict.getDownloadSite(), dict.getDictionaryLocation().getAbsolutePath(), dict.getName(), dict.dte.luceneFileSize()), activity);
-			}
-			activity.startActivity(new Intent(activity, DownloadActivity.class));
-		}
-	}
-
 	// This is where downloads get qued.
 	void download(final AbstractDownloader download, Activity a) {
 		if (!new File(download.targetDir).isAbsolute()) {
@@ -172,13 +128,6 @@ public class DownloaderService implements Closeable {
 	public void downloadDict(final Dictionary dict, Activity activity) {
 		download(new DictDownloader(dict, dict.getDownloadSite(), dict.dte.getDefaultDictionaryPath(), dict.getName(), dict.dte.luceneFileSize()), activity);
 	}
-	/**
-	 * Downloads the <a href="http://www.kanjicafe.com/using_soder.htm#download">SOD</a> Kanji Draw Order images.
-	 */
-	public void downloadSod(Activity activity) {
-		download(new SodDownloader(), activity);
-	}
-
 	private volatile boolean isDownloading = false;
 	private volatile State state = null;
 	private final ConcurrentMap<String, Object> queueDictNames = new ConcurrentHashMap<String, Object>();
@@ -401,29 +350,6 @@ public class DownloaderService implements Closeable {
 			final DictionaryVersions versions = AedictApp.getConfig().getCurrentDictVersions();
 			versions.versions.put(dictionary, version);
 			AedictApp.getConfig().setCurrentDictVersions(versions);
-		}
-	}
-
-	static class SodDownloader extends AbstractDownloader {
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Creates new dictionary downloader.
-		 */
-		public SodDownloader() {
-			super(SodLoader.DOWNLOAD_URL, SodLoader.SDCARD_LOCATION.getParent(), SodLoader.SDCARD_LOCATION.getName(), SodLoader.UNPACKED_SIZE);
-		}
-
-		@Override
-		protected void copy(final InputStream in, final String version) throws IOException {
-			// we have to ungzip the input stream
-			// final InputStream sodStream = new GZIPInputStream(in);
-			final OutputStream out = new FileOutputStream(SodLoader.SDCARD_LOCATION);
-			try {
-				copy(0L, -1, in, out);
-			} finally {
-				MiscUtils.closeQuietly(out);
-			}
 		}
 	}
 
