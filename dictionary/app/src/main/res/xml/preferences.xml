@@ -21,28 +21,16 @@
 		<CheckBoxPreference android:key="alwaysAvailable"
 			android:defaultValue="false" android:title="@string/always_available"
 			android:summary="@string/always_available_summary" />
-		<PreferenceScreen android:key="sdcardCleanup" android:title="@string/sdcardCleanup"
-			android:summary="@string/sdcardCleanupSummary">
-		</PreferenceScreen>
 		<PreferenceScreen android:key="resetIntroductions" android:title="@string/resetIntroductions"
 			android:summary="@string/resetIntroductionsSummary">
 		</PreferenceScreen>
 		<PreferenceScreen android:key="about" android:title="@string/aboutCaption"/>
-		<PreferenceScreen android:key="donate" android:title="@string/donate"/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/preference_dictionaries">
-		<PreferenceScreen android:key="checkForUpdates" android:title="@string/checkForUpdates"
-			android:summary="@string/checkForUpdatesSummary"/>
 		<ListPreference android:key="dictionaryName"
 			android:defaultValue="Default" android:title="@string/edictDictionary"
 			android:summary="@string/edictDictionarySummary"
 			android:dialogTitle="@string/edictDictionary" />
-		<PreferenceScreen android:key="downloadDictionaries" android:title="@string/downloadDictionaries"
-			android:summary="@string/downloadDictionariesSummary">
-		</PreferenceScreen>
-		<PreferenceScreen android:key="showDownloader" android:title="@string/downloader"
-			android:summary="@string/downloaderSummary">
-		</PreferenceScreen>
 		<ListPreference android:key="examplesDict"
 			android:defaultValue="Tanaka" android:title="@string/examplesDict"
 			android:summary="@string/examplesDictSummary"
