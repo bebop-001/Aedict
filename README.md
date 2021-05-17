@@ -53,4 +53,16 @@ Romaji support removed.  It adds too much complexity.  Also, my experience
 is that it's a crutch that in the longer run will impede learning Japanese
 reading and writing.  Kana isn't that complicated. 😊
 
+5/17/2021<br>
+Installed kotlin code to install dictionary files from assets.  The code
+looks for currently installed dictionaries and if not installed, installs.
+It puts up a progress dialog during the install process but this is
+currently obscured by a what's new dialog.  Just tap on the what's new
+dialog if you want to see progress.
+
+I haven't done a whole lot of testing but on Android 4.4 and Android 10, it
+comes up and basic functions are working.  On Android 4.4 the colors are
+still screwed up on the example screen though...
+
+
 Steve S.
