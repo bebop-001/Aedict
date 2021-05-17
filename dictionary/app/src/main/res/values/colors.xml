@@ -7,4 +7,9 @@
     <color name="file_edit_window_bg">#FFFFFF</color>
     <color name="file_edit_window_font_color">#FF000000</color>
 
+    <!-- for dict install status dialog. -->
+    <color name="textview_background">#D7CCC8</color>
+    <color name="textview_text">#212121</color>
+    <color name="textview_hint">#757575</color>
+
 </resources>

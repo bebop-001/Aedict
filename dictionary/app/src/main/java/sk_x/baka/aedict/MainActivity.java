@@ -34,6 +34,7 @@ import sk_x.baka.aedict.kanji.Deinflections.Deinflection;
 import sk_x.baka.aedict.kanji.VerbDeinflection;
 import sk_x.baka.aedict.util.Check;
 import sk_x.baka.aedict.util.DictEntryListActions;
+import sk_x.baka.aedict.util.InstallFromToc;
 import sk_x.baka.autils.DialogUtils;
 
 import android.annotation.SuppressLint;
@@ -43,6 +44,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +59,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TwoLineListItem;
 
 import static sk_x.baka.aedict.util.UtilsKt.displayBuildInfo;
@@ -74,6 +77,9 @@ public class MainActivity extends ListActivity {
 	}
 	private static AssetManager assetManager = null;
 	public static AssetManager getAssetManager() { return assetManager; }
+
+	InstallFromToc dictInstaller = null;
+
 	@SuppressLint("SetTextI18n")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +97,25 @@ public class MainActivity extends ListActivity {
 		findViewById(R.id.clearSearchBox).setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
-				((TextView) findViewById(R.id.searchEdit)).setText("");
+				((TextView) findViewById(R.id.searchTerm)).setText("");
 			}
 		});
-		// check for dictionary file and download it if it is missing.
-		AedictApp.getDownloader().checkDictionary(this, new Dictionary(DictTypeEnum.Edict, null), null, false);
-		AedictApp.getDownloader().checkRequiredVersions(this);
+		final EditText searchTerm = findViewById(R.id.searchTerm);
+		dictInstaller = InstallFromToc.Companion
+				.getInstance(MainActivity.this.getApplication(), "dictionaries.toc");
+		dictInstaller.install(MainActivity.this, new InstallFromToc.BooleanCB() {
+			@Override
+			public void booleanCb(boolean success) {
+				Log.d("booleanCb", "success: " + success);
+				Toast.makeText(MainActivity.this,
+						getString(R.string.dictInstallStatus, getString(
+								(success) ? R.string.installed : R.string.pending)
+						),
+						Toast.LENGTH_LONG
+				).show();
+				searchTerm.setEnabled(success);
+			}
+		});
 		if (!AedictApp.isInstrumentation) {
 			new DialogUtils(this).showInfoOnce(AedictApp.getVersion(), AedictApp.format(R.string.whatsNew, AedictApp.getVersion()), getString(R.string.whatsNewText));
 		}
@@ -120,7 +139,7 @@ public class MainActivity extends ListActivity {
 		}.register(getListView());
 		final String prefillTerm = getIntent().getStringExtra(INTENTKEY_PREFILL_SEARCH_FIELD);
 		if (prefillTerm != null) {
-			((TextView) findViewById(R.id.searchEdit)).setText(prefillTerm);
+			((TextView) findViewById(R.id.searchTerm)).setText(prefillTerm);
 		}
 		// setup search controls
 		setupSearchControls();
@@ -147,7 +166,7 @@ public class MainActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		invalidateModel();
-		findViewById(R.id.searchEdit).requestFocus();
+		findViewById(R.id.searchTerm).requestFocus();
 		final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, InputMethodManager.HIDE_IMPLICIT_ONLY);
 	}
@@ -248,10 +267,10 @@ public class MainActivity extends ListActivity {
 		tanaka.setOnCheckedChangeListener(new ComponentUpdater());
 		final CheckBox translate = findViewById(R.id.translate);
 		translate.setOnCheckedChangeListener(new ComponentUpdater());
-		((EditText)findViewById(R.id.searchEdit)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
+		((EditText)findViewById(R.id.searchTerm)).setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				final String text = ((TextView) findViewById(R.id.searchEdit)).getText().toString().trim();
+				final String text = ((TextView) findViewById(R.id.searchTerm)).getText().toString().trim();
 				if (text.length() == 0) {
 					return true;
 				}
@@ -279,7 +298,7 @@ public class MainActivity extends ListActivity {
 	private void search(final boolean isJapanese) {
 		final boolean isAdvanced = findViewById(R.id.advancedPanel).getVisibility() != View.GONE;
 		final boolean isTranslate = ((CheckBox) findViewById(R.id.translate)).isChecked();
-		final String text = ((TextView) findViewById(R.id.searchEdit)).getText().toString().trim();
+		final String text = ((TextView) findViewById(R.id.searchTerm)).getText().toString().trim();
 		if (text.length() == 0) {
 			return;
 		}
@@ -331,12 +350,6 @@ public class MainActivity extends ListActivity {
 	}
 
 	private void performSearch(final SearchQuery query, final List<Deinflection> deinflections) {
-		if (!AedictApp.getDownloader().checkDictionary(this, new Dictionary(query.dictType, null), null, false)) {
-			// the dictionary is not yet available. An activity was popped up,
-			// which offers dictionary download. Nothing to do here, just do
-			// nothing.
-			return;
-		}
 		ResultActivity.launch(this, query, deinflections);
 	}
 }

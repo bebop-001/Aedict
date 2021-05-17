@@ -17,13 +17,19 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
-	<EditText android:layout_height="wrap_content" android:id="@+id/searchEdit"
-		android:layout_width="wrap_content" android:hint="@string/enterKanaRomajiEnglish"
-		android:inputType="text" android:imeOptions="actionDone" android:layout_weight="1"/>
+		<EditText
+			android:layout_height="wrap_content"
+			android:id="@+id/searchTerm"
+			android:layout_width="wrap_content"
+			android:hint="@string/enterSearchTerm"
+			android:inputType="text"
+			android:imeOptions="actionDone"
+			android:layout_weight="1"
+			android:enabled="false"/>
 		<Button android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:text="X"
 			android:id="@+id/clearSearchBox"/>
-		</LinearLayout>
+	</LinearLayout>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
 		<Button android:layout_width="wrap_content"

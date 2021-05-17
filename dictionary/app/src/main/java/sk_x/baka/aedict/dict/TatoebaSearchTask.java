@@ -121,7 +121,7 @@ public class TatoebaSearchTask extends AsyncTask<String, Void, List<DictEntry>> 
 		for (final DictEntry de : exampleSentences) {
 			ViewGroup view;
 			if (views.size() <= i) {
-				view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tatoeba_example_LI, vg, false);
+				view = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.tatoeba_example, vg, false);
 				views.add(view);
 				vg.addView(view);
 			} else {

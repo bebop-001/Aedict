@@ -1,0 +1,81 @@
+Name: Edict
+Archive: dictionaries/edict-lucene-202001270.zip 6119206dd699a7ec54b7d9a98dcf6b5b
+Destination: index
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+  9705598  2020-01-27 19:02   _2.frq          e200afc3d14927efc4c4f3da2dcaf058
+       20  2020-01-27 19:02   segments.gen    2eb2668d2bf13379fa3584b9a9867b46
+  2077484  2020-01-27 19:02   _2.fdx          ee66087d26357a3e91f815a0c01a7018
+  7282459  2020-01-27 19:02   _2.prx          e088baa5dc2f1cc2e7492092d644fd03
+    10689  2020-01-27 19:02   _2.tii          dc55ddc5e0bed1a7fe2418dd2aa58a92
+       28  2020-01-27 19:02   _2.fnm          f5732513d1457750d4033c09f9f0d169
+   779059  2020-01-27 19:02   _2.nrm          5fc078199e775f1801559f35da23a09c
+ 20979198  2020-01-27 19:02   _2.fdt          38a5a03a74d1414d07ff6fdcdd34612c
+   770439  2020-01-27 19:02   _2.tis          839bd4ca2427824f1c40c7302011d430
+      292  2020-01-27 19:02   segments_2      16920ac9f077b0afff162f593f781dcc
+---------                     -------
+ 41605266                     10 files
+Name: Computer Dictionary
+Archive: dictionaries/edict-lucene-compdict-201304080.zip 45a7d42b3d85725caea41fba0e3d4a9b
+Destination: index-compdict
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+  2027870  2013-04-08 09:41   _0.cfs          7c7c051143ea779c379649ed34612c33
+      238  2013-04-08 09:41   segments_2      82aa862954b0a8ac0d07d9dce3dc3f81
+       20  2013-04-08 09:41   segments.gen    2eb2668d2bf13379fa3584b9a9867b46
+---------                     -------
+  2028128                     3 files
+Name: Names Dictionary
+Archive: dictionaries/edict-lucene-enamdict-201304080.zip 38231748c43b82e1113cc65cda503798
+Destination: index-enamdict
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+      291  2013-04-08 09:42   segments_3      95d663d683a4e638fb8eb435da3191b8
+ 40038956  2013-04-08 09:42   _0.cfx          46405968a73dcee6cbfdcaa7764d4163
+ 43017507  2013-04-08 09:42   _5.cfs          e8ae39cfab796492dd6eb1c817a70de5
+       20  2013-04-08 09:43   segments.gen    74b166dafdd55581096ad1a38b21b80e
+---------                     -------
+ 83056774                     4 files
+Name: Kanji Dictionary
+Archive: dictionaries/kanjidic-lucene-201304080.zip 14fe2da58f165b6087390f9b07296ebb
+Destination: index-kanjidic
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+   899805  2013-04-08 09:32   _0.cfs          a76e9d117ed490b4ae9ec1a531da9f56
+      238  2013-04-08 09:32   segments_2      71921bc89e0aef66ab493e5266d11933
+       20  2013-04-08 09:32   segments.gen    2eb2668d2bf13379fa3584b9a9867b46
+---------                     -------
+   900063                     3 files
+Name: Tanaka Corpus
+Archive: dictionaries/tanaka-lucene-201304080.zip 01c45aa213b279c0b10e34ebb33e12fa
+Destination: index-tanaka
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+ 49849205  2013-04-08 09:32   _0.cfs          23786ff79d9ca37366d8702e59c07c9b
+      238  2013-04-08 09:32   segments_2      9342ccf39cf19588407592343d93720f
+       20  2013-04-08 09:32   segments.gen    2eb2668d2bf13379fa3584b9a9867b46
+---------                     -------
+ 49849463                     3 files
+Name: Tatoeba Example Sentences
+Archive: dictionaries/tatoeba-lucene-201304080.zip 2e4982c72d08d028ac2918a10f84cb33
+Destination: index-tatoeba
+  Length      Date    Time    Name                   MD5 sum
+---------  ---------- -----   ----            --------------------------------
+       52  2020-01-28 12:21   _0.fnm          6b5aa8033d3f265bc2cb5e78819159dc
+       20  2020-01-28 12:21   segments.gen    4ec1a7e8a42f265101698c1971c5b65d
+     3595  2020-01-28 12:21   _0.tii          ac52deb56d00bc052e1477997cb7d785
+  8228244  2020-01-28 12:21   _0.frq          01a358c73a1a4dd37b26beb3b23cb80b
+ 34649473  2020-01-28 12:21   _0.fdt          b4ee0c7836db6b623659008ae6495850
+   254967  2020-01-28 12:21   _0.tis          15396ccc701c5fa9efd53d380e348930
+      217  2020-01-28 12:21   segments_1      ba238ba0e80e14b269cae726758cbe3d
+   448948  2020-01-28 12:21   _0.nrm          80318095418019007098790e8220ff18
+  1197188  2020-01-28 12:21   _0.fdx          349960b703d673e451acb75384874908
+  5780139  2020-01-28 12:21   _0.prx          41472867fd098269623c39caff7660e7
+---------                     -------
+ 50562843                     10 files
+
+Name: Rose Stroke-order Diagrams
+Source: dictionaries/sod-201103130.dat 4584605 48cebba17fd984523d6a03d174e74e51
+Destination: sod.dat
+
+

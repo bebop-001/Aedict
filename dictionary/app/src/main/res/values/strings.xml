@@ -46,7 +46,7 @@
     <string name="about">http://code.google.com/p/aedict\n\nCopyright (C) 2009 Martin Vyšný\nGUI design: Mitchell Liam\n\nLicensed under GPL3: http://www.gnu.org/licenses/gpl-3.0.html\n\nWhat\'s new: http://baka.sk/aedict/changes-report.html\n\nReferences:\nEDict: http://www.csse.monash.edu.au/~jwb/edict.html\nLucene: http://lucene.apache.org/java/docs/\nKanji recognizer (C) by Todd David Rudick, http://www.cs.arizona.edu/projects/japan/JavaDict/\nSKIP code system (C) by Jack Halpern\nStroke order diagrams (C) Jim Rose, http://www.kanjicafe.com\nVerb inflection examples (C) by Tim R. Matheson, http://www.timwerx.net/language/jpverbs/</string>
     <string name="aboutCaption">About</string>
     <string name="exactMatch">Exact match</string>
-    <string name="enterKanaRomajiEnglish">Enter kana/romaji/english</string>
+    <string name="enterSearchTerm">Enter search term</string>
     <string name="search">Search</string>
     <string name="searching">Searching</string>
     <string name="entryDetail">Entry detail</string>
@@ -434,4 +434,11 @@
 	<string name="examplesDictSummary">Use either Tanaka or Tatoeba to provide example sentences.</string>
 	<string name="examplesDictLang">Sample Sentences Dictionary Language</string>
 	<string name="examplesDictLangSummary">Select language for example sentences (Tatoeba only)</string>
+
+    <!-- for dict install status toast and dialog. -->
+    <string name="dictInstallStatus" type="id">Dictionary install status: %1$s</string>
+    <string name="installed">Installed</string>
+    <string name="pending">Pending</string>
+    <string name="installing_dictionarys">Installing Dictionary Files:</string>
+
 </resources>
