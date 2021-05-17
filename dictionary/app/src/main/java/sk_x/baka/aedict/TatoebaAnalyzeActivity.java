@@ -61,9 +61,6 @@ public class TatoebaAnalyzeActivity extends ListActivity {
 		if (td == null || td.wordList == null || td.wordList.isEmpty()) {
 			throw new IllegalArgumentException("word is null");
 		}
-		if (!AedictApp.getDownloader().checkDictionary(activity, new Dictionary(DictTypeEnum.Tanaka, null), null, false)) {
-			return;
-		}
 		final Intent i = new Intent(activity, TatoebaAnalyzeActivity.class);
 		i.putExtra(INTENT_TATOEBA, td);
 		activity.startActivity(i);

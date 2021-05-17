@@ -118,19 +118,6 @@ public class DownloaderService implements Closeable {
 	}
 
 	/**
-	 * Checks if given dictionary file exists. If not, user is prompted for a
-	 * download and the files are downloaded if requested.
-	 * @param activity context
-	 * @param dictionary the dictionary to download.
-	 * @param expectedSize the expected file size of unpacked dictionary. May be null if not known - in this case {@link DictTypeEnum#luceneFileSize()} is used.
-	 * @param skipMissingMsg if true then the "dictionary is missing" message is shown only when there is not enough free space.
-	 * @return true if the files are available, false otherwise.
-	 */
-	public boolean checkDictionary(final Activity activity, Dictionary dictionary, Long expectedSize, final boolean skipMissingMsg) {
-		return checkDictionaryFile(activity, new DictDownloader(dictionary, dictionary.getDownloadSite(), dictionary.getDictionaryLocation().getAbsolutePath(), dictionary.getName(), expectedSize == null ? dictionary.dte.luceneFileSize() : expectedSize), skipMissingMsg);
-	}
-	
-	/**
 	 * Checks if there are old dictionaries present on the SD Card which needs update.
 	 * @param activity context
 	 * @return true if the dictionaries are okay, false if there is an old dictionary. In this case, an activity handling this case is already launched.
@@ -164,44 +151,6 @@ public class DownloaderService implements Closeable {
 			}
 			activity.startActivity(new Intent(activity, DownloadActivity.class));
 		}
-	}
-	
-	/**
-	 * Checks if given dictionary file exists. If not, user is prompted for a
-	 * download and the files are downloaded if requested.
-	 * @param activity context
-	 * @param downloader the downloader implementation
-	 * @param skipMissingMsg if true then the "dictionary is missing" message is shown only when there is not enough free space.
-	 * @return true if the files are available, false otherwise.
-	 */
-	private boolean checkDictionaryFile(final Activity activity, final AbstractDownloader downloader, final boolean skipMissingMsg) {
-		if (!isComplete(downloader.targetDir)) {
-			final StatFs stats = new StatFs(activity.getFilesDir().getPath());
-			final long free = ((long) stats.getBlockSize()) * stats.getAvailableBlocks();
-			final StringBuilder msg = new StringBuilder(AedictApp.format(R.string.dictionary_missing_download, downloader.dictName));
-			if (free < downloader.expectedSize) {
-				msg.append('\n');
-				msg.append(AedictApp.format(R.string.warning_less_than_x_mb_free, downloader.expectedSize / 1024, free / 1024));
-			}
-			if (free >= downloader.expectedSize && skipMissingMsg) {
-				download(downloader, activity);
-				activity.startActivity(new Intent(activity, DownloadActivity.class));
-			} else {
-				new DialogActivity.Builder(activity).setDialogListener(new DownloaderDialogActivity(downloader)).showYesNoDialog(msg.toString());
-			}
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Checks if the SOD images exists. If not, user is prompted for a download
-	 * and the files are downloaded if requested.
-	 * @param a context
-	 * @return true if the files are available, false otherwise.
-	 */
-	public boolean checkSod(final Activity a) {
-		return checkDictionaryFile(a, new SodDownloader(), false);
 	}
 
 	// This is where downloads get qued.

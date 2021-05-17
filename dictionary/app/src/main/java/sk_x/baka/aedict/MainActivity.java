@@ -282,10 +282,8 @@ public class MainActivity extends ListActivity {
 					ResultActivity.launch(MainActivity.this, Arrays.asList(en, d.query), d.deinflections);
 				} else if (deinflect.isChecked() || translate.isChecked()) {
 					search(true);
-				} else if (tanaka.isChecked()) {
-					if (!AedictApp.getDownloader().checkDictionary(MainActivity.this, new Dictionary(DictTypeEnum.Tanaka, null), null, false)) {
-						return true;
-					}
+				}
+				else if (tanaka.isChecked()) {
 					final SearchQuery jp = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, true, AedictApp.getConfig().getSamplesDictLang());
 					final SearchQuery en = SearchQuery.searchTanaka(AedictApp.getConfig().getSamplesDictType(), text, false, AedictApp.getConfig().getSamplesDictLang());
 					ResultActivity.launch(MainActivity.this, Arrays.asList(en, jp), null);

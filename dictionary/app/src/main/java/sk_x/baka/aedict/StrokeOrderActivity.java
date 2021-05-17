@@ -69,17 +69,6 @@ public class StrokeOrderActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sod);
-		if (AedictApp.getDownloader().checkSod(this)) {
-			final String kanjis = getIntent().getStringExtra(INTENTKEY_KANJILIST);
-			for (final char c : kanjis.toCharArray()) {
-				model.add(c);
-			}
-			try {
-				sodLoader = new SodLoader();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
 		final DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
 		setListAdapter(new ArrayAdapter<Character>(this, R.layout.soddetail, model) {

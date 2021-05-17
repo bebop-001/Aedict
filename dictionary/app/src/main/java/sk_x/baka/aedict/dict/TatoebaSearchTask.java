@@ -78,9 +78,6 @@ public class TatoebaSearchTask extends AsyncTask<String, Void, List<DictEntry>> 
 
 	@Override
 	protected void onPreExecute() {
-		AedictApp.getDownloader().checkDictionary(activity, new Dictionary(dictType, null), null, false);
-		activity.setProgressBarIndeterminate(true);
-		activity.setProgressBarIndeterminateVisibility(true);
 		final TextView tv = (TextView) activity.getLayoutInflater().inflate(android.R.layout.simple_list_item_1, vg, false);
 		tv.setText(R.string.searching);
 		vg.addView(tv);

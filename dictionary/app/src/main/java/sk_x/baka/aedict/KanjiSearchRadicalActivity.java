@@ -100,7 +100,6 @@ public class KanjiSearchRadicalActivity extends AbstractActivity {
 			}
 		}));
 		// check that KANJIDIC exists
-		AedictApp.getDownloader().checkDictionary(this, new Dictionary(DictTypeEnum.Kanjidic, null), null, false);
 	}
 
 	/**
