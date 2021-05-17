@@ -31,7 +31,18 @@
     <string name="info">Information</string>
     <string name="searchResults">Aedict: Search Results</string>
     <string name="searchResultsFor">Search results for %s</string>
-    <string name="about">http://code.google.com/p/aedict\n\nCopyright (C) 2009 Martin Vyšný\nGUI design: Mitchell Liam\n\nLicensed under GPL3: http://www.gnu.org/licenses/gpl-3.0.html\n\nWhat\'s new: http://baka.sk/aedict/changes-report.html\n\nReferences:\nEDict: http://www.csse.monash.edu.au/~jwb/edict.html\nLucene: http://lucene.apache.org/java/docs/\nKanji recognizer (C) by Todd David Rudick, http://www.cs.arizona.edu/projects/japan/JavaDict/\nSKIP code system (C) by Jack Halpern\nStroke order diagrams (C) Jim Rose, http://www.kanjicafe.com\nVerb inflection examples (C) by Tim R. Matheson, http://www.timwerx.net/language/jpverbs/</string>
+    <string name="about">
+        Copyright (C) 2009 Martin Vyšný\n
+        GUI design: Mitchell Liam\n
+        \n
+        Licensed under GPL3: http://www.gnu.org/licenses/gpl-3.0.html\n
+        References:\n
+        EDict: http://www.csse.monash.edu.au/~jwb/edict.html\n
+        Lucene: http://lucene.apache.org/java/docs/\n
+        SKIP code system (C) by Jack Halpern\n
+        Stroke order diagrams (C) Jim Rose, http://www.kanjicafe.com\n
+        Verb inflection examples (C) by Tim R. Matheson, http://www.timwerx.net/language/jpverbs/\n
+    </string>
     <string name="aboutCaption">About</string>
     <string name="enterSearchTerm">Enter search term</string>
     <string name="search">Search</string>

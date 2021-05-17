@@ -18,7 +18,7 @@
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="fill_parent"
 	android:layout_width="fill_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="wrap_content" android:gravity="center">
 	<ImageView android:layout_width="wrap_content"
@@ -26,9 +26,13 @@
 	<TextView android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:id="@+id/aboutAppName"
 		android:gravity="center"/>
-	<TextView android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:gravity="center"
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:autoLink="web"
+		android:gravity="left"
 		android:text="@string/about"
-		android:autoLink="web" />
+		android:textAlignment="viewStart" />
 </LinearLayout>
 </ScrollView>
