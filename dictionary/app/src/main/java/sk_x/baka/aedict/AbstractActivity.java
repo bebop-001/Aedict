@@ -160,9 +160,8 @@ public abstract class AbstractActivity extends Activity {
 				builder.setItems(R.array.kanjiSearchMethod, new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
-						final Class<? extends Activity> launch = (which == 0)
-								? KanjiSearchRadicalActivity.class
-								:  KanjiDrawActivity.class;
+						final Class<? extends Activity>
+							launch = KanjiSearchRadicalActivity.class;
 						final Intent i = new Intent(activity, launch);
 						activity.startActivity(i);
 					}

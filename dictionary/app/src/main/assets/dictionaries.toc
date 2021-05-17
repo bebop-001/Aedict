@@ -76,6 +76,6 @@ Destination: index-tatoeba
 
 Name: Rose Stroke-order Diagrams
 Source: dictionaries/sod-201103130.dat 4584605 48cebba17fd984523d6a03d174e74e51
-Destination: sod.dat
+Destination: sod/sod.dat
 
 

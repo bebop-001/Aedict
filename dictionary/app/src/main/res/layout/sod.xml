@@ -17,25 +17,4 @@
 	android:layout_height="wrap_content" android:gravity="center">
 	<ListView android:id="@android:id/list" android:layout_height="wrap_content"
 		android:layout_width="fill_parent" />
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:id="@+id/kanjidrawRoot">
-		<TextView  android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/tryDrawingKanji"/>
-		<LinearLayout android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content"
-			android:gravity="center">
-			<TextView android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:id="@+id/textStrokes" />
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/undo"
-				android:id="@+id/undo"/>
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/clear"
-				android:id="@+id/btnKanjiClear"/>
-			<Button android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/tryIt"
-				android:id="@+id/btnKanjiSearch"/>
-		</LinearLayout>
-	</LinearLayout>
 </LinearLayout>

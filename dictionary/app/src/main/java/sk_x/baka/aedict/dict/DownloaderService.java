@@ -170,26 +170,6 @@ public class DownloaderService implements Closeable {
 	 * Checks if given dictionary file exists. If not, user is prompted for a
 	 * download and the files are downloaded if requested.
 	 * @param activity context
-	 * @param source
-	 *            download the dictionary files from here. A zipped Lucene
-	 *            index file is expected.
-	 * @param targetDir
-	 *            unzip the files here
-	 * @param dictName
-	 *            the dictionary name.
-	 * @param expectedSize
-	 *            the expected file size of unpacked dictionary.
-	 * @param skipMissingMsg if true then the "dictionary is missing" message is shown only when there is not enough free space.
-	 * @return true if the files are available, false otherwise.
-	 */
-	public boolean checkDictionary(final Activity activity, Dictionary dict, URL source, String targetDir, String dictName, long expectedSize, final boolean skipMissingMsg) {
-		return checkDictionaryFile(activity, new DictDownloader(dict, source, targetDir, dictName, expectedSize), skipMissingMsg);
-	}
-	
-	/**
-	 * Checks if given dictionary file exists. If not, user is prompted for a
-	 * download and the files are downloaded if requested.
-	 * @param activity context
 	 * @param downloader the downloader implementation
 	 * @param skipMissingMsg if true then the "dictionary is missing" message is shown only when there is not enough free space.
 	 * @return true if the files are available, false otherwise.
