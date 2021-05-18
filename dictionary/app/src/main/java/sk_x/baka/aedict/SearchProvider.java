@@ -88,7 +88,7 @@ public class SearchProvider extends ContentProvider {
 		final List<DictEntry> entries = searchForQuery(searchString);
 		int i = 0;
 		for (final DictEntry entry : entries) {
-			Object[] rowObject = new Object[] { i++, entry.formatJapanese(), entry.english, entry.toExternal() };
+			Object[] rowObject = new Object[] { i++, entry.textFormatJapanese(), entry.english, entry.toExternal() };
 			cursor.addRow(rowObject);
 		}
 		return cursor;

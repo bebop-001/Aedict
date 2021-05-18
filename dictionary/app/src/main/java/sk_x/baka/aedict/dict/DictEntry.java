@@ -167,7 +167,7 @@ public class DictEntry implements Comparable<DictEntry>, Serializable {
      *
      * @return a formatted japanese contents.
      */
-    public String formatJapanese() {
+    public String textFormatJapanese() {
         final ListBuilder t1 = new ListBuilder(" - ");
         if (kanji != null) {
             t1.add(kanji);

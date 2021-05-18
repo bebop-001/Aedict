@@ -24,6 +24,10 @@ import java.util.Map;
 
 import sk_x.baka.aedict.R;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.util.TypedValue;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
@@ -154,7 +158,18 @@ public final class Edict {
  *            second, smaller textview.
 	 */
 	public static void print(final DictEntry e, final TextView text1, final TextView text2) {
-		text1.setText(e.formatJapanese());
+		Context c = text1.getContext();
+		Resources r = c.getResources();
+
+		text1.setBackgroundColor(r.getColor(R.color.textview_background));
+		text1.setTextColor(r.getColor(R.color.kanji_textview_color));
+		text1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+		text1.setTypeface(null, Typeface.BOLD);
+		text1.setText(e.textFormatJapanese());
+
+		text2.setBackgroundColor(c.getResources().getColor(R.color.textview_background));
+		text2.setTextColor(c.getResources().getColor(R.color.textview_text));
+		text1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 		text2.setText(e.english);
 	}
 }

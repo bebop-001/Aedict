@@ -26,7 +26,7 @@
 			android:layout_height="wrap_content" android:orientation="horizontal"
 			android:layout_width="fill_parent">
 		
-<TextView android:layout_height="wrap_content" android:id="@+id/tanaka_kanji" android:text="K" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="center_horizontal" android:textColor="?android:attr/textColorPrimary" android:textSize="100dp"></TextView>
+<TextView android:layout_height="wrap_content" android:id="@+id/tanaka_kanji" android:text="K" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="center_horizontal" android:textColor="@color/textview_text" android:textSize="100dp"></TextView>
 			<TableLayout 
 				android:layout_height="wrap_content" android:layout_width="fill_parent"
 				android:layout_weight="1" android:gravity="center_horizontal"
@@ -35,41 +35,41 @@
 					android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
-						android:text="@string/stroke" android:gravity="right" android:textColor="#777"></TextView>
+						android:text="@string/stroke" android:gravity="right" android:textColor="#777"/>
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" android:id="@+id/stroke"
 						android:text="S" android:paddingLeft="3dp"
-						android:textColor="?android:attr/textColorPrimary"></TextView>
+						android:textColor="@color/textview_text"/>
 				</TableRow>
 				<TableRow 
 					android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" 
-						android:text="@string/grade" android:gravity="right" android:textColor="#777"></TextView>
+						android:text="@string/grade" android:gravity="right" android:textColor="#777"/>
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" android:id="@+id/grade"
 						android:text="G" android:paddingLeft="3dp"
-						android:textColor="?android:attr/textColorPrimary"></TextView>
+						android:textColor="@color/textview_text"/>
 				</TableRow>
 				<TableRow 
 					android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/jlptLevel" android:gravity="right" android:textColor="#777"></TextView>
+						android:text="@string/jlptLevel" android:gravity="right" android:textColor="#777"/>
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" android:id="@+id/jlpt"
 						android:text="J" android:paddingLeft="3dp"
-						android:textColor="?android:attr/textColorPrimary"></TextView>
+						android:textColor="@color/textview_text"/>
 				</TableRow>
 				<TableRow
 					android:layout_width="wrap_content" android:layout_height="wrap_content">
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:text="@string/radicals_colon" android:gravity="right" android:textColor="#777"></TextView>
+						android:text="@string/radicals_colon" android:gravity="right" android:textColor="#777"/>
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" android:id="@+id/radicals"
 						android:text="RADICALS" android:paddingLeft="3dp"
-						android:textColor="?android:attr/textColorPrimary"></TextView>
+						android:textColor="@color/textview_text"/>
 				</TableRow>
 				<TableRow 
 					android:layout_width="wrap_content" android:layout_height="wrap_content">
@@ -79,7 +79,7 @@
 					<TextView android:layout_width="wrap_content"
 						android:layout_height="wrap_content" android:id="@+id/radicalNumber"
 						android:text="RADICALS" android:paddingLeft="3dp"
-						android:textColor="?android:attr/textColorPrimary"></TextView>
+						android:textColor="@color/textview_text"/>
 				</TableRow>
 			</TableLayout>
 		</LinearLayout>
@@ -97,16 +97,16 @@
 			android:layout_marginTop="12dp">
 			<Button android:id="@+id/copy" android:layout_height="wrap_content"
 				android:text="@string/copy" android:layout_width="fill_parent"
-				android:layout_weight="1"></Button>
+				android:layout_weight="1"/>
 			<Button android:id="@+id/showStrokeOrder" android:layout_height="wrap_content"
 				android:text="@string/strokeOrder" android:layout_width="fill_parent"
-				android:layout_weight="1"></Button>
+				android:layout_weight="1"/>
 			<Button android:id="@+id/addToNotepad" android:layout_height="wrap_content"
 				android:text="@string/addToNotepad" android:layout_width="fill_parent"
-				android:layout_weight="1"></Button>
+				android:layout_weight="1"/>
 			<Button android:id="@+id/showRadical" android:layout_height="wrap_content"
 				android:text="@string/radicals" android:layout_width="fill_parent"
-				android:layout_weight="1"></Button>
+				android:layout_weight="1"/>
 		</LinearLayout>
 
 	</LinearLayout>

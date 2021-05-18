@@ -12,4 +12,8 @@
     <color name="textview_text">#212121</color>
     <color name="textview_hint">#757575</color>
 
+    <color name="kanji_textview_color">#1E88E5</color>
+
+    <color name="layout_bg_color">#D7CCC8</color>
+
 </resources>

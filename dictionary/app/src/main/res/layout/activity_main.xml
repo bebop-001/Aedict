@@ -14,31 +14,34 @@
 	-->
 <LinearLayout android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:background="@color/layout_bg_color">
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
 		<EditText
 			android:layout_height="wrap_content"
 			android:id="@+id/searchTerm"
+			android:textColor="@color/textview_text"
+			android:background="@color/textview_background"
 			android:layout_width="wrap_content"
 			android:hint="@string/enterSearchTerm"
 			android:inputType="text"
 			android:imeOptions="actionDone"
 			android:layout_weight="1"
 			android:enabled="false"/>
-		<Button android:layout_width="wrap_content"
+		<Button android:layout_width="wrap_content" android:textSize="@dimen/button_text_size"
 			android:layout_height="wrap_content" android:text="X"
 			android:id="@+id/clearSearchBox"/>
 	</LinearLayout>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
-		<Button android:layout_width="wrap_content"
+		<Button android:layout_width="wrap_content" android:textSize="@dimen/button_text_size"
 			android:layout_height="wrap_content" android:text="@string/japanese"
 			android:id="@+id/jpSearch" android:layout_weight="1" />
-		<Button android:layout_width="wrap_content"
+		<Button android:layout_width="wrap_content" android:textSize="@dimen/button_text_size"
 			android:layout_height="wrap_content" android:text="@string/english"
 			android:id="@+id/englishSearch" android:layout_weight="1" />
-		<Button android:layout_width="wrap_content"
+		<Button android:layout_width="wrap_content" android:textSize="@dimen/button_text_size"
 			android:layout_height="wrap_content" android:text="@string/more"
 			android:id="@+id/advanced" android:layout_weight="1" />
 	</LinearLayout>
