@@ -79,5 +79,5 @@ Steve S.
 
 <center>
   <summary>Demo app screenshot</summary>
-  <img alt="demo app screenshot" src="https://github.com/bebop-001/SearchWindow/blob/master/images/Screenshot.png">
+  <img alt="demo app screenshot" src="dictionary/screenshots/screenshot_2.png">
 </center>
