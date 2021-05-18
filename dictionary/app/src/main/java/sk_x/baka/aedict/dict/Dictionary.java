@@ -1,4 +1,4 @@
-/**
+/*
  *     Aedict - an EDICT browser for Android
  Copyright (C) 2009 Martin Vysny
 
@@ -17,12 +17,11 @@
  */
 package sk_x.baka.aedict.dict;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -93,13 +92,13 @@ public class Dictionary implements Serializable {
 		if (custom == null) {
 			if (other.custom != null)
 				return false;
-		} else if (!custom.equals(other.custom))
+		}
+		else if (!custom.equals(other.custom))
 			return false;
-		if (dte != other.dte)
-			return false;
-		return true;
+		return dte == other.dte;
 	}
 
+	@NotNull
 	@Override
 	public String toString() {
 		return "Dictionary[" + dte + (custom != null ? ", " + custom : "")
@@ -130,19 +129,12 @@ public class Dictionary implements Serializable {
 	}
 
 	/**
-	 * Deletes this dictionary from the SD Card.
-	 */
-	public void delete() throws IOException {
-		MiscUtils.deleteDir(getDictionaryLocation());
-	}
-
-	/**
 	 * Lists all dictionaries currently installed on the SD Card.
 	 *
 	 * @return list of all installed dictionaries, never null, may be empty.
 	 */
 	public static Set<Dictionary> listInstalled() {
-		final Set<Dictionary> result = new HashSet<Dictionary>();
+		final Set<Dictionary> result = new HashSet<>();
 		for (DictTypeEnum dte : DictTypeEnum.values()) {
 			final Dictionary d = new Dictionary(dte, null);
 			if (d.exists()) {
@@ -158,7 +150,7 @@ public class Dictionary implements Serializable {
 	 * @return list of all Edict installed dictionaries, never null, may be empty.
 	 */
 	public static Set<Dictionary> listEdictInstalled() {
-		final Set<Dictionary> result = new HashSet<Dictionary>();
+		final Set<Dictionary> result = new HashSet<>();
 		final File aedict = new File(MainActivity.getBaseDir());
 		if (aedict.exists() && aedict.isDirectory()) {
 			final String[] dictionaries = aedict.list(new FilenameFilter() {
@@ -194,20 +186,6 @@ public class Dictionary implements Serializable {
 		return false;
 	}
 
-	public String getVersionFileURL() {
-		String downloadURL = dte.getDownloadSite().toString();
-		if (custom != null) {
-                    // strip the ending .zip
-                    downloadURL = downloadURL.substring(0, downloadURL.length() - 4);
-			downloadURL += "-" + custom + ".zip";
-		}
-		return downloadURL + ".version";
-	}
-
-	public String downloadVersion() throws IOException {
-		return new String(MiscUtils.readFully(new URL(getVersionFileURL()).openStream()), "UTF-8");
-	}
-
 	public String toExternal() {
 		String result = dte.name();
 		if (custom != null) {
@@ -223,25 +201,6 @@ public class Dictionary implements Serializable {
 			return new Dictionary(dte, parsed.length == 1 ? null : parsed[1]);
 		} catch (Exception ex) {
 			throw new RuntimeException("Failed to parse '" + external + "'", ex);
-		}
-	}
-
-	public String getName() {
-		String result = dte.name();
-		if (custom != null) {
-			result = result + "-" + custom;
-		}
-		return result;
-	}
-
-	public URL getDownloadSite() {
-		if(custom==null){
-			return dte.getDownloadSite();
-		}
-		try {
-			return new URL(DictTypeEnum.DICT_BASE_LOCATION_URL+custom+".zip");
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
 		}
 	}
 }

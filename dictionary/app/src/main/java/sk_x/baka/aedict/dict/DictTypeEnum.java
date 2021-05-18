@@ -86,15 +86,6 @@ public enum DictTypeEnum {
         }
 
         @Override
-        public URL getDownloadSite() {
-            try {
-                return new URL(DICT_BASE_LOCATION_URL + "edict-lucene.zip");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
         public long luceneFileSize() {
             return 20L * 1024 * 1024;
         }
@@ -185,15 +176,6 @@ public enum DictTypeEnum {
         }
 
         @Override
-        public URL getDownloadSite() {
-            try {
-                return new URL(DICT_BASE_LOCATION_URL + "kanjidic-lucene.zip");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
         public long luceneFileSize() {
             return 1500 * 1024;
         }
@@ -271,15 +253,6 @@ public enum DictTypeEnum {
         }
 
         @Override
-        public URL getDownloadSite() {
-            try {
-                return new URL(DICT_BASE_LOCATION_URL + "tanaka-lucene.zip");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        @Override
         public long luceneFileSize() {
             return 50012213;
         }
@@ -334,15 +307,6 @@ public enum DictTypeEnum {
         @Override
         public String getDefaultDictionaryLoc() {
             return "index-tatoeba";
-        }
-
-        @Override
-        public URL getDownloadSite() {
-            try {
-                return new URL(DICT_BASE_LOCATION_URL + "tatoeba-lucene.zip");
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            }
         }
 
         @Override
@@ -424,20 +388,6 @@ public enum DictTypeEnum {
         return MainActivity.getBaseDir() + "/" + getDefaultDictionaryLoc();
     }
 
-    /**
-     * Returns the address where the zipped Lucene index of the dictionary can
-     * be downloaded.
-     *
-     * @return the URL pointing to a zip file.
-     */
-    public abstract URL getDownloadSite();
-
-    /**
-     * Returns the expected size of the Lucene (not zip!) files, zipped in
-     * {@link #getDownloadSite()}.
-     *
-     * @return a size of the zip file in bytes
-     */
     public abstract long luceneFileSize();
 
     /**
@@ -502,7 +452,7 @@ public enum DictTypeEnum {
 	    return true;
     }
 
-    /**
+    /*
      * Checks if given dictionary entry (in a form of a Lucene document) matches
      * given query.
      *

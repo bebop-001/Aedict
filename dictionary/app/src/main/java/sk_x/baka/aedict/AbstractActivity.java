@@ -151,26 +151,6 @@ public abstract class AbstractActivity extends Activity {
 	 *            the menu
 	 */
 	public static void addMenuItems(final Activity activity, final Menu menu) {
-		MenuItem item = menu.add(R.string.kanjiSearch);
-		item.setIcon(android.R.drawable.ic_menu_search);
-		item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-
-			public boolean onMenuItemClick(MenuItem item) {
-				final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-				builder.setItems(R.array.kanjiSearchMethod, new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						final Class<? extends Activity>
-							launch = KanjiSearchRadicalActivity.class;
-						final Intent i = new Intent(activity, launch);
-						activity.startActivity(i);
-					}
-				});
-				builder.setTitle(R.string.kanjiSearchMethod);
-				builder.create().show();
-				return true;
-			}
-		});
 		addActivityLauncher(activity, menu, R.string.notepad, android.R.drawable.ic_menu_agenda, NotepadActivity.class);
 		addActivityLauncher(activity, menu, R.string.configuration, android.R.drawable.ic_menu_preferences, ConfigActivity.class);
 	}
