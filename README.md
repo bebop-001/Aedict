@@ -63,6 +63,21 @@ dialog if you want to see progress.
 I haven't done a whole lot of testing but on Android 4.4 and Android 10, it
 comes up and basic functions are working.  On Android 4.4 the colors are
 still screwed up on the example screen though...
+<br>
+4/18/2021
+Colors for both 4.4 and 10 should be workable now.  Behavior between the
+two versions with some things (Spinners, checkboxes) is very different.
+While not ideal, I think this is workable.
+
+Colors are very different from original app but again, workable.
+
+
+
 
 
 Steve S.
+
+<center>
+  <summary>Demo app screenshot</summary>
+  <img alt="demo app screenshot" src="https://github.com/bebop-001/SearchWindow/blob/master/images/Screenshot.png">
+</center>
