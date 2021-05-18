@@ -31,7 +31,7 @@ import android.util.Log;
  */
 public abstract class AbstractTask<P, R> {
 
-    /**
+    /*
      * Publishes a progress. Intended to be invoked from an {@link ITask} implementation.
      * @param progress the progress to publish, must not be null.
      */
@@ -40,7 +40,7 @@ public abstract class AbstractTask<P, R> {
             executor.publish(progress);
         }
     }
-    /**
+    /*
      * This object is the executor of this task. Valid after the {@link #execute(P[])} is invoked.
      */
     DialogAsyncTask<P, R> executor;
@@ -63,7 +63,7 @@ public abstract class AbstractTask<P, R> {
      */
     public abstract R impl(final P... params) throws Exception;
 
-    /**
+    /*
      * Performs a cleanup when the task fails (throws an exception), or is canceled. The method is run in the UI thread - it is NOT executed in the same thread as the {@link #execute(null, params)} method.
      * The exception is already logged using the Android logger.
      * <h3>Memory effects</h3>
@@ -92,7 +92,7 @@ public abstract class AbstractTask<P, R> {
         return execute(false, activity, parameters);
     }
 
-    /**
+    /*
      * Invoke this method from the UI thread to run the task. The task will be run entirely in UI thread and the dialog will not be shown.
      * This helps the testing.
      * @param sync if true then the task is run in the UI thread. The method blocks until the task finished running. If the task fails the exception is thrown.
@@ -100,13 +100,23 @@ public abstract class AbstractTask<P, R> {
      * @param parameters the parameter list.
      * @return the asynctask or null if synchronous execution was requested.
      */
+    private final String pParamaters(P...parameters) {
+        String rv = "<" + parameters.getClass().getSimpleName() + ":";
+        for (P p:parameters) {
+            rv += p.toString() + ",";
+        }
+        rv += ">";
+        return rv;
+    }
     public final AsyncTask<P, Progress, R> execute(final boolean sync, final Activity activity, P... parameters) {
+        Log.d("AbstractClass", String.format("execute:sync=%b, activity=%s, parameters=%s",
+                sync, activity.getClass().getSimpleName(), pParamaters(parameters)));
         if (executor != null) {
             throw new IllegalStateException("The task has already been run. Use new instance.");
         }
         this.sync = sync;
         if (!sync) {
-            executor = new DialogAsyncTask<P, R>(activity, this);
+            executor = new DialogAsyncTask<>(activity, this);
             return executor.execute(parameters);
         }
         final R result;

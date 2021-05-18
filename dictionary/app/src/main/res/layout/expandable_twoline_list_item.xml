@@ -27,10 +27,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
+        android:textColor="@color/textview_text"
+        android:background="@color/textview_background"
         android:textAppearance="?android:attr/textAppearanceLarge"
     />
 
     <TextView android:id="@android:id/text2"
+        android:textColor="@color/textview_text"
+        android:background="@color/textview_background"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@android:id/text1"

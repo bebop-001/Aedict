@@ -121,7 +121,7 @@ public class VerbInflectionActivity extends ExpandableListActivity {
 			childData.add(childDataItem);
 		}
 		// set the adapter
-		setListAdapter(new SimpleExpandableListAdapter(this, groupData, R.layout.simple_expandable_list_item_2, new String[] { KEY_JP, KEY_EN }, new int[] { android.R.id.text1, android.R.id.text2 }, childData, R.layout.simple_expandable_list_item_2, new String[] { KEY_JP, KEY_EN }, new int[] { android.R.id.text1, android.R.id.text2 }));
+		setListAdapter(new SimpleExpandableListAdapter(this, groupData, R.layout.expandable_twoline_list_item, new String[] { KEY_JP, KEY_EN }, new int[] { android.R.id.text1, android.R.id.text2 }, childData, R.layout.expandable_twoline_list_item, new String[] { KEY_JP, KEY_EN }, new int[] { android.R.id.text1, android.R.id.text2 }));
 	}
 
 	@Override

@@ -162,7 +162,7 @@ public final class Edict {
 		Resources r = c.getResources();
 
 		text1.setBackgroundColor(r.getColor(R.color.textview_background));
-		text1.setTextColor(r.getColor(R.color.kanji_textview_color));
+		text1.setTextColor(r.getColor(R.color.jp_textview_color));
 		text1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
 		text1.setTypeface(null, Typeface.BOLD);
 		text1.setText(e.textFormatJapanese());

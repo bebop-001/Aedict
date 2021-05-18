@@ -17,103 +17,111 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<LinearLayout 
 		android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
-	<LinearLayout 
-		android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingRight="?android:attr/scrollbarSize" android:paddingLeft="?android:attr/scrollbarSize" >
-	<LinearLayout 
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		android:orientation="vertical" >
-		<LinearLayout 
-			android:layout_height="wrap_content" android:orientation="horizontal"
-			android:layout_width="fill_parent">
-		
-<TextView android:layout_height="wrap_content" android:id="@+id/tanaka_kanji" android:text="K" android:layout_width="fill_parent" android:layout_weight="1" android:gravity="center_horizontal" android:textColor="@color/textview_text" android:textSize="100dp"></TextView>
-			<TableLayout 
-				android:layout_height="wrap_content" android:layout_width="fill_parent"
-				android:layout_weight="1" android:gravity="center_horizontal"
-				android:layout_gravity="center">
-				<TableRow 
-					android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" 
-						android:text="@string/stroke" android:gravity="right" android:textColor="#777"/>
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:id="@+id/stroke"
-						android:text="S" android:paddingLeft="3dp"
-						android:textColor="@color/textview_text"/>
-				</TableRow>
-				<TableRow 
-					android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" 
-						android:text="@string/grade" android:gravity="right" android:textColor="#777"/>
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:id="@+id/grade"
-						android:text="G" android:paddingLeft="3dp"
-						android:textColor="@color/textview_text"/>
-				</TableRow>
-				<TableRow 
-					android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/jlptLevel" android:gravity="right" android:textColor="#777"/>
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:id="@+id/jlpt"
-						android:text="J" android:paddingLeft="3dp"
-						android:textColor="@color/textview_text"/>
-				</TableRow>
-				<TableRow
-					android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/radicals_colon" android:gravity="right" android:textColor="#777"/>
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:id="@+id/radicals"
-						android:text="RADICALS" android:paddingLeft="3dp"
-						android:textColor="@color/textview_text"/>
-				</TableRow>
-				<TableRow 
-					android:layout_width="wrap_content" android:layout_height="wrap_content">
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@string/radicalNumber" android:gravity="right" android:textColor="#777"></TextView>
-					<TextView android:layout_width="wrap_content"
-						android:layout_height="wrap_content" android:id="@+id/radicalNumber"
-						android:text="RADICALS" android:paddingLeft="3dp"
-						android:textColor="@color/textview_text"/>
-				</TableRow>
-			</TableLayout>
-		</LinearLayout>
-		<TextView android:id="@+id/onyomi" android:textSize="20sp" android:textColor="#777" android:textColorLink="@android:color/black"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
-		<TextView android:id="@+id/kunyomi" android:textSize="20sp" android:textColor="#777" android:textColorLink="@android:color/black"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
-		<TextView android:id="@+id/namae"  android:textSize="20sp" android:textColor="#777" android:textColorLink="@android:color/black"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
-		<TextView android:id="@+id/tanaka_english"  android:textSize="15sp" android:textColor="#777" android:textColorLink="@android:color/black"
-			android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
-		<LinearLayout 
-			android:layout_width="wrap_content" android:layout_height="wrap_content"
-			android:orientation="horizontal" android:layout_gravity="center_horizontal"
-			android:layout_marginTop="12dp">
-			<Button android:id="@+id/copy" android:layout_height="wrap_content"
-				android:text="@string/copy" android:layout_width="fill_parent"
-				android:layout_weight="1"/>
-			<Button android:id="@+id/showStrokeOrder" android:layout_height="wrap_content"
-				android:text="@string/strokeOrder" android:layout_width="fill_parent"
-				android:layout_weight="1"/>
-			<Button android:id="@+id/addToNotepad" android:layout_height="wrap_content"
-				android:text="@string/addToNotepad" android:layout_width="fill_parent"
-				android:layout_weight="1"/>
-			<Button android:id="@+id/showRadical" android:layout_height="wrap_content"
-				android:text="@string/radicals" android:layout_width="fill_parent"
-				android:layout_weight="1"/>
-		</LinearLayout>
+		<LinearLayout
+			android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"
+			android:paddingRight="?android:attr/scrollbarSize" android:paddingLeft="?android:attr/scrollbarSize" >
+			<LinearLayout
+				android:layout_width="wrap_content" android:layout_height="wrap_content"
+				android:orientation="vertical" >
+				<LinearLayout
+					android:layout_height="wrap_content" android:orientation="horizontal"
+					android:layout_width="fill_parent">
 
-	</LinearLayout>
-	</LinearLayout>
-	<TextView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:text="@string/exampleSentences" android:textColor="@android:color/white" android:background="@android:color/black"/>
-		<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="vertical" android:id="@+id/tanakaExamples"></LinearLayout>
+					<TextView
+						android:layout_height="wrap_content" android:id="@+id/tanaka_kanji"
+						android:text="K" android:layout_width="fill_parent" android:layout_weight="1"
+						android:gravity="center_horizontal" android:textColor="@color/textview_text"
+						android:textSize="100dp"/>
+					<TableLayout
+						android:layout_height="wrap_content" android:layout_width="fill_parent"
+						android:layout_weight="1" android:gravity="center_horizontal"
+						android:layout_gravity="center">
+						<TableRow
+							android:layout_width="wrap_content" android:layout_height="wrap_content">
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/stroke" android:gravity="right" android:textColor="#777"/>
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content" android:id="@+id/stroke"
+								android:text="S" android:paddingLeft="3dp"
+								android:textColor="@color/textview_text"/>
+						</TableRow>
+						<TableRow
+							android:layout_width="wrap_content" android:layout_height="wrap_content">
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/grade" android:gravity="right" android:textColor="#777"/>
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content" android:id="@+id/grade"
+								android:text="G" android:paddingLeft="3dp"
+								android:textColor="@color/textview_text"/>
+						</TableRow>
+						<TableRow
+							android:layout_width="wrap_content" android:layout_height="wrap_content">
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/jlptLevel" android:gravity="right" android:textColor="#777"/>
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content" android:id="@+id/jlpt"
+								android:text="J" android:paddingLeft="3dp"
+								android:textColor="@color/textview_text"/>
+						</TableRow>
+						<TableRow
+							android:layout_width="wrap_content" android:layout_height="wrap_content">
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/radicals_colon" android:gravity="right" android:textColor="#777"/>
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content" android:id="@+id/radicals"
+								android:text="RADICALS" android:paddingLeft="3dp"
+								android:textColor="@color/textview_text"/>
+						</TableRow>
+						<TableRow
+							android:layout_width="wrap_content" android:layout_height="wrap_content">
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:text="@string/radicalNumber" android:gravity="right" android:textColor="#777"/>
+							<TextView android:layout_width="wrap_content"
+								android:layout_height="wrap_content" android:id="@+id/radicalNumber"
+								android:text="RADICALS" android:paddingLeft="3dp"
+								android:textColor="@color/textview_text"/>
+						</TableRow>
+					</TableLayout>
+				</LinearLayout>
+				<TextView android:id="@+id/onyomi" android:textSize="20sp" android:textColor="#777"
+					android:textColorLink="@android:color/black"
+					android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
+				<TextView android:id="@+id/kunyomi" android:textSize="20sp" android:textColor="#777" android:textColorLink="@android:color/black"
+					android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
+				<TextView android:id="@+id/namae"  android:textSize="20sp" android:textColor="#777"
+					android:textColorLink="@android:color/black"
+					android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
+				<TextView android:id="@+id/tanaka_english"  android:textSize="15sp" android:textColor="#777"
+					android:textColorLink="@android:color/black" android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:layout_marginTop="6dp"/>
+				<LinearLayout
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:orientation="horizontal" android:layout_gravity="center_horizontal"
+					android:layout_marginTop="12dp">
+					<Button android:id="@+id/copy" android:layout_height="wrap_content"
+						android:text="@string/copy" android:layout_width="fill_parent"
+						android:layout_weight="1"/>
+					<Button android:id="@+id/showStrokeOrder" android:layout_height="wrap_content"
+						android:text="@string/strokeOrder" android:layout_width="fill_parent"
+						android:layout_weight="1"/>
+					<Button android:id="@+id/addToNotepad" android:layout_height="wrap_content"
+						android:text="@string/addToNotepad" android:layout_width="fill_parent"
+						android:layout_weight="1"/>
+					<Button android:id="@+id/showRadical" android:layout_height="wrap_content"
+						android:text="@string/radicals" android:layout_width="fill_parent"
+						android:layout_weight="1"/>
+				</LinearLayout>
+			</LinearLayout>
 		</LinearLayout>
+		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:text="@string/exampleSentences" android:textColor="@color/textview_text"
+			android:background="@color/textview_background"/>
+		<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:id="@+id/tanakaExamples"/>
+	</LinearLayout>
 </ScrollView>

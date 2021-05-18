@@ -40,6 +40,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,6 +55,7 @@ import android.widget.TextView;
  * @author Martin Vysny
  */
 public class KanjiAnalyzeActivity extends ListActivity {
+	private static final String TAG = "KanjiAnalyzeActivity";
 	/**
 	 * The string word to analyze.
 	 */
@@ -122,7 +124,8 @@ public class KanjiAnalyzeActivity extends ListActivity {
 		setTitle(AedictApp.format(R.string.kanjiAnalysisOf, word != null ? word : DictEntry.getJapaneseWord(model)));
 		if (model == null) {
 			recomputeModel();
-		} else {
+		}
+		else {
 			// if the activity received a list of EdictEntry instead of a word,
 			// the model was not set to the activity and the activity shown an
 			// empty list
@@ -190,9 +193,11 @@ public class KanjiAnalyzeActivity extends ListActivity {
 		}
 		if (e instanceof KanjidicEntry) {
 			KanjiDetailActivity.launch(this, (KanjidicEntry) e);
-		} else if (e instanceof EdictEntry){
+		}
+		else if (e instanceof EdictEntry){
 			EdictEntryDetailActivity.launch(this, (EdictEntry)e);
-		}else{
+		}
+		else{
 			// this only happens when the word analysis is turned off and the entry shows a single kana character.
 			// just do nothing.
 			// fixes http://code.google.com/p/aedict/issues/detail?id=69
