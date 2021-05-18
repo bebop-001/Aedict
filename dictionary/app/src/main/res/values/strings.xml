@@ -359,19 +359,36 @@
 	<string name="exampleSentences">Example sentences</string>
 	<string name="launch">Launch</string>
 	<string name="results">Results</string>
-	<string name="intro">Aedict is a Japanese translation tool based on Jim Breen\'s EDict dictionary. Tips:\n
-		\n- Some features are accessible by long-clicking an item
-		\n- You can switch to romaji anytime, using menu
-		\n- Requires SDCard for storing dictionaries
-		\n\nFeatures:\n\n- Automatic download of the indexed EDict/Kanjidic/Tatoeba dictionaries
-		\n- Kanjipad for drawing and searching kanji characters
-		\n- Search kanji characters by radicals and stroke numbers
-		\n- Shows a kanji analysis in a word
-		\n- Search in Tatoeba Example sentences
-		\n- Verb deinflection (e.g. searching for あえない will find あう)
-		\n- Kanji drawing order for more than 1500 kanjis
-		\n- A basic sentence translation
-		\n- Verb conjugations with example sentences</string>
+	<string name="intro">\tThis is a open-source version of an older
+        of Martin Vysny\'s Aedict 2.  The author posted this about
+        10 years ago on github at https://github.com/mvysny/aedict.\n\t
+        I modified this for my own use to study Android and Lucene on
+        Android, and because I wanted a simple dictionary.\n\t
+        \tIt has an updated version of Edict but the rest of the dictionary
+        files are from about 2011.  I moved the files into the assets
+        directory and they are installed the first time the
+        app executes.\n\t
+        This version has some of the original functionality removed.
+        The Kanji look-up and support for Romaji are gone,\n\t
+        It\'s very old code and not at all the style of more modern
+        Android applications.  For instance, it uses about 10 activities
+        where a more modern app would have many fewer.\n\t
+        It\'s changing from time.  Hopefully I don\'t introduce any
+        new bugs but if I do, please drop me a note.  I try to keep
+        it usable.  It should work on Android 4.4 and newer.\n\t
+        Source is on Git Hub at https://github.com/bebop-001/Aedict.
+        If you want to download it to play with, please do.  It\'s a
+        large download however, because it includes Lucene indexes of
+        all the dictionaries it supplies.  Currently it supports Edict,
+        Compudict, KanjiDic, Enamdict, all of which are open source and
+        can be downloaded from https://www.edrdg.org/.\n\t
+        Please feel free to download and play with it.  It should
+        download and play on Android Studio 4.1.3 or newer.  It uses Java
+        8 and Kotlin.\n\n
+        Enjoy\n
+        Steve S.\n
+        5/18/2021
+    </string>
 	<string name="japanese">From Japanese</string>
 	<string name="english">From English</string>
 	<string name="more">More...</string>

@@ -85,7 +85,9 @@
 		android:layout_width="fill_parent" android:id="@+id/intro"
 		android:visibility="gone">
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:orientation="vertical">
+			android:layout_height="wrap_content"
+			android:layout_margin="20dp"
+			android:orientation="vertical">
 			<LinearLayout android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:gravity="center"
 				android:orientation="horizontal" android:layout_marginBottom="15sp"
@@ -95,10 +97,11 @@
 					android:layout_marginRight="20sp" />
 				<TextView android:layout_width="wrap_content"
 					android:layout_height="wrap_content" android:id="@+id/aedict"
-					android:text="Aedict 2.0" android:textSize="35sp"
+					android:text="Aedict 2.9" android:textSize="35sp"
 					android:textColor="@android:color/black" />
 			</LinearLayout>
 			<TextView android:layout_width="fill_parent"
+				android:textSize="18sp"
 				android:layout_height="wrap_content" android:text="@string/intro"
 				android:textColor="@android:color/black" />
 		</LinearLayout>
