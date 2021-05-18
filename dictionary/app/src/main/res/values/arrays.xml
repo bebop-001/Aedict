@@ -31,10 +31,10 @@
         <item>NihonShiki</item>
     </string-array>
     <string-array name="matcher">
-    	<item>Any matches</item>
-    	<item>Exact matches</item>
-    	<item>Starts with</item>
-    	<item>Ends with</item>
+    	<item>* Any matches</item>
+    	<item>* Exact matches</item>
+    	<item>* Text starts with</item>
+    	<item>* Text ends with</item>
     </string-array>
     <string-array name="notepadRestore">
     	<item>Overwrite</item>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="button_text_size">15sp</dimen>
-
     <dimen name="jap_text_size">20</dimen>
-
-
+    <dimen name="spinner_size">12dp</dimen>
+    <dimen name="matcher_cb_text_size">8sp</dimen>
 </resources>

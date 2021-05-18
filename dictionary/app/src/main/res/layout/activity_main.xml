@@ -14,8 +14,10 @@
 	-->
 <LinearLayout android:orientation="vertical"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:background="@color/layout_bg_color">
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/layout_bg_color"
+	>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal">
 		<EditText
@@ -48,24 +50,36 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="vertical"
 		android:visibility="gone" android:id="@+id/advancedPanel">
-	<Spinner android:layout_height="wrap_content"
-		android:layout_width="fill_parent" android:id="@+id/matcher"
-		android:entries="@array/matcher"/>
+		<Spinner android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:id="@+id/matcher"
+			android:entries="@array/matcher"
+			android:theme="@style/match_spinner" />
 		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:orientation="horizontal">
-			<CheckBox android:layout_height="wrap_content" android:id="@+id/jpDeinflectVerbs"
-				android:text="@string/deinflectVerbs" android:layout_width="wrap_content"
-				android:layout_weight="1" />
-			<CheckBox android:id="@+id/searchExamples"
-				android:layout_width="wrap_content" android:layout_weight="1"
-				android:layout_height="wrap_content" android:text="@string/searchInExamples" />
-			<CheckBox android:layout_height="wrap_content" android:id="@+id/translate"
-				android:text="@string/translate" android:layout_width="wrap_content"
-				android:layout_weight="1" />
+			android:layout_height="wrap_content" android:orientation="horizontal"
+			android:background="@color/textview_text">
+			<CheckBox  style="@style/matcher_cb"
+				android:id="@+id/jpDeinflectVerbs"
+				android:text="@string/deinflectVerbs"
+				android:layout_width="wrap_content"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				/>
+			<CheckBox style="@style/matcher_cb"
+				android:id="@+id/searchExamples"
+				android:text="@string/searchInExamples"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_width="wrap_content"
+				/>
+			<CheckBox style="@style/matcher_cb"
+				android:id="@+id/translate"
+				android:text="@string/translate"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:layout_width="wrap_content"
+				/>
 		</LinearLayout>
-		<TextView android:layout_width="fill_parent"
-			android:textColor="@android:color/black" android:layout_height="wrap_content"
-			android:text="@string/jpTranslate" />
 	</LinearLayout>
 	<ScrollView android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:id="@+id/intro"

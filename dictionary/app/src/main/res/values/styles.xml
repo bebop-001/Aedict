@@ -7,5 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="match_spinner">
+        <item name="android:textColor">@color/textview_text</item>
+    </style>
+
+    <style name="matcher_cb">
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@color/textview_background</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
 </resources>
